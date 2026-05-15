@@ -1,6 +1,6 @@
 # k-cloud-charge-analysis
 
-云快充协议（GB/T 27930）解析与构建SDK，高性能、轻量级、零框架依赖，专为充电桩与平台对接场景设计。
+云快充协议（GBT-27930）解析与构建SDK，高性能、轻量级、零框架依赖，专为充电桩与平台对接场景设计。
 
 [![Maven](https://img.shields.io/badge/Maven-3.9+-blue.svg)](https://maven.apache.org/)
 [![Java](https://img.shields.io/badge/Java-8+-green.svg)](https://www.oracle.com/java/)
