@@ -1,0 +1,32 @@
+# 编译输出
+target/
+build/
+*.class
+*.jar
+*.war
+*.ear
+
+# IDEA 全部忽略（最关键）
+.idea/
+*.iml
+*.iws
+*.ipr
+
+# Eclipse
+.classpath
+.project
+.settings/
+.factorypath
+.springBeans
+.sts4-cache
+
+# VS Code
+.vscode/
+
+# 系统文件
+.DS_Store
+Thumbs.db
+
+# 日志
+logs/
+*.log
