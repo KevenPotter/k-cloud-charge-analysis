@@ -80,13 +80,13 @@ public class AQTradeRecordRes extends FrameHeader {
      *
      * @param rawHexMsg 原始报文数据
      * @author KevenPotter
-     * @date 2026-05-11 14:20:35
+     * @date 2026-05-19 14:27:15
      */
     private void log(String rawHexMsg) {
-        log.info("------------------------------------------------------------------------------");
-        log.info("🔶 【0x40】 {} 交易记录确认 原始报文    rawMsg               : {}", deviceId, rawHexMsg);
-        log.info("🔶 【0x40】 {} 交易记录确认 交易编号    tradeNo              : {}", deviceId, tradeNo);
-        log.info("🔶 【0x40】 {} 交易记录确认 确认结果    confirmResult        : {}", deviceId, "00".equals(confirmResult) ? "上传成功" : "非法账单");
+        log.info("-------------------------------------------------------------------------------------------");
+        log.info("🔶 【0x40】 {} 交易记录确认  原始报文    rawMsg                       : {}", deviceId, rawHexMsg);
+        log.info("🔶 【0x40】 {} 交易记录确认  交易编号    tradeNo                      : {}", deviceId, tradeNo);
+        log.info("🔶 【0x40】 {} 交易记录确认  确认结果    confirmResult                : {}", deviceId, "00".equals(confirmResult) ? "上传成功" : "非法账单");
         System.out.println();
     }
 

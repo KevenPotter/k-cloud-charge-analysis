@@ -111,18 +111,18 @@ public class AUOfflineCardQueryReq extends FrameHeader {
      *
      * @param rawHexMsg 原始报文数据
      * @author KevenPotter
-     * @date 2026-05-11 14:39:49
+     * @date 2026-05-19 14:18:38
      */
     private void log(String rawHexMsg) {
-        log.info("------------------------------------------------------------------------------");
-        log.info("🟢 【0x47】 {} 离线卡数据查询应答 原始报文    rawMsg                       : {}", deviceId, rawHexMsg);
-        log.info("🟢 【0x47】 {} 离线卡数据查询应答 设备编号    deviceId                     : {}", deviceId, deviceId);
+        log.info("-------------------------------------------------------------------------------------------");
+        log.info("🟢 【0x47】 {} 电卡查询应答  原始报文    rawMsg                       : {}", deviceId, rawHexMsg);
+        log.info("🟢 【0x47】 {} 电卡查询应答  设备编号    deviceId                     : {}", deviceId, deviceId);
 
         for (int i = 0; i < queryResultList.size(); i++) {
             System.out.println();
             QueryResult queryResult = queryResultList.get(i);
-            log.info("🟢 【0x47】 {} 离线卡数据查询应答 第{}物号    physicalCardNo               : {}", deviceId, NumberChineseFormatter.format(i, false, false), queryResult.getPhysicalCardNo());
-            log.info("🟢 【0x47】 {} 离线卡数据查询应答 查询结果    queryResult                  : {}", deviceId, queryResult.getQueryResult() == 0 ? "卡不存在" : "卡存在");
+            log.info("🟢 【0x47】 {} 电卡查询应答  第{}物号    physicalCardNo               : {}", deviceId, NumberChineseFormatter.format(i, false, false), queryResult.getPhysicalCardNo());
+            log.info("🟢 【0x47】 {} 电卡查询应答  查询结果    queryResult                  : {}", deviceId, queryResult.getQueryResult() == 0 ? "卡不存在" : "卡存在");
         }
         System.out.println();
     }

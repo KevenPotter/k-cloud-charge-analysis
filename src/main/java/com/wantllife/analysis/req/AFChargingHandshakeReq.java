@@ -202,26 +202,26 @@ public class AFChargingHandshakeReq extends FrameHeader {
      *
      * @param rawHexMsg 原始报文数据
      * @author KevenPotter
-     * @date 2026-05-09 21:26:52
+     * @date 2026-05-19 14:14:38
      */
     private void log(String rawHexMsg) {
-        log.info("------------------------------------------------------------------------------");
-        log.info("🟢 【0x15】 {} 充电握手 原始报文    rawMsg                       : {}", deviceId, rawHexMsg);
-        log.info("🟢 【0x15】 {} 充电握手 设备编号    deviceId                     : {}", deviceId, deviceId);
-        log.info("🟢 【0x15】 {} 充电握手 枪口编号    gunNo                        : {}", deviceId, gunNo);
-        log.info("🟢 【0x15】 {} 充电握手 交易编号    tradeNo                      : {}", deviceId, tradeNo);
-        log.info("🟢 【0x15】 {} 充电握手 通信版本    communicationProtocolVersion : {}", deviceId, communicationProtocolVersion);
-        log.info("🟢 【0x15】 {} 充电握手 电池类型    batteryDesc                  : {}", deviceId, batteryDesc);
-        log.info("🟢 【0x15】 {} 充电握手 额定容量    batteryRated                 : {}", deviceId, batteryRated);
-        log.info("🟢 【0x15】 {} 充电握手 额定电压    batteryTotalVoltage          : {}", deviceId, batteryTotalVoltage);
-        log.info("🟢 【0x15】 {} 充电握手 厂商名称    batteryManufacturer          : {}", deviceId, batteryManufacturer);
-        log.info("🟢 【0x15】 {} 充电握手 电池序号    batterySerialNo              : {}", deviceId, batterySerialNo);
-        log.info("🟢 【0x15】 {} 充电握手 生产日期    ProductionDate               : {}-{}-{}", deviceId, batteryProductionYear, batteryProductionMonth, batteryProductionDay);
-        log.info("🟢 【0x15】 {} 充电握手 充电次数    batteryChargeCounts          : {}", deviceId, batteryChargeCounts);
-        log.info("🟢 【0x15】 {} 充电握手 产权标识    propertyIdentificationDesc   : {}", deviceId, batteryPropertyIdentificationDesc);
-        log.info("🟢 【0x15】 {} 充电握手 预留位值    reserved                     : {}", deviceId, reserved);
-        log.info("🟢 【0x15】 {} 充电握手 车识别码    VIN                          : {}", deviceId, vin);
-        log.info("🟢 【0x15】 {} 充电握手 软件版本    softwareVersionDesc          : {}", deviceId, softwareVersionDesc);
+        log.info("-------------------------------------------------------------------------------------------");
+        log.info("🟢 【0x15】 {} 充电握手上传  原始报文    rawMsg                       : {}", deviceId, rawHexMsg);
+        log.info("🟢 【0x15】 {} 充电握手上传  设备编号    deviceId                     : {}", deviceId, deviceId);
+        log.info("🟢 【0x15】 {} 充电握手上传  枪口编号    gunNo                        : {}", deviceId, gunNo);
+        log.info("🟢 【0x15】 {} 充电握手上传  交易编号    tradeNo                      : {}", deviceId, tradeNo);
+        log.info("🟢 【0x15】 {} 充电握手上传  通信版本    communicationProtocolVersion : {}", deviceId, communicationProtocolVersion);
+        log.info("🟢 【0x15】 {} 充电握手上传  电池类型    batteryDesc                  : {}", deviceId, batteryDesc);
+        log.info("🟢 【0x15】 {} 充电握手上传  额定容量    batteryRated                 : {}", deviceId, batteryRated);
+        log.info("🟢 【0x15】 {} 充电握手上传  额定电压    batteryTotalVoltage          : {}", deviceId, batteryTotalVoltage);
+        log.info("🟢 【0x15】 {} 充电握手上传  厂商名称    batteryManufacturer          : {}", deviceId, batteryManufacturer);
+        log.info("🟢 【0x15】 {} 充电握手上传  电池序号    batterySerialNo              : {}", deviceId, batterySerialNo);
+        log.info("🟢 【0x15】 {} 充电握手上传  生产日期    ProductionDate               : {}-{}-{}", deviceId, batteryProductionYear, batteryProductionMonth, batteryProductionDay);
+        log.info("🟢 【0x15】 {} 充电握手上传  充电次数    batteryChargeCounts          : {}", deviceId, batteryChargeCounts);
+        log.info("🟢 【0x15】 {} 充电握手上传  产权标识    propertyIdentificationDesc   : {}", deviceId, batteryPropertyIdentificationDesc);
+        log.info("🟢 【0x15】 {} 充电握手上传  预留位值    reserved                     : {}", deviceId, reserved);
+        log.info("🟢 【0x15】 {} 充电握手上传  车识别码    VIN                          : {}", deviceId, vin);
+        log.info("🟢 【0x15】 {} 充电握手上传  软件版本    softwareVersionDesc          : {}", deviceId, softwareVersionDesc);
         System.out.println();
     }
 

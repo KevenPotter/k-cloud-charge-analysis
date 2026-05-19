@@ -88,15 +88,15 @@ public class APStopChargeReq extends FrameHeader {
      *
      * @param rawHexMsg 原始报文数据
      * @author KevenPotter
-     * @date 2026-05-11 14:06:42
+     * @date 2026-05-19 14:17:20
      */
     private void log(String rawHexMsg) {
-        log.info("------------------------------------------------------------------------------");
-        log.info("🟢 【0x35】 {} 远程停机命令回复 原始报文    rawMsg                       : {}", deviceId, rawHexMsg);
-        log.info("🟢 【0x35】 {} 远程停机命令回复 设备编号    deviceId                     : {}", deviceId, deviceId);
-        log.info("🟢 【0x35】 {} 远程停机命令回复 枪口编号    gunNo                        : {}", deviceId, gunNo);
-        log.info("🟢 【0x35】 {} 远程停机命令回复 停止结果    stopResult                   : {}", deviceId, stopResult == 0 ? "停止失败" : "停止成功");
-        log.info("🟢 【0x35】 {} 远程停机命令回复 失败原因    failureReasonDesc            : {}", deviceId, failureReasonDesc);
+        log.info("-------------------------------------------------------------------------------------------");
+        log.info("🟢 【0x35】 {} 远程关电回复  原始报文    rawMsg                       : {}", deviceId, rawHexMsg);
+        log.info("🟢 【0x35】 {} 远程关电回复  设备编号    deviceId                     : {}", deviceId, deviceId);
+        log.info("🟢 【0x35】 {} 远程关电回复  枪口编号    gunNo                        : {}", deviceId, gunNo);
+        log.info("🟢 【0x35】 {} 远程关电回复  停止结果    stopResult                   : {}", deviceId, stopResult == 0 ? "停止失败" : "停止成功");
+        log.info("🟢 【0x35】 {} 远程关电回复  失败原因    failureReasonDesc            : {}", deviceId, failureReasonDesc);
         System.out.println();
     }
 

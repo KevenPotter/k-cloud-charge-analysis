@@ -50,12 +50,12 @@ public class ADBillingModelReq extends FrameHeader {
      *
      * @param rawHexMsg 原始报文数据
      * @author KevenPotter
-     * @date 2026-05-09 16:45:24
+     * @date 2026-05-19 14:13:18
      */
     private void log(String rawHexMsg) {
-        log.info("------------------------------------------------------------------------------");
-        log.info("🟢 【0x09】 {} 充电桩计费模型请求 原始报文    rawMsg               : {}", deviceId, rawHexMsg);
-        log.info("🟢 【0x09】 {} 充电桩计费模型请求 设备编号    deviceId             : {}", deviceId, deviceId);
+        log.info("-------------------------------------------------------------------------------------------");
+        log.info("🟢 【0x09】 {} 计费模型请求  原始报文    rawMsg                       : {}", deviceId, rawHexMsg);
+        log.info("🟢 【0x09】 {} 计费模型请求  设备编号    deviceId                     : {}", deviceId, deviceId);
         System.out.println();
     }
 

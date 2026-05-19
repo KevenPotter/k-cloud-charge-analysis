@@ -104,22 +104,22 @@ public class AHChargeFinishedReq extends FrameHeader {
      *
      * @param rawHexMsg 原始报文数据
      * @author KevenPotter
-     * @date 2026-05-11 10:06:20
+     * @date 2026-05-19 14:15:09
      */
     private void log(String rawHexMsg) {
-        log.info("------------------------------------------------------------------------------");
-        log.info("🟢 【0x19】 {} 充电结束 原始报文    rawMsg                       : {}", deviceId, rawHexMsg);
-        log.info("🟢 【0x19】 {} 充电结束 设备编号    deviceId                     : {}", deviceId, deviceId);
-        log.info("🟢 【0x19】 {} 充电结束 枪口编号    gunNo                        : {}", deviceId, gunNo);
-        log.info("🟢 【0x19】 {} 充电结束 交易编号    tradeNo                      : {}", deviceId, tradeNo);
-        log.info("🟢 【0x19】 {} 充电结束 荷电状态    stopSoc                      : {}", deviceId, stopSoc);
-        log.info("🟢 【0x19】 {} 充电结束 最低电压    minVoltage                   : {}", deviceId, minVoltage);
-        log.info("🟢 【0x19】 {} 充电结束 最高电压    maxVoltage                   : {}", deviceId, maxVoltage);
-        log.info("🟢 【0x19】 {} 充电结束 最低温度    minTemperature               : {}", deviceId, minTemperature);
-        log.info("🟢 【0x19】 {} 充电结束 最高温度    maxTemperature               : {}", deviceId, maxTemperature);
-        log.info("🟢 【0x19】 {} 充电结束 累充时间    chargeTime                   : {}", deviceId, chargeTime);
-        log.info("🟢 【0x19】 {} 充电结束 输出能量    outputEnergy                 : {}", deviceId, outputEnergy);
-        log.info("🟢 【0x19】 {} 充电结束 电机编号    chargeNo                     : {}", deviceId, chargeNo);
+        log.info("-------------------------------------------------------------------------------------------");
+        log.info("🟢 【0x19】 {} 充电结束上传  原始报文    rawMsg                       : {}", deviceId, rawHexMsg);
+        log.info("🟢 【0x19】 {} 充电结束上传  设备编号    deviceId                     : {}", deviceId, deviceId);
+        log.info("🟢 【0x19】 {} 充电结束上传  枪口编号    gunNo                        : {}", deviceId, gunNo);
+        log.info("🟢 【0x19】 {} 充电结束上传  交易编号    tradeNo                      : {}", deviceId, tradeNo);
+        log.info("🟢 【0x19】 {} 充电结束上传  荷电状态    stopSoc                      : {}", deviceId, stopSoc);
+        log.info("🟢 【0x19】 {} 充电结束上传  最低电压    minVoltage                   : {}", deviceId, minVoltage);
+        log.info("🟢 【0x19】 {} 充电结束上传  最高电压    maxVoltage                   : {}", deviceId, maxVoltage);
+        log.info("🟢 【0x19】 {} 充电结束上传  最低温度    minTemperature               : {}", deviceId, minTemperature);
+        log.info("🟢 【0x19】 {} 充电结束上传  最高温度    maxTemperature               : {}", deviceId, maxTemperature);
+        log.info("🟢 【0x19】 {} 充电结束上传  累充时间    chargeTime                   : {}", deviceId, chargeTime);
+        log.info("🟢 【0x19】 {} 充电结束上传  输出能量    outputEnergy                 : {}", deviceId, outputEnergy);
+        log.info("🟢 【0x19】 {} 充电结束上传  电机编号    chargeNo                     : {}", deviceId, chargeNo);
         System.out.println();
     }
 

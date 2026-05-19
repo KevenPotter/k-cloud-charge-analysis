@@ -97,15 +97,15 @@ public class ARBalanceUpdateRes extends FrameHeader {
      *
      * @param rawHexMsg 原始报文数据
      * @author KevenPotter
-     * @date 2026-05-11 14:24:44
+     * @date 2026-05-19 14:27:32
      */
     private void log(String rawHexMsg) {
-        log.info("------------------------------------------------------------------------------");
-        log.info("🔶 【0x42】 {} 远程账户余额更新 原始报文    rawMsg               : {}", deviceId, rawHexMsg);
-        log.info("🔶 【0x42】 {} 远程账户余额更新 设备编号    deviceId             : {}", deviceId, deviceId);
-        log.info("🔶 【0x42】 {} 远程账户余额更新 枪口编号    gunNo                : {}", deviceId, gunNo);
-        log.info("🔶 【0x42】 {} 远程账户余额更新 物理卡号    physicalCardNo       : {}", deviceId, physicalCardNo);
-        log.info("🔶 【0x42】 {} 远程账户余额更新 改后金额    balance              : {}", deviceId, balance);
+        log.info("-------------------------------------------------------------------------------------------");
+        log.info("🔶 【0x42】 {} 远程余额更新  原始报文    rawMsg                       : {}", deviceId, rawHexMsg);
+        log.info("🔶 【0x42】 {} 远程余额更新  设备编号    deviceId                     : {}", deviceId, deviceId);
+        log.info("🔶 【0x42】 {} 远程余额更新  枪口编号    gunNo                        : {}", deviceId, gunNo);
+        log.info("🔶 【0x42】 {} 远程余额更新  物理卡号    physicalCardNo               : {}", deviceId, physicalCardNo);
+        log.info("🔶 【0x42】 {} 远程余额更新  改后金额    balance                      : {}", deviceId, balance);
         System.out.println();
     }
 

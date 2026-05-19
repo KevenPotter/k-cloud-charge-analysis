@@ -143,18 +143,18 @@ public class AYGroundLockDataReq extends FrameHeader {
      *
      * @param rawHexMsg 原始报文数据
      * @author KevenPotter
-     * @date 2026-05-11 16:17:40
+     * @date 2026-05-19 14:19:39
      */
     private void log(String rawHexMsg) {
-        log.info("------------------------------------------------------------------------------");
-        log.info("🟢 【0x61】 {} 地锁数据上送 原始报文    rawMsg                       : {}", deviceId, rawHexMsg);
-        log.info("🟢 【0x61】 {} 地锁数据上送 设备编号    deviceId                     : {}", deviceId, deviceId);
-        log.info("🟢 【0x61】 {} 地锁数据上送 枪口编号    gunNo                        : {}", deviceId, gunNo);
-        log.info("🟢 【0x61】 {} 地锁数据上送 车锁状态    lockStatusDesc               : {}", deviceId, lockStatusDesc);
-        log.info("🟢 【0x61】 {} 地锁数据上送 车位状态    parkingStatusDesc            : {}", deviceId, parkingStatusDesc);
-        log.info("🟢 【0x61】 {} 地锁数据上送 电量状态    batteryStatus                : {}", deviceId, batteryStatus);
-        log.info("🟢 【0x61】 {} 地锁数据上送 报警状态    alarmStatusDesc              : {}", deviceId, alarmStatusDesc);
-        log.info("🟢 【0x61】 {} 地锁数据上送 预留位值    reserved                     : {}", deviceId, reserved);
+        log.info("-------------------------------------------------------------------------------------------");
+        log.info("🟢 【0x61】 {} 地锁数据上送  原始报文    rawMsg                       : {}", deviceId, rawHexMsg);
+        log.info("🟢 【0x61】 {} 地锁数据上送  设备编号    deviceId                     : {}", deviceId, deviceId);
+        log.info("🟢 【0x61】 {} 地锁数据上送  枪口编号    gunNo                        : {}", deviceId, gunNo);
+        log.info("🟢 【0x61】 {} 地锁数据上送  车锁状态    lockStatusDesc               : {}", deviceId, lockStatusDesc);
+        log.info("🟢 【0x61】 {} 地锁数据上送  车位状态    parkingStatusDesc            : {}", deviceId, parkingStatusDesc);
+        log.info("🟢 【0x61】 {} 地锁数据上送  电量状态    batteryStatus                : {}", deviceId, batteryStatus);
+        log.info("🟢 【0x61】 {} 地锁数据上送  报警状态    alarmStatusDesc              : {}", deviceId, alarmStatusDesc);
+        log.info("🟢 【0x61】 {} 地锁数据上送  预留位值    reserved                     : {}", deviceId, reserved);
         System.out.println();
     }
 

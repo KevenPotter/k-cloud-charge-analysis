@@ -76,13 +76,13 @@ public class AERealTimeMonitorRes extends FrameHeader {
      *
      * @param rawHexMsg 原始报文数据
      * @author KevenPotter
-     * @date 2026-05-09 21:08:09
+     * @date 2026-05-19 14:25:25
      */
     private void log(String rawHexMsg) {
-        log.info("------------------------------------------------------------------------------");
-        log.info("🔶 【0x12】 {} 读取实时监测数据 原始报文    rawMsg               : {}", deviceId, rawHexMsg);
-        log.info("🔶 【0x12】 {} 读取实时监测数据 设备编号    deviceId             : {}", deviceId, deviceId);
-        log.info("🔶 【0x12】 {} 读取实时监测数据 枪口编号    gunNo                : {}", deviceId, gunNo);
+        log.info("-------------------------------------------------------------------------------------------");
+        log.info("🔶 【0x12】 {} 读取监测数据  原始报文    rawMsg                       : {}", deviceId, rawHexMsg);
+        log.info("🔶 【0x12】 {} 读取监测数据  设备编号    deviceId                     : {}", deviceId, deviceId);
+        log.info("🔶 【0x12】 {} 读取监测数据  枪口编号    gunNo                        : {}", deviceId, gunNo);
         System.out.println();
     }
 

@@ -56,13 +56,13 @@ public class AVWorkingParamsReq extends FrameHeader {
      *
      * @param rawHexMsg 原始报文数据
      * @author KevenPotter
-     * @date 2026-05-11 15:09:54
+     * @date 2026-05-19 14:18:50
      */
     private void log(String rawHexMsg) {
-        log.info("------------------------------------------------------------------------------");
-        log.info("🟢 【0x51】 {} 充电桩工作参数设置应答 原始报文    rawMsg                       : {}", deviceId, rawHexMsg);
-        log.info("🟢 【0x51】 {} 充电桩工作参数设置应答 设备编号    deviceId                     : {}", deviceId, deviceId);
-        log.info("🟢 【0x51】 {} 充电桩工作参数设置应答 设置结果    setResult                    : {}", deviceId, setResult == 0 ? "设置失败" : "设置成功");
+        log.info("-------------------------------------------------------------------------------------------");
+        log.info("🟢 【0x51】 {} 工作参数设置  原始报文    rawMsg                       : {}", deviceId, rawHexMsg);
+        log.info("🟢 【0x51】 {} 工作参数设置  设备编号    deviceId                     : {}", deviceId, deviceId);
+        log.info("🟢 【0x51】 {} 工作参数设置  设置结果    setResult                    : {}", deviceId, setResult == 0 ? "设置失败" : "设置成功");
         System.out.println();
     }
 

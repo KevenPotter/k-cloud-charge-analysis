@@ -126,25 +126,25 @@ public class AGParamConfigReq extends FrameHeader {
      *
      * @param rawHexMsg 原始报文数据
      * @author KevenPotter
-     * @date 2026-05-11 10:00:04
+     * @date 2026-05-19 14:14:56
      */
     private void log(String rawHexMsg) {
-        log.info("------------------------------------------------------------------------------");
-        log.info("🟢 【0x17】 {} 参数配置 原始报文    rawMsg                       : {}", deviceId, rawHexMsg);
-        log.info("🟢 【0x17】 {} 参数配置 设备编号    deviceId                     : {}", deviceId, deviceId);
-        log.info("🟢 【0x17】 {} 参数配置 枪口编号    gunNo                        : {}", deviceId, gunNo);
-        log.info("🟢 【0x17】 {} 参数配置 交易编号    tradeNo                      : {}", deviceId, tradeNo);
-        log.info("🟢 【0x17】 {} 参数配置 允许电压    maxAllowVoltage              : {}", deviceId, maxAllowVoltage);
-        log.info("🟢 【0x17】 {} 参数配置 允许电流    maxChargeCurrent             : {}", deviceId, maxChargeCurrent);
-        log.info("🟢 【0x17】 {} 参数配置 标称能量    ratedEnergy                  : {}", deviceId, ratedEnergy);
-        log.info("🟢 【0x17】 {} 参数配置 最高电压    maxTotalVoltage              : {}", deviceId, maxTotalVoltage);
-        log.info("🟢 【0x17】 {} 参数配置 最高温度    maxTemperature               : {}", deviceId, maxTemperature);
-        log.info("🟢 【0x17】 {} 参数配置 充电率值    SOC                          : {}", deviceId, soc);
-        log.info("🟢 【0x17】 {} 参数配置 当前电压    currentTotalVoltage          : {}", deviceId, currentTotalVoltage);
-        log.info("🟢 【0x17】 {} 参数配置 最高输压    maxOutVoltage                : {}", deviceId, maxOutVoltage);
-        log.info("🟢 【0x17】 {} 参数配置 最低输压    minOutVoltage                : {}", deviceId, minOutVoltage);
-        log.info("🟢 【0x17】 {} 参数配置 最大输流    maxOutCurrent                : {}", deviceId, maxOutCurrent);
-        log.info("🟢 【0x17】 {} 参数配置 最小输流    minOutCurrent                : {}", deviceId, minOutCurrent);
+        log.info("-------------------------------------------------------------------------------------------");
+        log.info("🟢 【0x17】 {} 参数配置上传  原始报文    rawMsg                       : {}", deviceId, rawHexMsg);
+        log.info("🟢 【0x17】 {} 参数配置上传  设备编号    deviceId                     : {}", deviceId, deviceId);
+        log.info("🟢 【0x17】 {} 参数配置上传  枪口编号    gunNo                        : {}", deviceId, gunNo);
+        log.info("🟢 【0x17】 {} 参数配置上传  交易编号    tradeNo                      : {}", deviceId, tradeNo);
+        log.info("🟢 【0x17】 {} 参数配置上传  允许电压    maxAllowVoltage              : {}", deviceId, maxAllowVoltage);
+        log.info("🟢 【0x17】 {} 参数配置上传  允许电流    maxChargeCurrent             : {}", deviceId, maxChargeCurrent);
+        log.info("🟢 【0x17】 {} 参数配置上传  标称能量    ratedEnergy                  : {}", deviceId, ratedEnergy);
+        log.info("🟢 【0x17】 {} 参数配置上传  最高电压    maxTotalVoltage              : {}", deviceId, maxTotalVoltage);
+        log.info("🟢 【0x17】 {} 参数配置上传  最高温度    maxTemperature               : {}", deviceId, maxTemperature);
+        log.info("🟢 【0x17】 {} 参数配置上传  充电率值    SOC                          : {}", deviceId, soc);
+        log.info("🟢 【0x17】 {} 参数配置上传  当前电压    currentTotalVoltage          : {}", deviceId, currentTotalVoltage);
+        log.info("🟢 【0x17】 {} 参数配置上传  最高输压    maxOutVoltage                : {}", deviceId, maxOutVoltage);
+        log.info("🟢 【0x17】 {} 参数配置上传  最低输压    minOutVoltage                : {}", deviceId, minOutVoltage);
+        log.info("🟢 【0x17】 {} 参数配置上传  最大输流    maxOutCurrent                : {}", deviceId, maxOutCurrent);
+        log.info("🟢 【0x17】 {} 参数配置上传  最小输流    minOutCurrent                : {}", deviceId, minOutCurrent);
         System.out.println();
     }
 

@@ -88,14 +88,14 @@ public class ARBalanceUpdateReq extends FrameHeader {
      *
      * @param rawHexMsg 原始报文数据
      * @author KevenPotter
-     * @date 2026-05-11 14:06:42
+     * @date 2026-05-19 14:18:00
      */
     private void log(String rawHexMsg) {
-        log.info("------------------------------------------------------------------------------");
-        log.info("🟢 【0x41】 {} 余额更新应答 原始报文    rawMsg                       : {}", deviceId, rawHexMsg);
-        log.info("🟢 【0x41】 {} 余额更新应答 设备编号    deviceId                     : {}", deviceId, deviceId);
-        log.info("🟢 【0x41】 {} 余额更新应答 物理卡号    physicalCardNo               : {}", deviceId, physicalCardNo);
-        log.info("🟢 【0x41】 {} 余额更新应答 修改结果    updateResultDesc             : {}", deviceId, updateResultDesc);
+        log.info("-------------------------------------------------------------------------------------------");
+        log.info("🟢 【0x41】 {} 余额更新应答  原始报文    rawMsg                       : {}", deviceId, rawHexMsg);
+        log.info("🟢 【0x41】 {} 余额更新应答  设备编号    deviceId                     : {}", deviceId, deviceId);
+        log.info("🟢 【0x41】 {} 余额更新应答  物理卡号    physicalCardNo               : {}", deviceId, physicalCardNo);
+        log.info("🟢 【0x41】 {} 余额更新应答  修改结果    updateResultDesc             : {}", deviceId, updateResultDesc);
         System.out.println();
     }
 

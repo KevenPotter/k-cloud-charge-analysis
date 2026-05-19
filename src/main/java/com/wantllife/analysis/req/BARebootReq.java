@@ -56,13 +56,13 @@ public class BARebootReq extends FrameHeader {
      *
      * @param rawHexMsg 原始报文数据
      * @author KevenPotter
-     * @date 2026-05-11 16:28:05
+     * @date 2026-05-19 14:19:57
      */
     private void log(String rawHexMsg) {
-        log.info("------------------------------------------------------------------------------");
-        log.info("🟢 【0x91】 {} 远程重启应答 原始报文    rawMsg                       : {}", deviceId, rawHexMsg);
-        log.info("🟢 【0x91】 {} 远程重启应答 设备编号    deviceId                     : {}", deviceId, deviceId);
-        log.info("🟢 【0x91】 {} 远程重启应答 设置结果    setResult                    : {}", deviceId, setResult == 0 ? "重启失败" : "重启成功");
+        log.info("-------------------------------------------------------------------------------------------");
+        log.info("🟢 【0x91】 {} 远程重启应答  原始报文    rawMsg                       : {}", deviceId, rawHexMsg);
+        log.info("🟢 【0x91】 {} 远程重启应答  设备编号    deviceId                     : {}", deviceId, deviceId);
+        log.info("🟢 【0x91】 {} 远程重启应答  设置结果    setResult                    : {}", deviceId, setResult == 0 ? "重启失败" : "重启成功");
         System.out.println();
     }
 

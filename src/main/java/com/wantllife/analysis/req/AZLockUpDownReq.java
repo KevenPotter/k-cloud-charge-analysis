@@ -67,15 +67,15 @@ public class AZLockUpDownReq extends FrameHeader {
      *
      * @param rawHexMsg 原始报文数据
      * @author KevenPotter
-     * @date 2026-05-11 16:27:29
+     * @date 2026-05-19 14:19:48
      */
     private void log(String rawHexMsg) {
-        log.info("------------------------------------------------------------------------------");
-        log.info("🟢 【0x63】 {} 充电桩返回数据 原始报文    rawMsg                       : {}", deviceId, rawHexMsg);
-        log.info("🟢 【0x63】 {} 充电桩返回数据 设备编号    deviceId                     : {}", deviceId, deviceId);
-        log.info("🟢 【0x63】 {} 充电桩返回数据 枪口编号    gunNo                        : {}", deviceId, gunNo);
-        log.info("🟢 【0x63】 {} 充电桩返回数据 控制标志    upDownStatus                 : {}", deviceId, upDownStatus == 1 ? "鉴权成功" : "鉴权失败");
-        log.info("🟢 【0x63】 {} 充电桩返回数据 预留位值    reserved                     : {}", deviceId, reserved);
+        log.info("-------------------------------------------------------------------------------------------");
+        log.info("🟢 【0x63】 {} 设备返回数据  原始报文    rawMsg                       : {}", deviceId, rawHexMsg);
+        log.info("🟢 【0x63】 {} 设备返回数据  设备编号    deviceId                     : {}", deviceId, deviceId);
+        log.info("🟢 【0x63】 {} 设备返回数据  枪口编号    gunNo                        : {}", deviceId, gunNo);
+        log.info("🟢 【0x63】 {} 设备返回数据  控制标志    upDownStatus                 : {}", deviceId, upDownStatus == 1 ? "鉴权成功" : "鉴权失败");
+        log.info("🟢 【0x63】 {} 设备返回数据  预留位值    reserved                     : {}", deviceId, reserved);
         System.out.println();
     }
 

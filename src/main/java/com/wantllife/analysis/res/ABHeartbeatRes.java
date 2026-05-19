@@ -81,14 +81,14 @@ public class ABHeartbeatRes extends FrameHeader {
      *
      * @param rawHexMsg 原始报文数据
      * @author KevenPotter
-     * @date 2026-05-09 15:50:06
+     * @date 2026-05-19 14:22:00
      */
     private void log(String rawHexMsg) {
-        log.info("------------------------------------------------------------------------------");
-        log.info("🔶 【0x04】 {} 心跳包应答 原始报文    rawMsg               : {}", deviceId, rawHexMsg);
-        log.info("🔶 【0x04】 {} 心跳包应答 设备编号    deviceId             : {}", deviceId, deviceId);
-        log.info("🔶 【0x04】 {} 心跳包应答 枪口编号    gunNo                : {}", deviceId, gunNo);
-        log.info("🔶 【0x04】 {} 心跳包应答 心跳应答    heartbeatResult      : {}", deviceId, heartbeatResult);
+        log.info("-------------------------------------------------------------------------------------------");
+        log.info("🔶 【0x04】 {} 心跳检测应答  原始报文    rawMsg                       : {}", deviceId, rawHexMsg);
+        log.info("🔶 【0x04】 {} 心跳检测应答  设备编号    deviceId                     : {}", deviceId, deviceId);
+        log.info("🔶 【0x04】 {} 心跳检测应答  枪口编号    gunNo                        : {}", deviceId, gunNo);
+        log.info("🔶 【0x04】 {} 心跳检测应答  心跳应答    heartbeatResult              : {}", deviceId, heartbeatResult);
         System.out.println();
     }
 }

@@ -120,20 +120,20 @@ public class BCApplyParallelChargingReq extends FrameHeader {
      *
      * @param rawHexMsg 原始报文数据
      * @author KevenPotter
-     * @date 2026-05-11 16:39:55
+     * @date 2026-05-19 14:21:18
      */
     private void log(String rawHexMsg) {
-        log.info("------------------------------------------------------------------------------");
-        log.info("🟢 【0xA1】 {} 充电桩主动申请并充充电 原始报文    rawMsg                       : {}", deviceId, rawHexMsg);
-        log.info("🟢 【0xA1】 {} 充电桩主动申请并充充电 设备编号    deviceId                     : {}", deviceId, deviceId);
-        log.info("🟢 【0xA1】 {} 充电桩主动申请并充充电 枪口编号    gunNo                        : {}", deviceId, gunNo);
-        log.info("🟢 【0xA1】 {} 充电桩主动申请并充充电 启动方式    startupModeDesc              : {}", deviceId, startupModeDesc);
-        log.info("🟢 【0xA1】 {} 充电桩主动申请并充充电 需要密码    needPassword                 : {}", deviceId, needPassword == 0 ? "不需要密码" : "需要密码");
-        log.info("🟢 【0xA1】 {} 充电桩主动申请并充充电 卡号信息    accountOrCardNo              : {}", deviceId, accountOrCardNo);
-        log.info("🟢 【0xA1】 {} 充电桩主动申请并充充电 输入密码    password                     : {}", deviceId, password);
-        log.info("🟢 【0xA1】 {} 充电桩主动申请并充充电 车识别码    VIN                          : {}", deviceId, vin);
-        log.info("🟢 【0xA1】 {} 充电桩主动申请并充充电 主辅标记    priAndSecFlagDesc            : {}", deviceId, priAndSecFlagDesc);
-        log.info("🟢 【0xA1】 {} 充电桩主动申请并充充电 并充序号    parallelNo                   : {}", deviceId, parallelNo);
+        log.info("-------------------------------------------------------------------------------------------");
+        log.info("🟢 【0xA1】 {} 主动申请并充  原始报文    rawMsg                       : {}", deviceId, rawHexMsg);
+        log.info("🟢 【0xA1】 {} 主动申请并充  设备编号    deviceId                     : {}", deviceId, deviceId);
+        log.info("🟢 【0xA1】 {} 主动申请并充  枪口编号    gunNo                        : {}", deviceId, gunNo);
+        log.info("🟢 【0xA1】 {} 主动申请并充  启动方式    startupModeDesc              : {}", deviceId, startupModeDesc);
+        log.info("🟢 【0xA1】 {} 主动申请并充  需要密码    needPassword                 : {}", deviceId, needPassword == 0 ? "不需要密码" : "需要密码");
+        log.info("🟢 【0xA1】 {} 主动申请并充  卡号信息    accountOrCardNo              : {}", deviceId, accountOrCardNo);
+        log.info("🟢 【0xA1】 {} 主动申请并充  输入密码    password                     : {}", deviceId, password);
+        log.info("🟢 【0xA1】 {} 主动申请并充  车识别码    VIN                          : {}", deviceId, vin);
+        log.info("🟢 【0xA1】 {} 主动申请并充  主辅标记    priAndSecFlagDesc            : {}", deviceId, priAndSecFlagDesc);
+        log.info("🟢 【0xA1】 {} 主动申请并充  并充序号    parallelNo                   : {}", deviceId, parallelNo);
         System.out.println();
     }
 

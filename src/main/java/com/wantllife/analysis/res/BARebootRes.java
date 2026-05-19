@@ -76,13 +76,13 @@ public class BARebootRes extends FrameHeader {
      *
      * @param rawHexMsg 原始报文数据
      * @author KevenPotter
-     * @date 2026-05-11 16:27:28
+     * @date 2026-05-19 14:30:55
      */
     private void log(String rawHexMsg) {
-        log.info("------------------------------------------------------------------------------");
-        log.info("🔶 【0x92】 {} 远程重启 原始报文    rawMsg               : {}", deviceId, rawHexMsg);
-        log.info("🔶 【0x92】 {} 远程重启 设备编号    deviceId             : {}", deviceId, deviceId);
-        log.info("🔶 【0x92】 {} 远程重启 执行方式    execMethod           : {}", deviceId, execMethod == 1 ? "立即执行" : "空闲执行");
+        log.info("-------------------------------------------------------------------------------------------");
+        log.info("🔶 【0x92】 {} 远程重启操作  原始报文    rawMsg                       : {}", deviceId, rawHexMsg);
+        log.info("🔶 【0x92】 {} 远程重启操作  设备编号    deviceId                     : {}", deviceId, deviceId);
+        log.info("🔶 【0x92】 {} 远程重启操作  执行方式    execMethod                   : {}", deviceId, execMethod == 1 ? "立即执行" : "空闲执行");
         System.out.println();
     }
 

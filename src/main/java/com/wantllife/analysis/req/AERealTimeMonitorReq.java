@@ -217,29 +217,29 @@ public class AERealTimeMonitorReq extends FrameHeader {
      *
      * @param rawHexMsg 原始报文数据
      * @author KevenPotter
-     * @date 2026-05-09 14:01:40
+     * @date 2026-05-19 14:13:29
      */
     private void log(String rawHexMsg) {
-        log.info("------------------------------------------------------------------------------");
-        log.info("🟢 【0x13】 {} 上传实时监测数据 原始报文    rawMsg                  : {}", deviceId, rawHexMsg);
-        log.info("🟢 【0x13】 {} 上传实时监测数据 设备编号    deviceId                : {}", deviceId, deviceId);
-        log.info("🟢 【0x13】 {} 上传实时监测数据 枪口编号    gunNo                   : {}", deviceId, gunNo);
-        log.info("🟢 【0x13】 {} 上传实时监测数据 交易编号    tradeNo                 : {}", deviceId, tradeNo);
-        log.info("🟢 【0x13】 {} 上传实时监测数据 设备状态    statusDesc              : {}", deviceId, statusDesc);
-        log.info("🟢 【0x13】 {} 上传实时监测数据 插枪归位    haveReturnDesc          : {}", deviceId, haveReturnDesc);
-        log.info("🟢 【0x13】 {} 上传实时监测数据 是否插枪    haveInsert              : {}", deviceId, haveInsert == 0 ? "未插枪" : "已插枪");
-        log.info("🟢 【0x13】 {} 上传实时监测数据 输出电压    voltage                 : {}", deviceId, voltage);
-        log.info("🟢 【0x13】 {} 上传实时监测数据 输出电流    current                 : {}", deviceId, current);
-        log.info("🟢 【0x13】 {} 上传实时监测数据 枪线温度    temperature             : {}", deviceId, temperature);
-        log.info("🟢 【0x13】 {} 上传实时监测数据 枪线编码    gunCode                 : {}", deviceId, gunCode);
-        log.info("🟢 【0x13】 {} 上传实时监测数据 充电率值    SOC                     : {}", deviceId, soc);
-        log.info("🟢 【0x13】 {} 上传实时监测数据 最高温度    highestTemperature      : {}", deviceId, highestTemperature);
-        log.info("🟢 【0x13】 {} 上传实时监测数据 累充时间    accumulatedChargingTime : {}", deviceId, accumulatedChargingTime);
-        log.info("🟢 【0x13】 {} 上传实时监测数据 剩余时间    remainingChargingTime   : {}", deviceId, remainingChargingTime);
-        log.info("🟢 【0x13】 {} 上传实时监测数据 充电度数    chargingDegree          : {}", deviceId, chargingDegree);
-        log.info("🟢 【0x13】 {} 上传实时监测数据 计损度数    calculatedChargingDegree: {}", deviceId, calculatedChargingDegree);
-        log.info("🟢 【0x13】 {} 上传实时监测数据 已充金额    chargedAmount           : {}", deviceId, chargedAmount);
-        log.info("🟢 【0x13】 {} 上传实时监测数据 故障描述    hardwareFailureDesc     : {}", deviceId, hardwareFailureDesc);
+        log.info("-------------------------------------------------------------------------------------------");
+        log.info("🟢 【0x13】 {} 实时监测数据  原始报文    rawMsg                       : {}", deviceId, rawHexMsg);
+        log.info("🟢 【0x13】 {} 实时监测数据  设备编号    deviceId                     : {}", deviceId, deviceId);
+        log.info("🟢 【0x13】 {} 实时监测数据  枪口编号    gunNo                        : {}", deviceId, gunNo);
+        log.info("🟢 【0x13】 {} 实时监测数据  交易编号    tradeNo                      : {}", deviceId, tradeNo);
+        log.info("🟢 【0x13】 {} 实时监测数据  设备状态    statusDesc                   : {}", deviceId, statusDesc);
+        log.info("🟢 【0x13】 {} 实时监测数据  插枪归位    haveReturnDesc               : {}", deviceId, haveReturnDesc);
+        log.info("🟢 【0x13】 {} 实时监测数据  是否插枪    haveInsert                   : {}", deviceId, haveInsert == 0 ? "未插枪" : "已插枪");
+        log.info("🟢 【0x13】 {} 实时监测数据  输出电压    voltage                      : {}", deviceId, voltage);
+        log.info("🟢 【0x13】 {} 实时监测数据  输出电流    current                      : {}", deviceId, current);
+        log.info("🟢 【0x13】 {} 实时监测数据  枪线温度    temperature                  : {}", deviceId, temperature);
+        log.info("🟢 【0x13】 {} 实时监测数据  枪线编码    gunCode                      : {}", deviceId, gunCode);
+        log.info("🟢 【0x13】 {} 实时监测数据  充电率值    SOC                          : {}", deviceId, soc);
+        log.info("🟢 【0x13】 {} 实时监测数据  最高温度    highestTemperature           : {}", deviceId, highestTemperature);
+        log.info("🟢 【0x13】 {} 实时监测数据  累充时间    accumulatedChargingTime      : {}", deviceId, accumulatedChargingTime);
+        log.info("🟢 【0x13】 {} 实时监测数据  剩余时间    remainingChargingTime        : {}", deviceId, remainingChargingTime);
+        log.info("🟢 【0x13】 {} 实时监测数据  充电度数    chargingDegree               : {}", deviceId, chargingDegree);
+        log.info("🟢 【0x13】 {} 实时监测数据  计损度数    calculatedChargingDegree     : {}", deviceId, calculatedChargingDegree);
+        log.info("🟢 【0x13】 {} 实时监测数据  已充金额    chargedAmount                : {}", deviceId, chargedAmount);
+        log.info("🟢 【0x13】 {} 实时监测数据  故障描述    hardwareFailureDesc          : {}", deviceId, hardwareFailureDesc);
         System.out.println();
     }
 

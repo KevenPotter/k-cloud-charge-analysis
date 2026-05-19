@@ -99,16 +99,16 @@ public class AOStartChargeReq extends FrameHeader {
      *
      * @param rawHexMsg 原始报文数据
      * @author KevenPotter
-     * @date 2026-05-11 14:02:05
+     * @date 2026-05-19 14:16:50
      */
     private void log(String rawHexMsg) {
-        log.info("------------------------------------------------------------------------------");
-        log.info("🟢 【0x33】 {} 远程启动充电命令回复 原始报文    rawMsg                       : {}", deviceId, rawHexMsg);
-        log.info("🟢 【0x33】 {} 远程启动充电命令回复 设备编号    deviceId                     : {}", deviceId, deviceId);
-        log.info("🟢 【0x33】 {} 远程启动充电命令回复 枪口编号    gunNo                        : {}", deviceId, gunNo);
-        log.info("🟢 【0x33】 {} 远程启动充电命令回复 交易编号    tradeNo                      : {}", deviceId, tradeNo);
-        log.info("🟢 【0x33】 {} 远程启动充电命令回复 启动结果    startupResult                : {}", deviceId, startupResult == 0 ? "启动失败" : "启动成功");
-        log.info("🟢 【0x33】 {} 远程启动充电命令回复 失败原因    failureReasonDesc            : {}", deviceId, failureReasonDesc);
+        log.info("-------------------------------------------------------------------------------------------");
+        log.info("🟢 【0x33】 {} 远程开电回复  原始报文    rawMsg                       : {}", deviceId, rawHexMsg);
+        log.info("🟢 【0x33】 {} 远程开电回复  设备编号    deviceId                     : {}", deviceId, deviceId);
+        log.info("🟢 【0x33】 {} 远程开电回复  枪口编号    gunNo                        : {}", deviceId, gunNo);
+        log.info("🟢 【0x33】 {} 远程开电回复  交易编号    tradeNo                      : {}", deviceId, tradeNo);
+        log.info("🟢 【0x33】 {} 远程开电回复  启动结果    startupResult                : {}", deviceId, startupResult == 0 ? "启动失败" : "启动成功");
+        log.info("🟢 【0x33】 {} 远程开电回复  失败原因    failureReasonDesc            : {}", deviceId, failureReasonDesc);
         System.out.println();
     }
 

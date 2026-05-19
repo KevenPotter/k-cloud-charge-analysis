@@ -56,13 +56,13 @@ public class AXBillingModeSetReq extends FrameHeader {
      *
      * @param rawHexMsg 原始报文数据
      * @author KevenPotter
-     * @date 2026-05-11 15:17:24
+     * @date 2026-05-19 14:19:18
      */
     private void log(String rawHexMsg) {
-        log.info("------------------------------------------------------------------------------");
-        log.info("🟢 【0x57】 {} 计费模型应答 原始报文    rawMsg                       : {}", deviceId, rawHexMsg);
-        log.info("🟢 【0x57】 {} 计费模型应答 设备编号    deviceId                     : {}", deviceId, deviceId);
-        log.info("🟢 【0x57】 {} 计费模型应答 设置结果    setResult                    : {}", deviceId, setResult == 0 ? "设置失败" : "设置成功");
+        log.info("-------------------------------------------------------------------------------------------");
+        log.info("🟢 【0x57】 {} 计费模型应答  原始报文    rawMsg                       : {}", deviceId, rawHexMsg);
+        log.info("🟢 【0x57】 {} 计费模型应答  设备编号    deviceId                     : {}", deviceId, deviceId);
+        log.info("🟢 【0x57】 {} 计费模型应答  设置结果    setResult                    : {}", deviceId, setResult == 0 ? "设置失败" : "设置成功");
         System.out.println();
     }
 

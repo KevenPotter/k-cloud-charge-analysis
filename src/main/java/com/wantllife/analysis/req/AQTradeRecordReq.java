@@ -449,41 +449,41 @@ public class AQTradeRecordReq extends FrameHeader {
      *
      * @param rawHexMsg 原始报文数据
      * @author KevenPotter
-     * @date 2026-05-11 14:08:31
+     * @date 2026-05-19 14:17:44
      */
     private void log(String rawHexMsg) {
-        log.info("------------------------------------------------------------------------------");
-        log.info("🟢 【0x3B】 {} 交易记录 原始报文    rawMsg                       : {}", deviceId, rawHexMsg);
-        log.info("🟢 【0x3B】 {} 交易记录 设备编号    deviceId                     : {}", deviceId, deviceId);
-        log.info("🟢 【0x3B】 {} 交易记录 枪口编号    gunNo                        : {}", deviceId, gunNo);
-        log.info("🟢 【0x3B】 {} 交易记录 交易编号    tradeNo                      : {}", deviceId, tradeNo);
-        log.info("🟢 【0x3B】 {} 交易记录 时间范围    timeRange                    : {}-{}", deviceId, startTime, endTime);
-        log.info("🟢 【0x3B】 {} 交易记录 尖时单价    sharpUnitPrice               : {}", deviceId, sharpUnitPrice);
-        log.info("🟢 【0x3B】 {} 交易记录 尖时电量    sharpElectricity             : {}", deviceId, sharpElectricity);
-        log.info("🟢 【0x3B】 {} 交易记录 尖时计损    sharpLossElectricity         : {}", deviceId, sharpLossElectricity);
-        log.info("🟢 【0x3B】 {} 交易记录 尖时金额    sharpAmount                  : {}", deviceId, sharpAmount);
-        log.info("🟢 【0x3B】 {} 交易记录 峰时单价    peakUnitPrice                : {}", deviceId, peakUnitPrice);
-        log.info("🟢 【0x3B】 {} 交易记录 峰时电量    peakElectricity              : {}", deviceId, peakElectricity);
-        log.info("🟢 【0x3B】 {} 交易记录 峰时计损    peakLossElectricity          : {}", deviceId, peakLossElectricity);
-        log.info("🟢 【0x3B】 {} 交易记录 峰时金额    peakAmount                   : {}", deviceId, peakAmount);
-        log.info("🟢 【0x3B】 {} 交易记录 平时单价    flatUnitPrice                : {}", deviceId, flatUnitPrice);
-        log.info("🟢 【0x3B】 {} 交易记录 平时电量    flatElectricity              : {}", deviceId, flatElectricity);
-        log.info("🟢 【0x3B】 {} 交易记录 平时计损    flatLossElectricity          : {}", deviceId, flatLossElectricity);
-        log.info("🟢 【0x3B】 {} 交易记录 平时金额    flatAmount                   : {}", deviceId, flatAmount);
-        log.info("🟢 【0x3B】 {} 交易记录 谷时单价    valleyUnitPrice              : {}", deviceId, valleyUnitPrice);
-        log.info("🟢 【0x3B】 {} 交易记录 谷时电量    valleyElectricity            : {}", deviceId, valleyElectricity);
-        log.info("🟢 【0x3B】 {} 交易记录 谷时计损    valleyLossElectricity        : {}", deviceId, valleyLossElectricity);
-        log.info("🟢 【0x3B】 {} 交易记录 谷时金额    valleyAmount                 : {}", deviceId, valleyAmount);
-        log.info("🟢 【0x3B】 {} 交易记录 电表起值    electricityStart             : {}", deviceId, electricityStart);
-        log.info("🟢 【0x3B】 {} 交易记录 电表止值    electricityEnd               : {}", deviceId, electricityEnd);
-        log.info("🟢 【0x3B】 {} 交易记录 总用电量    totalElectricity             : {}", deviceId, totalElectricity);
-        log.info("🟢 【0x3B】 {} 交易记录 计损电量    totalLossElectricity         : {}", deviceId, totalLossElectricity);
-        log.info("🟢 【0x3B】 {} 交易记录 消费金额    totalAmount                  : {}", deviceId, totalAmount);
-        log.info("🟢 【0x3B】 {} 交易记录 车识别码    VIN                          : {}", deviceId, vinCode);
-        log.info("🟢 【0x3B】 {} 交易记录 交易标识    tradeIdentifierDesc          : {}", deviceId, tradeIdentifierDesc);
-        log.info("🟢 【0x3B】 {} 交易记录 交易日期    tradeTime                    : {}", deviceId, tradeTime);
-        log.info("🟢 【0x3B】 {} 交易记录 停止原因    stopReasonDesc               : {}", deviceId, stopReasonDesc);
-        log.info("🟢 【0x3B】 {} 交易记录 物理卡号    physicalCardNo               : {}", deviceId, physicalCardNo);
+        log.info("-------------------------------------------------------------------------------------------");
+        log.info("🟢 【0x3B】 {} 交易记录上报  原始报文    rawMsg                       : {}", deviceId, rawHexMsg);
+        log.info("🟢 【0x3B】 {} 交易记录上报  设备编号    deviceId                     : {}", deviceId, deviceId);
+        log.info("🟢 【0x3B】 {} 交易记录上报  枪口编号    gunNo                        : {}", deviceId, gunNo);
+        log.info("🟢 【0x3B】 {} 交易记录上报  交易编号    tradeNo                      : {}", deviceId, tradeNo);
+        log.info("🟢 【0x3B】 {} 交易记录上报  时间范围    timeRange                    : {}-{}", deviceId, startTime, endTime);
+        log.info("🟢 【0x3B】 {} 交易记录上报  尖时单价    sharpUnitPrice               : {}", deviceId, sharpUnitPrice);
+        log.info("🟢 【0x3B】 {} 交易记录上报  尖时电量    sharpElectricity             : {}", deviceId, sharpElectricity);
+        log.info("🟢 【0x3B】 {} 交易记录上报  尖时计损    sharpLossElectricity         : {}", deviceId, sharpLossElectricity);
+        log.info("🟢 【0x3B】 {} 交易记录上报  尖时金额    sharpAmount                  : {}", deviceId, sharpAmount);
+        log.info("🟢 【0x3B】 {} 交易记录上报  峰时单价    peakUnitPrice                : {}", deviceId, peakUnitPrice);
+        log.info("🟢 【0x3B】 {} 交易记录上报  峰时电量    peakElectricity              : {}", deviceId, peakElectricity);
+        log.info("🟢 【0x3B】 {} 交易记录上报  峰时计损    peakLossElectricity          : {}", deviceId, peakLossElectricity);
+        log.info("🟢 【0x3B】 {} 交易记录上报  峰时金额    peakAmount                   : {}", deviceId, peakAmount);
+        log.info("🟢 【0x3B】 {} 交易记录上报  平时单价    flatUnitPrice                : {}", deviceId, flatUnitPrice);
+        log.info("🟢 【0x3B】 {} 交易记录上报  平时电量    flatElectricity              : {}", deviceId, flatElectricity);
+        log.info("🟢 【0x3B】 {} 交易记录上报  平时计损    flatLossElectricity          : {}", deviceId, flatLossElectricity);
+        log.info("🟢 【0x3B】 {} 交易记录上报  平时金额    flatAmount                   : {}", deviceId, flatAmount);
+        log.info("🟢 【0x3B】 {} 交易记录上报  谷时单价    valleyUnitPrice              : {}", deviceId, valleyUnitPrice);
+        log.info("🟢 【0x3B】 {} 交易记录上报  谷时电量    valleyElectricity            : {}", deviceId, valleyElectricity);
+        log.info("🟢 【0x3B】 {} 交易记录上报  谷时计损    valleyLossElectricity        : {}", deviceId, valleyLossElectricity);
+        log.info("🟢 【0x3B】 {} 交易记录上报  谷时金额    valleyAmount                 : {}", deviceId, valleyAmount);
+        log.info("🟢 【0x3B】 {} 交易记录上报  电表起值    electricityStart             : {}", deviceId, electricityStart);
+        log.info("🟢 【0x3B】 {} 交易记录上报  电表止值    electricityEnd               : {}", deviceId, electricityEnd);
+        log.info("🟢 【0x3B】 {} 交易记录上报  总用电量    totalElectricity             : {}", deviceId, totalElectricity);
+        log.info("🟢 【0x3B】 {} 交易记录上报  计损电量    totalLossElectricity         : {}", deviceId, totalLossElectricity);
+        log.info("🟢 【0x3B】 {} 交易记录上报  消费金额    totalAmount                  : {}", deviceId, totalAmount);
+        log.info("🟢 【0x3B】 {} 交易记录上报  车识别码    VIN                          : {}", deviceId, vinCode);
+        log.info("🟢 【0x3B】 {} 交易记录上报  交易标识    tradeIdentifierDesc          : {}", deviceId, tradeIdentifierDesc);
+        log.info("🟢 【0x3B】 {} 交易记录上报  交易日期    tradeTime                    : {}", deviceId, tradeTime);
+        log.info("🟢 【0x3B】 {} 交易记录上报  停止原因    stopReasonDesc               : {}", deviceId, stopReasonDesc);
+        log.info("🟢 【0x3B】 {} 交易记录上报  物理卡号    physicalCardNo               : {}", deviceId, physicalCardNo);
         System.out.println();
     }
 

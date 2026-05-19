@@ -95,17 +95,17 @@ public class AUOfflineCardQueryRes extends FrameHeader {
      *
      * @param rawHexMsg 原始报文数据
      * @author KevenPotter
-     * @date 2026-05-11 14:47:51
+     * @date 2026-05-19 14:28:09
      */
     private void log(String rawHexMsg, List<StandardCard> cardList) {
-        log.info("------------------------------------------------------------------------------");
-        log.info("🔶 【0x48】 {} 离线卡数据查询 原始报文    rawMsg               : {}", deviceId, rawHexMsg);
-        log.info("🔶 【0x48】 {} 离线卡数据查询 设备编号    deviceId             : {}", deviceId, deviceId);
-        log.info("🔶 【0x48】 {} 离线卡数据查询 离线卡数    offlineCounts        : {}", deviceId, offlineCounts);
+        log.info("-------------------------------------------------------------------------------------------");
+        log.info("🔶 【0x48】 {} 电卡数据查询  原始报文    rawMsg                       : {}", deviceId, rawHexMsg);
+        log.info("🔶 【0x48】 {} 电卡数据查询  设备编号    deviceId                     : {}", deviceId, deviceId);
+        log.info("🔶 【0x48】 {} 电卡数据查询  离线卡数    offlineCounts                : {}", deviceId, offlineCounts);
 
         for (int i = 0; i < offlineCounts; i++) {
             StandardCard card = cardList.get(i);
-            log.info("🔶 【0x48】 {} 离线卡数据查询 第{}物号    physicalCardNo       : {}", deviceId, NumberChineseFormatter.format(i, false, false), card.getPhysicalCardNo());
+            log.info("🔶 【0x48】 {} 电卡数据查询  第{}物号    physicalCardNo               : {}", deviceId, NumberChineseFormatter.format(i, false, false), card.getPhysicalCardNo());
         }
         System.out.println();
     }

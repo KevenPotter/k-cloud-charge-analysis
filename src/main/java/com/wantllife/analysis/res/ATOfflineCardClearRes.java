@@ -96,17 +96,17 @@ public class ATOfflineCardClearRes extends FrameHeader {
      *
      * @param rawHexMsg 原始报文数据
      * @author KevenPotter
-     * @date 2026-05-11 14:36:25
+     * @date 2026-05-19 14:28:00
      */
     private void log(String rawHexMsg, List<StandardCard> cardList) {
-        log.info("------------------------------------------------------------------------------");
-        log.info("🔶 【0x46】 {} 离线卡数据清除 原始报文    rawMsg               : {}", deviceId, rawHexMsg);
-        log.info("🔶 【0x46】 {} 离线卡数据清除 设备编号    deviceId             : {}", deviceId, deviceId);
-        log.info("🔶 【0x46】 {} 离线卡数据清除 清除个数    clearCounts          : {}", deviceId, clearCounts);
+        log.info("-------------------------------------------------------------------------------------------");
+        log.info("🔶 【0x46】 {} 电卡数据清除  原始报文    rawMsg                       : {}", deviceId, rawHexMsg);
+        log.info("🔶 【0x46】 {} 电卡数据清除  设备编号    deviceId                     : {}", deviceId, deviceId);
+        log.info("🔶 【0x46】 {} 电卡数据清除  清除个数    clearCounts                  : {}", deviceId, clearCounts);
 
         for (int i = 0; i < clearCounts; i++) {
             StandardCard card = cardList.get(i);
-            log.info("🔶 【0x46】 {} 离线卡数据清除 第{}物号    physicalCardNo       : {}", deviceId, NumberChineseFormatter.format(i, false, false), card.getPhysicalCardNo());
+            log.info("🔶 【0x46】 {} 电卡数据清除  第{}物号    physicalCardNo               : {}", deviceId, NumberChineseFormatter.format(i, false, false), card.getPhysicalCardNo());
         }
         System.out.println();
     }

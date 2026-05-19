@@ -145,26 +145,26 @@ public class ALChargingBMSDemandReq extends FrameHeader {
      *
      * @param rawHexMsg 原始报文数据
      * @author KevenPotter
-     * @date 2026-05-11 10:18:30
+     * @date 2026-05-19 14:15:57
      */
     private void log(String rawHexMsg) {
-        log.info("------------------------------------------------------------------------------");
-        log.info("🟢 【0x23】 {} 充电过程BMS需求与充电机输出 原始报文    rawMsg                       : {}", deviceId, rawHexMsg);
-        log.info("🟢 【0x23】 {} 充电过程BMS需求与充电机输出 设备编号    deviceId                     : {}", deviceId, deviceId);
-        log.info("🟢 【0x23】 {} 充电过程BMS需求与充电机输出 枪口编号    gunNo                        : {}", deviceId, gunNo);
-        log.info("🟢 【0x23】 {} 充电过程BMS需求与充电机输出 交易编号    tradeNo                      : {}", deviceId, tradeNo);
-        log.info("🟢 【0x23】 {} 充电过程BMS需求与充电机输出 电压需求    voltageDemand                : {}", deviceId, voltageDemand);
-        log.info("🟢 【0x23】 {} 充电过程BMS需求与充电机输出 电流需求    currentDemand                : {}", deviceId, currentDemand);
-        log.info("🟢 【0x23】 {} 充电过程BMS需求与充电机输出 充电模式    chargeModeDesc               : {}", deviceId, chargeModeDesc);
-        log.info("🟢 【0x23】 {} 充电过程BMS需求与充电机输出 电压测值    voltageMeasure               : {}", deviceId, voltageMeasure);
-        log.info("🟢 【0x23】 {} 充电过程BMS需求与充电机输出 电流测值    currentMeasure               : {}", deviceId, currentMeasure);
-        log.info("🟢 【0x23】 {} 充电过程BMS需求与充电机输出 最高单压    maxVoltage                   : {}", deviceId, maxVoltage);
-        log.info("🟢 【0x23】 {} 充电过程BMS需求与充电机输出 电压组号    maxVoltageGroupNo            : {}", deviceId, maxVoltageGroupNo);
-        log.info("🟢 【0x23】 {} 充电过程BMS需求与充电机输出 充电率值    SOC                          : {}", deviceId, soc);
-        log.info("🟢 【0x23】 {} 充电过程BMS需求与充电机输出 剩余时间    remainingChargingTime        : {}", deviceId, remainingChargingTime);
-        log.info("🟢 【0x23】 {} 充电过程BMS需求与充电机输出 电压输出    voltageOutput                : {}", deviceId, voltageOutput);
-        log.info("🟢 【0x23】 {} 充电过程BMS需求与充电机输出 电流输出    currentOutput                : {}", deviceId, currentOutput);
-        log.info("🟢 【0x23】 {} 充电过程BMS需求与充电机输出 累充时间    accumulatedChargingTime      : {}", deviceId, accumulatedChargingTime);
+        log.info("-------------------------------------------------------------------------------------------");
+        log.info("🟢 【0x23】 {} 电池需求输出  原始报文    rawMsg                       : {}", deviceId, rawHexMsg);
+        log.info("🟢 【0x23】 {} 电池需求输出  设备编号    deviceId                     : {}", deviceId, deviceId);
+        log.info("🟢 【0x23】 {} 电池需求输出  枪口编号    gunNo                        : {}", deviceId, gunNo);
+        log.info("🟢 【0x23】 {} 电池需求输出  交易编号    tradeNo                      : {}", deviceId, tradeNo);
+        log.info("🟢 【0x23】 {} 电池需求输出  电压需求    voltageDemand                : {}", deviceId, voltageDemand);
+        log.info("🟢 【0x23】 {} 电池需求输出  电流需求    currentDemand                : {}", deviceId, currentDemand);
+        log.info("🟢 【0x23】 {} 电池需求输出  充电模式    chargeModeDesc               : {}", deviceId, chargeModeDesc);
+        log.info("🟢 【0x23】 {} 电池需求输出  电压测值    voltageMeasure               : {}", deviceId, voltageMeasure);
+        log.info("🟢 【0x23】 {} 电池需求输出  电流测值    currentMeasure               : {}", deviceId, currentMeasure);
+        log.info("🟢 【0x23】 {} 电池需求输出  最高单压    maxVoltage                   : {}", deviceId, maxVoltage);
+        log.info("🟢 【0x23】 {} 电池需求输出  电压组号    maxVoltageGroupNo            : {}", deviceId, maxVoltageGroupNo);
+        log.info("🟢 【0x23】 {} 电池需求输出  充电率值    SOC                          : {}", deviceId, soc);
+        log.info("🟢 【0x23】 {} 电池需求输出  剩余时间    remainingChargingTime        : {}", deviceId, remainingChargingTime);
+        log.info("🟢 【0x23】 {} 电池需求输出  电压输出    voltageOutput                : {}", deviceId, voltageOutput);
+        log.info("🟢 【0x23】 {} 电池需求输出  电流输出    currentOutput                : {}", deviceId, currentOutput);
+        log.info("🟢 【0x23】 {} 电池需求输出  累充时间    accumulatedChargingTime      : {}", deviceId, accumulatedChargingTime);
         System.out.println();
     }
 

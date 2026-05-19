@@ -150,19 +150,19 @@ public class AALoginReq extends FrameHeader {
      *
      * @param rawHexMsg 原始报文数据
      * @author KevenPotter
-     * @date 2026-05-09 14:01:40
+     * @date 2026-05-19 14:12:32
      */
     private void log(String rawHexMsg) {
-        log.info("------------------------------------------------------------------------------");
-        log.info("🟢 【0x01】 {} 充电桩登录认证 原始报文    rawMsg               : {}", deviceId, rawHexMsg);
-        log.info("🟢 【0x01】 {} 充电桩登录认证 设备编号    deviceId             : {}", deviceId, deviceId);
-        log.info("🟢 【0x01】 {} 充电桩登录认证 设备类型    deviceTypeDesc       : {}", deviceId, deviceTypeDesc);
-        log.info("🟢 【0x01】 {} 充电桩登录认证 充电枪数    gunNum               : {}", deviceId, gunNum);
-        log.info("🟢 【0x01】 {} 充电桩登录认证 协议版本    protocolVersion      : {}", deviceId, protocolVersion);
-        log.info("🟢 【0x01】 {} 充电桩登录认证 程序版本    programVersion       : {}", deviceId, programVersion);
-        log.info("🟢 【0x01】 {} 充电桩登录认证 网络类型    networkLinkTypeDesc  : {}", deviceId, networkLinkTypeDesc);
-        log.info("🟢 【0x01】 {} 充电桩登录认证 芯片卡号    simNo                : {}", deviceId, simNo);
-        log.info("🟢 【0x01】 {} 充电桩登录认证 运营商家    carrierDesc          : {}", deviceId, carrierDesc);
+        log.info("-------------------------------------------------------------------------------------------");
+        log.info("🟢 【0x01】 {} 设备登录认证  原始报文    rawMsg                       : {}", deviceId, rawHexMsg);
+        log.info("🟢 【0x01】 {} 设备登录认证  设备编号    deviceId                     : {}", deviceId, deviceId);
+        log.info("🟢 【0x01】 {} 设备登录认证  设备类型    deviceTypeDesc               : {}", deviceId, deviceTypeDesc);
+        log.info("🟢 【0x01】 {} 设备登录认证  充电枪数    gunNum                       : {}", deviceId, gunNum);
+        log.info("🟢 【0x01】 {} 设备登录认证  协议版本    protocolVersion              : {}", deviceId, protocolVersion);
+        log.info("🟢 【0x01】 {} 设备登录认证  程序版本    programVersion               : {}", deviceId, programVersion);
+        log.info("🟢 【0x01】 {} 设备登录认证  网络类型    networkLinkTypeDesc          : {}", deviceId, networkLinkTypeDesc);
+        log.info("🟢 【0x01】 {} 设备登录认证  芯片卡号    simNo                        : {}", deviceId, simNo);
+        log.info("🟢 【0x01】 {} 设备登录认证  运营商家    carrierDesc                  : {}", deviceId, carrierDesc);
         System.out.println();
     }
 

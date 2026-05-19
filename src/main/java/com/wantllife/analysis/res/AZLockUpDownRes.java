@@ -90,15 +90,15 @@ public class AZLockUpDownRes extends FrameHeader {
      *
      * @param rawHexMsg 原始报文数据
      * @author KevenPotter
-     * @date 2026-05-11 16:21:37
+     * @date 2026-05-19 14:30:39
      */
     private void log(String rawHexMsg) {
-        log.info("------------------------------------------------------------------------------");
-        log.info("🔶 【0x62】 {} 遥控地锁升锁与降锁 原始报文    rawMsg               : {}", deviceId, rawHexMsg);
-        log.info("🔶 【0x62】 {} 遥控地锁升锁与降锁 设备编号    deviceId             : {}", deviceId, deviceId);
-        log.info("🔶 【0x62】 {} 遥控地锁升锁与降锁 枪口编号    gunNo                : {}", deviceId, gunNo);
-        log.info("🔶 【0x62】 {} 遥控地锁升锁与降锁 升降地锁    upOrDown             : {}", deviceId, upOrDown == 0 ? "降锁" : "升锁");
-        log.info("🔶 【0x62】 {} 遥控地锁升锁与降锁 预留位值    reserved             : {}", deviceId, reserved);
+        log.info("-------------------------------------------------------------------------------------------");
+        log.info("🔶 【0x62】 {} 遥控地锁升降  原始报文    rawMsg                       : {}", deviceId, rawHexMsg);
+        log.info("🔶 【0x62】 {} 遥控地锁升降  设备编号    deviceId                     : {}", deviceId, deviceId);
+        log.info("🔶 【0x62】 {} 遥控地锁升降  枪口编号    gunNo                        : {}", deviceId, gunNo);
+        log.info("🔶 【0x62】 {} 遥控地锁升降  升降地锁    upOrDown                     : {}", deviceId, upOrDown == 0 ? "降锁" : "升锁");
+        log.info("🔶 【0x62】 {} 遥控地锁升降  预留位值    reserved                     : {}", deviceId, reserved);
         System.out.println();
     }
 

@@ -109,18 +109,18 @@ public class ANRequestChargingReq extends FrameHeader {
      *
      * @param rawHexMsg 原始报文数据
      * @author KevenPotter
-     * @date 2026-05-11 13:48:50
+     * @date 2026-05-19 14:16:37
      */
     private void log(String rawHexMsg) {
-        log.info("------------------------------------------------------------------------------");
-        log.info("🟢 【0x31】 {} 充电桩主动申请启动充电 原始报文    rawMsg                       : {}", deviceId, rawHexMsg);
-        log.info("🟢 【0x31】 {} 充电桩主动申请启动充电 设备编号    deviceId                     : {}", deviceId, deviceId);
-        log.info("🟢 【0x31】 {} 充电桩主动申请启动充电 枪口编号    gunNo                        : {}", deviceId, gunNo);
-        log.info("🟢 【0x31】 {} 充电桩主动申请启动充电 启动方式    startupModeDesc              : {}", deviceId, startupModeDesc);
-        log.info("🟢 【0x31】 {} 充电桩主动申请启动充电 需要密码    needPassword                 : {}", deviceId, needPassword == 0 ? "不需要密码" : "需要密码");
-        log.info("🟢 【0x31】 {} 充电桩主动申请启动充电 卡号信息    accountOrCardNo              : {}", deviceId, accountOrCardNo);
-        log.info("🟢 【0x31】 {} 充电桩主动申请启动充电 输入密码    password                     : {}", deviceId, password);
-        log.info("🟢 【0x31】 {} 充电桩主动申请启动充电 车识别码    VIN                          : {}", deviceId, vin);
+        log.info("-------------------------------------------------------------------------------------------");
+        log.info("🟢 【0x31】 {} 主动申请充电  原始报文    rawMsg                       : {}", deviceId, rawHexMsg);
+        log.info("🟢 【0x31】 {} 主动申请充电  设备编号    deviceId                     : {}", deviceId, deviceId);
+        log.info("🟢 【0x31】 {} 主动申请充电  枪口编号    gunNo                        : {}", deviceId, gunNo);
+        log.info("🟢 【0x31】 {} 主动申请充电  启动方式    startupModeDesc              : {}", deviceId, startupModeDesc);
+        log.info("🟢 【0x31】 {} 主动申请充电  需要密码    needPassword                 : {}", deviceId, needPassword == 0 ? "不需要密码" : "需要密码");
+        log.info("🟢 【0x31】 {} 主动申请充电  卡号信息    accountOrCardNo              : {}", deviceId, accountOrCardNo);
+        log.info("🟢 【0x31】 {} 主动申请充电  输入密码    password                     : {}", deviceId, password);
+        log.info("🟢 【0x31】 {} 主动申请充电  车识别码    VIN                          : {}", deviceId, vin);
         System.out.println();
     }
 

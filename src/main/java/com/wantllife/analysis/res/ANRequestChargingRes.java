@@ -152,18 +152,18 @@ public class ANRequestChargingRes extends FrameHeader {
      *
      * @param rawHexMsg 原始报文数据
      * @author KevenPotter
-     * @date 2026-05-11 13:52:07
+     * @date 2026-05-19 14:25:40
      */
     private void log(String rawHexMsg) {
-        log.info("------------------------------------------------------------------------------");
-        log.info("🔶 【0x32】 {} 运营平台确认启动充电 原始报文    rawMsg               : {}", deviceId, rawHexMsg);
-        log.info("🔶 【0x32】 {} 运营平台确认启动充电 设备编号    deviceId             : {}", deviceId, deviceId);
-        log.info("🔶 【0x32】 {} 运营平台确认启动充电 枪口编号    gunNo                : {}", deviceId, gunNo);
-        log.info("🔶 【0x32】 {} 运营平台确认启动充电 交易编号    tradeNo              : {}", deviceId, tradeNo);
-        log.info("🔶 【0x32】 {} 运营平台确认启动充电 逻辑卡号    logicalCardNo        : {}", deviceId, logicalCardNo);
-        log.info("🔶 【0x32】 {} 运营平台确认启动充电 账户余额    balance              : {}", deviceId, balance);
-        log.info("🔶 【0x32】 {} 运营平台确认启动充电 鉴权标志    authResult           : {}", deviceId, "00".equals(authResult) ? "失败" : "成功");
-        log.info("🔶 【0x32】 {} 运营平台确认启动充电 失败原因    failureReasonDesc    : {}", deviceId, failureReasonDesc);
+        log.info("-------------------------------------------------------------------------------------------");
+        log.info("🔶 【0x32】 {} 确认启动充电  原始报文    rawMsg                       : {}", deviceId, rawHexMsg);
+        log.info("🔶 【0x32】 {} 确认启动充电  设备编号    deviceId                     : {}", deviceId, deviceId);
+        log.info("🔶 【0x32】 {} 确认启动充电  枪口编号    gunNo                        : {}", deviceId, gunNo);
+        log.info("🔶 【0x32】 {} 确认启动充电  交易编号    tradeNo                      : {}", deviceId, tradeNo);
+        log.info("🔶 【0x32】 {} 确认启动充电  逻辑卡号    logicalCardNo                : {}", deviceId, logicalCardNo);
+        log.info("🔶 【0x32】 {} 确认启动充电  账户余额    balance                      : {}", deviceId, balance);
+        log.info("🔶 【0x32】 {} 确认启动充电  鉴权标志    authResult                   : {}", deviceId, "00".equals(authResult) ? "失败" : "成功");
+        log.info("🔶 【0x32】 {} 确认启动充电  失败原因    failureReasonDesc            : {}", deviceId, failureReasonDesc);
         System.out.println();
     }
 

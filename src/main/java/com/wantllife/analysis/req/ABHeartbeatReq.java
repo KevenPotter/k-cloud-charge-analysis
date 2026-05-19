@@ -80,14 +80,14 @@ public class ABHeartbeatReq extends FrameHeader {
      *
      * @param rawHexMsg 原始报文数据
      * @author KevenPotter
-     * @date 2026-05-09 16:03:30
+     * @date 2026-05-19 14:12:40
      */
     private void log(String rawHexMsg) {
-        log.info("------------------------------------------------------------------------------");
-        log.info("🟢 【0x03】 {} 充电桩心跳包 原始报文    rawMsg               : {}", deviceId, rawHexMsg);
-        log.info("🟢 【0x03】 {} 充电桩心跳包 设备编号    deviceId             : {}", deviceId, deviceId);
-        log.info("🟢 【0x03】 {} 充电桩心跳包 枪口编号    gunNo                : {}", deviceId, gunNo);
-        log.info("🟢 【0x03】 {} 充电桩心跳包 枪口状态    gunStatusDesc        : {}", deviceId, gunStatusDesc);
+        log.info("-------------------------------------------------------------------------------------------");
+        log.info("🟢 【0x03】 {} 设备心跳检测  原始报文    rawMsg                       : {}", deviceId, rawHexMsg);
+        log.info("🟢 【0x03】 {} 设备心跳检测  设备编号    deviceId                     : {}", deviceId, deviceId);
+        log.info("🟢 【0x03】 {} 设备心跳检测  枪口编号    gunNo                        : {}", deviceId, gunNo);
+        log.info("🟢 【0x03】 {} 设备心跳检测  枪口状态    gunStatusDesc                : {}", deviceId, gunStatusDesc);
         System.out.println();
     }
 

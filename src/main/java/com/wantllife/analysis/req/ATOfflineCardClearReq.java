@@ -115,19 +115,19 @@ public class ATOfflineCardClearReq extends FrameHeader {
      *
      * @param rawHexMsg 原始报文数据
      * @author KevenPotter
-     * @date 2026-05-11 14:39:49
+     * @date 2026-05-19 14:18:25
      */
     private void log(String rawHexMsg) {
-        log.info("------------------------------------------------------------------------------");
-        log.info("🟢 【0x45】 {} 离线卡数据清除应答 原始报文    rawMsg                       : {}", deviceId, rawHexMsg);
-        log.info("🟢 【0x45】 {} 离线卡数据清除应答 设备编号    deviceId                     : {}", deviceId, deviceId);
+        log.info("-------------------------------------------------------------------------------------------");
+        log.info("🟢 【0x45】 {} 电卡清除应答  原始报文    rawMsg                       : {}", deviceId, rawHexMsg);
+        log.info("🟢 【0x45】 {} 电卡清除应答  设备编号    deviceId                     : {}", deviceId, deviceId);
 
         for (int i = 0; i < clearResultList.size(); i++) {
             System.out.println();
             ClearResult clearResult = clearResultList.get(i);
-            log.info("🟢 【0x45】 {} 离线卡数据清除应答 第{}物号    physicalCardNo               : {}", deviceId, NumberChineseFormatter.format(i, false, false), clearResult.getPhysicalCardNo());
-            log.info("🟢 【0x45】 {} 离线卡数据清除应答 清除标记    clearResult                  : {}", deviceId, clearResult.getClearResult() == 0 ? "清除失败" : "清除成功");
-            log.info("🟢 【0x45】 {} 离线卡数据清除应答 失败原因    failReasonDesc               : {}", deviceId, clearResult.getFailReasonDesc());
+            log.info("🟢 【0x45】 {} 电卡清除应答  第{}物号    physicalCardNo               : {}", deviceId, NumberChineseFormatter.format(i, false, false), clearResult.getPhysicalCardNo());
+            log.info("🟢 【0x45】 {} 电卡清除应答  清除标记    clearResult                  : {}", deviceId, clearResult.getClearResult() == 0 ? "清除失败" : "清除成功");
+            log.info("🟢 【0x45】 {} 电卡清除应答  失败原因    failReasonDesc               : {}", deviceId, clearResult.getFailReasonDesc());
         }
         System.out.println();
     }

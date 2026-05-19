@@ -159,19 +159,19 @@ public class BCApplyParallelChargingRes extends FrameHeader {
      *
      * @param rawHexMsg 原始报文数据
      * @author KevenPotter
-     * @date 2026-05-11 16:41:44
+     * @date 2026-05-19 14:31:37
      */
     private void log(String rawHexMsg) {
-        log.info("------------------------------------------------------------------------------");
-        log.info("🔶 【0xA2】 {} 运营平台确认并充启动充电 原始报文    rawMsg               : {}", deviceId, rawHexMsg);
-        log.info("🔶 【0xA2】 {} 运营平台确认并充启动充电 设备编号    deviceId             : {}", deviceId, deviceId);
-        log.info("🔶 【0xA2】 {} 运营平台确认并充启动充电 枪口编号    gunNo                : {}", deviceId, gunNo);
-        log.info("🔶 【0xA2】 {} 运营平台确认并充启动充电 交易编号    tradeNo              : {}", deviceId, tradeNo);
-        log.info("🔶 【0xA2】 {} 运营平台确认并充启动充电 逻辑卡号    logicalCardNo        : {}", deviceId, logicalCardNo);
-        log.info("🔶 【0xA2】 {} 运营平台确认并充启动充电 账户余额    balance              : {}", deviceId, balance);
-        log.info("🔶 【0xA2】 {} 运营平台确认并充启动充电 鉴权标志    authResult           : {}", deviceId, "00".equals(authResult) ? "失败" : "成功");
-        log.info("🔶 【0xA2】 {} 运营平台确认并充启动充电 失败原因    failureReasonDesc    : {}", deviceId, failureReasonDesc);
-        log.info("🔶 【0xA2】 {} 运营平台确认并充启动充电 并充序号    parallelNo           : {}", deviceId, parallelNo);
+        log.info("-------------------------------------------------------------------------------------------");
+        log.info("🔶 【0xA2】 {} 确认并充开电  原始报文    rawMsg                       : {}", deviceId, rawHexMsg);
+        log.info("🔶 【0xA2】 {} 确认并充开电  设备编号    deviceId                     : {}", deviceId, deviceId);
+        log.info("🔶 【0xA2】 {} 确认并充开电  枪口编号    gunNo                        : {}", deviceId, gunNo);
+        log.info("🔶 【0xA2】 {} 确认并充开电  交易编号    tradeNo                      : {}", deviceId, tradeNo);
+        log.info("🔶 【0xA2】 {} 确认并充开电  逻辑卡号    logicalCardNo                : {}", deviceId, logicalCardNo);
+        log.info("🔶 【0xA2】 {} 确认并充开电  账户余额    balance                      : {}", deviceId, balance);
+        log.info("🔶 【0xA2】 {} 确认并充开电  鉴权标志    authResult                   : {}", deviceId, "00".equals(authResult) ? "失败" : "成功");
+        log.info("🔶 【0xA2】 {} 确认并充开电  失败原因    failureReasonDesc            : {}", deviceId, failureReasonDesc);
+        log.info("🔶 【0xA2】 {} 确认并充开电  并充序号    parallelNo                   : {}", deviceId, parallelNo);
         System.out.println();
     }
 

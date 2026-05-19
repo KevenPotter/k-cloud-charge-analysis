@@ -60,13 +60,13 @@ public class AWTimeSyncReq extends FrameHeader {
      *
      * @param rawHexMsg 原始报文数据
      * @author KevenPotter
-     * @date 2026-05-11 15:13:41
+     * @date 2026-05-19 14:19:05
      */
     private void log(String rawHexMsg) {
-        log.info("------------------------------------------------------------------------------");
-        log.info("🟢 【0x55】 {} 对时设置应答 原始报文    rawMsg                       : {}", deviceId, rawHexMsg);
-        log.info("🟢 【0x55】 {} 对时设置应答 设备编号    deviceId                     : {}", deviceId, deviceId);
-        log.info("🟢 【0x55】 {} 对时设置应答 当前时间    currentTime                  : {}", deviceId, currentTime);
+        log.info("-------------------------------------------------------------------------------------------");
+        log.info("🟢 【0x55】 {} 对时设置应答  原始报文    rawMsg                       : {}", deviceId, rawHexMsg);
+        log.info("🟢 【0x55】 {} 对时设置应答  设备编号    deviceId                     : {}", deviceId, deviceId);
+        log.info("🟢 【0x55】 {} 对时设置应答  当前时间    currentTime                  : {}", deviceId, currentTime);
         System.out.println();
     }
 

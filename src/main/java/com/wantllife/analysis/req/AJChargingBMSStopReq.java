@@ -133,17 +133,17 @@ public class AJChargingBMSStopReq extends FrameHeader {
      *
      * @param rawHexMsg 原始报文数据
      * @author KevenPotter
-     * @date 2026-05-11 10:15:50
+     * @date 2026-05-19 14:15:29
      */
     private void log(String rawHexMsg) {
-        log.info("------------------------------------------------------------------------------");
-        log.info("🟢 【0x1D】 {} 充电阶段BMS中止 原始报文    rawMsg                       : {}", deviceId, rawHexMsg);
-        log.info("🟢 【0x1D】 {} 充电阶段BMS中止 设备编号    deviceId                     : {}", deviceId, deviceId);
-        log.info("🟢 【0x1D】 {} 充电阶段BMS中止 枪口编号    gunNo                        : {}", deviceId, gunNo);
-        log.info("🟢 【0x1D】 {} 充电阶段BMS中止 交易编号    tradeNo                      : {}", deviceId, tradeNo);
-        log.info("🟢 【0x1D】 {} 充电阶段BMS中止 中止原因    bmsStopReasonDesc            : {}", deviceId, bmsStopReasonDesc);
-        log.info("🟢 【0x1D】 {} 充电阶段BMS中止 故障原因    bmsStopFailureDesc           : {}", deviceId, bmsStopFailureDesc);
-        log.info("🟢 【0x1D】 {} 充电阶段BMS中止 错误原因    bmsStopErrorReasonDesc       : {}", deviceId, bmsStopErrorReasonDesc);
+        log.info("-------------------------------------------------------------------------------------------");
+        log.info("🟢 【0x1D】 {} 电池管理中止  原始报文    rawMsg                       : {}", deviceId, rawHexMsg);
+        log.info("🟢 【0x1D】 {} 电池管理中止  设备编号    deviceId                     : {}", deviceId, deviceId);
+        log.info("🟢 【0x1D】 {} 电池管理中止  枪口编号    gunNo                        : {}", deviceId, gunNo);
+        log.info("🟢 【0x1D】 {} 电池管理中止  交易编号    tradeNo                      : {}", deviceId, tradeNo);
+        log.info("🟢 【0x1D】 {} 电池管理中止  中止原因    bmsStopReasonDesc            : {}", deviceId, bmsStopReasonDesc);
+        log.info("🟢 【0x1D】 {} 电池管理中止  故障原因    bmsStopFailureDesc           : {}", deviceId, bmsStopFailureDesc);
+        log.info("🟢 【0x1D】 {} 电池管理中止  错误原因    bmsStopErrorReasonDesc       : {}", deviceId, bmsStopErrorReasonDesc);
         System.out.println();
     }
 

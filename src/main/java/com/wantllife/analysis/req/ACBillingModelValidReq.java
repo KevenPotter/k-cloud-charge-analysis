@@ -55,13 +55,13 @@ public class ACBillingModelValidReq extends FrameHeader {
      *
      * @param rawHexMsg 原始报文数据
      * @author KevenPotter
-     * @date 2026-05-09 16:36:51
+     * @date 2026-05-19 14:13:09
      */
     private void log(String rawHexMsg) {
-        log.info("------------------------------------------------------------------------------");
-        log.info("🟢 【0x05】 {} 计费模型验证请求 原始报文    rawMsg               : {}", deviceId, rawHexMsg);
-        log.info("🟢 【0x05】 {} 计费模型验证请求 设备编号    deviceId             : {}", deviceId, deviceId);
-        log.info("🟢 【0x05】 {} 计费模型验证请求 计费编码    billingModeId        : {}", deviceId, billingModeId);
+        log.info("-------------------------------------------------------------------------------------------");
+        log.info("🟢 【0x05】 {} 计费模型验证  原始报文    rawMsg                       : {}", deviceId, rawHexMsg);
+        log.info("🟢 【0x05】 {} 计费模型验证  设备编号    deviceId                     : {}", deviceId, deviceId);
+        log.info("🟢 【0x05】 {} 计费模型验证  计费编码    billingModeId                : {}", deviceId, billingModeId);
         System.out.println();
     }
 

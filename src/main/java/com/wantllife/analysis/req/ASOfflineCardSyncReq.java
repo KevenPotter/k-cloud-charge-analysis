@@ -83,14 +83,14 @@ public class ASOfflineCardSyncReq extends FrameHeader {
      *
      * @param rawHexMsg 原始报文数据
      * @author KevenPotter
-     * @date 2026-05-11 14:35:20
+     * @date 2026-05-19 14:18:13
      */
     private void log(String rawHexMsg) {
-        log.info("------------------------------------------------------------------------------");
-        log.info("🟢 【0x43】 {} 离线卡数据同步应答 原始报文    rawMsg                       : {}", deviceId, rawHexMsg);
-        log.info("🟢 【0x43】 {} 离线卡数据同步应答 设备编号    deviceId                     : {}", deviceId, deviceId);
-        log.info("🟢 【0x43】 {} 离线卡数据同步应答 保存结果    saveResult                   : {}", deviceId, saveResult == 0 ? "保存失败" : "保存成功");
-        log.info("🟢 【0x43】 {} 离线卡数据同步应答 失败原因    failReasonDesc               : {}", deviceId, failReasonDesc);
+        log.info("-------------------------------------------------------------------------------------------");
+        log.info("🟢 【0x43】 {} 电卡同步应答  原始报文    rawMsg                       : {}", deviceId, rawHexMsg);
+        log.info("🟢 【0x43】 {} 电卡同步应答  设备编号    deviceId                     : {}", deviceId, deviceId);
+        log.info("🟢 【0x43】 {} 电卡同步应答  保存结果    saveResult                   : {}", deviceId, saveResult == 0 ? "保存失败" : "保存成功");
+        log.info("🟢 【0x43】 {} 电卡同步应答  失败原因    failReasonDesc               : {}", deviceId, failReasonDesc);
         System.out.println();
     }
 

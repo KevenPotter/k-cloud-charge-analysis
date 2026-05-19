@@ -123,21 +123,21 @@ public class BBUpgradeRes extends FrameHeader {
      *
      * @param rawHexMsg 原始报文数据
      * @author KevenPotter
-     * @date 2026-05-11 16:30:50
+     * @date 2026-05-19 14:31:17
      */
     private void log(String rawHexMsg) {
-        log.info("------------------------------------------------------------------------------");
-        log.info("🔶 【0x94】 {} 远程更新 原始报文    rawMsg               : {}", deviceId, rawHexMsg);
-        log.info("🔶 【0x94】 {} 远程更新 设备编号    deviceId             : {}", deviceId, deviceId);
-        log.info("🔶 【0x94】 {} 远程更新 设备类型    deviceType           : {}", deviceId, deviceType == 1 ? "直流" : "交流");
-        log.info("🔶 【0x94】 {} 远程更新 设备功率    devicePower          : {}", deviceId, devicePower);
-        log.info("🔶 【0x94】 {} 远程更新 升级地址    address              : {}", deviceId, address);
-        log.info("🔶 【0x94】 {} 远程更新 升级端口    port                 : {}", deviceId, port);
-        log.info("🔶 【0x94】 {} 远程更新 用户名称    username             : {}", deviceId, username);
-        log.info("🔶 【0x94】 {} 远程更新 输入密码    password             : {}", deviceId, password);
-        log.info("🔶 【0x94】 {} 远程更新 文件路径    filePath             : {}", deviceId, filePath);
-        log.info("🔶 【0x94】 {} 远程更新 执行控制    execMethod           : {}", deviceId, execMethod == 1 ? "立即执行" : "空闲执行");
-        log.info("🔶 【0x94】 {} 远程更新 超时时间    timeout              : {}", deviceId, timeout);
+        log.info("-------------------------------------------------------------------------------------------");
+        log.info("🔶 【0x94】 {} 远程更新操作  原始报文    rawMsg                       : {}", deviceId, rawHexMsg);
+        log.info("🔶 【0x94】 {} 远程更新操作  设备编号    deviceId                     : {}", deviceId, deviceId);
+        log.info("🔶 【0x94】 {} 远程更新操作  设备类型    deviceType                   : {}", deviceId, deviceType == 1 ? "直流" : "交流");
+        log.info("🔶 【0x94】 {} 远程更新操作  设备功率    devicePower                  : {}", deviceId, devicePower);
+        log.info("🔶 【0x94】 {} 远程更新操作  升级地址    address                      : {}", deviceId, address);
+        log.info("🔶 【0x94】 {} 远程更新操作  升级端口    port                         : {}", deviceId, port);
+        log.info("🔶 【0x94】 {} 远程更新操作  用户名称    username                     : {}", deviceId, username);
+        log.info("🔶 【0x94】 {} 远程更新操作  输入密码    password                     : {}", deviceId, password);
+        log.info("🔶 【0x94】 {} 远程更新操作  文件路径    filePath                     : {}", deviceId, filePath);
+        log.info("🔶 【0x94】 {} 远程更新操作  执行控制    execMethod                   : {}", deviceId, execMethod == 1 ? "立即执行" : "空闲执行");
+        log.info("🔶 【0x94】 {} 远程更新操作  超时时间    timeout                      : {}", deviceId, timeout);
         System.out.println();
     }
 

@@ -100,18 +100,18 @@ public class ASOfflineCardSyncRes extends FrameHeader {
      *
      * @param rawHexMsg 原始报文数据
      * @author KevenPotter
-     * @date 2026-05-11 14:24:44
+     * @date 2026-05-19 14:27:49
      */
     private void log(String rawHexMsg, List<StandardCard> cardList) {
-        log.info("------------------------------------------------------------------------------");
-        log.info("🔶 【0x44】 {} 离线卡数据同步 原始报文    rawMsg               : {}", deviceId, rawHexMsg);
-        log.info("🔶 【0x44】 {} 离线卡数据同步 设备编号    deviceId             : {}", deviceId, deviceId);
-        log.info("🔶 【0x44】 {} 离线卡数据同步 下发个数    cardCounts           : {}", deviceId, cardCounts);
+        log.info("-------------------------------------------------------------------------------------------");
+        log.info("🔶 【0x44】 {} 电卡数据同步  原始报文    rawMsg                       : {}", deviceId, rawHexMsg);
+        log.info("🔶 【0x44】 {} 电卡数据同步  设备编号    deviceId                     : {}", deviceId, deviceId);
+        log.info("🔶 【0x44】 {} 电卡数据同步  下发个数    cardCounts                   : {}", deviceId, cardCounts);
 
         for (int i = 0; i < cardCounts; i++) {
             StandardCard card = cardList.get(i);
-            log.info("🔶 【0x44】 {} 离线卡数据同步 第{}逻号    logicalCardNo        : {}", deviceId, NumberChineseFormatter.format(i, false, false), card.getLogicalCardNo());
-            log.info("🔶 【0x44】 {} 离线卡数据同步 第{}物号    physicalCardNo       : {}", deviceId, NumberChineseFormatter.format(i, false, false), card.getPhysicalCardNo());
+            log.info("🔶 【0x44】 {} 电卡数据同步  第{}逻号    logicalCardNo                : {}", deviceId, NumberChineseFormatter.format(i, false, false), card.getLogicalCardNo());
+            log.info("🔶 【0x44】 {} 电卡数据同步  第{}物号    physicalCardNo               : {}", deviceId, NumberChineseFormatter.format(i, false, false), card.getPhysicalCardNo());
         }
         System.out.println();
     }

@@ -266,35 +266,35 @@ public class ADBillingModelRes extends FrameHeader {
      *
      * @param rawHexMsg 原始报文数据
      * @author KevenPotter
-     * @date 2026-05-09 16:46:10
+     * @date 2026-05-19 14:22:50
      */
     private void log(String rawHexMsg, List<StandardBillingModel> billingModelList) {
-        log.info("------------------------------------------------------------------------------");
-        log.info("🔶 【0x0A】 {} 计费模型请求应答 原始报文    rawMsg               : {}", deviceId, rawHexMsg);
-        log.info("🔶 【0x0A】 {} 计费模型请求应答 设备编号    deviceId             : {}", deviceId, deviceId);
-        log.info("🔶 【0x0A】 {} 计费模型请求应答 计费编码    billingModeId        : {}", deviceId, billingModeId);
-        log.info("🔶 【0x0A】 {} 计费模型请求应答 尖电费率    sharpEleFee          : {}", deviceId, sharpEleFee);
-        log.info("🔶 【0x0A】 {} 计费模型请求应答 尖服费率    sharpServiceFee      : {}", deviceId, sharpServiceFee);
-        log.info("🔶 【0x0A】 {} 计费模型请求应答 峰电费率    peakEleFee           : {}", deviceId, peakEleFee);
-        log.info("🔶 【0x0A】 {} 计费模型请求应答 峰服费率    peakServiceFee       : {}", deviceId, peakServiceFee);
-        log.info("🔶 【0x0A】 {} 计费模型请求应答 平电费率    flatEleFee           : {}", deviceId, flatEleFee);
-        log.info("🔶 【0x0A】 {} 计费模型请求应答 平服费率    flatServiceFee       : {}", deviceId, flatServiceFee);
-        log.info("🔶 【0x0A】 {} 计费模型请求应答 谷电费率    valleyEleFee         : {}", deviceId, valleyEleFee);
-        log.info("🔶 【0x0A】 {} 计费模型请求应答 谷服费率    valleyServiceFee     : {}", deviceId, valleyServiceFee);
-        log.info("🔶 【0x0A】 {} 计费模型请求应答 计损比例    lossRatio            : {}", deviceId, lossRatio);
+        log.info("-------------------------------------------------------------------------------------------");
+        log.info("🔶 【0x0A】 {} 计费模型应答  原始报文    rawMsg                       : {}", deviceId, rawHexMsg);
+        log.info("🔶 【0x0A】 {} 计费模型应答  设备编号    deviceId                     : {}", deviceId, deviceId);
+        log.info("🔶 【0x0A】 {} 计费模型应答  计费编码    billingModeId                : {}", deviceId, billingModeId);
+        log.info("🔶 【0x0A】 {} 计费模型应答  尖电费率    sharpEleFee                  : {}", deviceId, sharpEleFee);
+        log.info("🔶 【0x0A】 {} 计费模型应答  尖服费率    sharpServiceFee              : {}", deviceId, sharpServiceFee);
+        log.info("🔶 【0x0A】 {} 计费模型应答  峰电费率    peakEleFee                   : {}", deviceId, peakEleFee);
+        log.info("🔶 【0x0A】 {} 计费模型应答  峰服费率    peakServiceFee               : {}", deviceId, peakServiceFee);
+        log.info("🔶 【0x0A】 {} 计费模型应答  平电费率    flatEleFee                   : {}", deviceId, flatEleFee);
+        log.info("🔶 【0x0A】 {} 计费模型应答  平服费率    flatServiceFee               : {}", deviceId, flatServiceFee);
+        log.info("🔶 【0x0A】 {} 计费模型应答  谷电费率    valleyEleFee                 : {}", deviceId, valleyEleFee);
+        log.info("🔶 【0x0A】 {} 计费模型应答  谷服费率    valleyServiceFee             : {}", deviceId, valleyServiceFee);
+        log.info("🔶 【0x0A】 {} 计费模型应答  计损比例    lossRatio                    : {}", deviceId, lossRatio);
         for (StandardBillingModel mode : billingModelList) {
             switch (mode.getTimeSlotType()) {
                 case 1:
-                    log.info("🔶 【0x0A】 {} 计费模型请求应答 尖时间段    sharpTime            : {}-{}", deviceId, mode.getStartTime(), mode.getEndTime());
+                    log.info("🔶 【0x0A】 {} 计费模型应答  尖时间段    sharpTime                    : {}-{}", deviceId, mode.getStartTime(), mode.getEndTime());
                     break;
                 case 2:
-                    log.info("🔶 【0x0A】 {} 计费模型请求应答 峰时间段    peakTime             : {}-{}", deviceId, mode.getStartTime(), mode.getEndTime());
+                    log.info("🔶 【0x0A】 {} 计费模型应答  峰时间段    peakTime                     : {}-{}", deviceId, mode.getStartTime(), mode.getEndTime());
                     break;
                 case 3:
-                    log.info("🔶 【0x0A】 {} 计费模型请求应答 平时间段    flatTime             : {}-{}", deviceId, mode.getStartTime(), mode.getEndTime());
+                    log.info("🔶 【0x0A】 {} 计费模型应答  平时间段    flatTime                     : {}-{}", deviceId, mode.getStartTime(), mode.getEndTime());
                     break;
                 case 4:
-                    log.info("🔶 【0x0A】 {} 计费模型请求应答 谷时间段    valleyTime           : {}-{}", deviceId, mode.getStartTime(), mode.getEndTime());
+                    log.info("🔶 【0x0A】 {} 计费模型应答  谷时间段    valleyTime                   : {}-{}", deviceId, mode.getStartTime(), mode.getEndTime());
                     break;
             }
         }

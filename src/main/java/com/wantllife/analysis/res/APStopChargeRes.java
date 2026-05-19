@@ -77,13 +77,13 @@ public class APStopChargeRes extends FrameHeader {
      *
      * @param rawHexMsg 原始报文数据
      * @author KevenPotter
-     * @date 2026-05-11 14:05:36
+     * @date 2026-05-19 14:26:44
      */
     private void log(String rawHexMsg) {
-        log.info("------------------------------------------------------------------------------");
-        log.info("🔶 【0x36】 {} 运营平台远程停机 原始报文    rawMsg               : {}", deviceId, rawHexMsg);
-        log.info("🔶 【0x36】 {} 运营平台远程停机 设备编号    deviceId             : {}", deviceId, deviceId);
-        log.info("🔶 【0x36】 {} 运营平台远程停机 枪口编号    gunNo                : {}", deviceId, gunNo);
+        log.info("-------------------------------------------------------------------------------------------");
+        log.info("🔶 【0x36】 {} 远程控制停机  原始报文    rawMsg                       : {}", deviceId, rawHexMsg);
+        log.info("🔶 【0x36】 {} 远程控制停机  设备编号    deviceId                     : {}", deviceId, deviceId);
+        log.info("🔶 【0x36】 {} 远程控制停机  枪口编号    gunNo                        : {}", deviceId, gunNo);
         System.out.println();
     }
 

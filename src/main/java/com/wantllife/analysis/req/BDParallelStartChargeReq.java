@@ -110,18 +110,18 @@ public class BDParallelStartChargeReq extends FrameHeader {
      *
      * @param rawHexMsg 原始报文数据
      * @author KevenPotter
-     * @date 2026-05-11 16:45:41
+     * @date 2026-05-19 14:21:27
      */
     private void log(String rawHexMsg) {
-        log.info("------------------------------------------------------------------------------");
-        log.info("🟢 【0xA3】 {} 远程并充启机命令回复 原始报文    rawMsg                       : {}", deviceId, rawHexMsg);
-        log.info("🟢 【0xA3】 {} 远程并充启机命令回复 设备编号    deviceId                     : {}", deviceId, deviceId);
-        log.info("🟢 【0xA3】 {} 远程并充启机命令回复 枪口编号    gunNo                        : {}", deviceId, gunNo);
-        log.info("🟢 【0xA3】 {} 远程并充启机命令回复 交易编号    tradeNo                      : {}", deviceId, tradeNo);
-        log.info("🟢 【0xA3】 {} 远程并充启机命令回复 启动结果    startupResult                : {}", deviceId, startupResult == 0 ? "启动失败" : "启动成功");
-        log.info("🟢 【0xA3】 {} 远程并充启机命令回复 失败原因    failureReasonDesc            : {}", deviceId, failureReasonDesc);
-        log.info("🟢 【0xA3】 {} 远程并充启机命令回复 主辅标记    priAndSecFlagDesc            : {}", deviceId, priAndSecFlagDesc);
-        log.info("🟢 【0xA3】 {} 远程并充启机命令回复 并充序号    parallelNo                   : {}", deviceId, parallelNo);
+        log.info("-------------------------------------------------------------------------------------------");
+        log.info("🟢 【0xA3】 {} 并充开电回复  原始报文    rawMsg                       : {}", deviceId, rawHexMsg);
+        log.info("🟢 【0xA3】 {} 并充开电回复  设备编号    deviceId                     : {}", deviceId, deviceId);
+        log.info("🟢 【0xA3】 {} 并充开电回复  枪口编号    gunNo                        : {}", deviceId, gunNo);
+        log.info("🟢 【0xA3】 {} 并充开电回复  交易编号    tradeNo                      : {}", deviceId, tradeNo);
+        log.info("🟢 【0xA3】 {} 并充开电回复  启动结果    startupResult                : {}", deviceId, startupResult == 0 ? "启动失败" : "启动成功");
+        log.info("🟢 【0xA3】 {} 并充开电回复  失败原因    failureReasonDesc            : {}", deviceId, failureReasonDesc);
+        log.info("🟢 【0xA3】 {} 并充开电回复  主辅标记    priAndSecFlagDesc            : {}", deviceId, priAndSecFlagDesc);
+        log.info("🟢 【0xA3】 {} 并充开电回复  并充序号    parallelNo                   : {}", deviceId, parallelNo);
         System.out.println();
     }
 

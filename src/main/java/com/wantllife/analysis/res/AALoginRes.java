@@ -75,13 +75,13 @@ public class AALoginRes extends FrameHeader {
      *
      * @param rawHexMsg 原始报文数据
      * @author KevenPotter
-     * @date 2026-05-09 15:50:06
+     * @date 2026-05-19 14:21:39
      */
     private void log(String rawHexMsg) {
-        log.info("------------------------------------------------------------------------------");
-        log.info("🔶 【0x02】 {} 登录认证应答 原始报文    rawMsg               : {}", deviceId, rawHexMsg);
-        log.info("🔶 【0x02】 {} 登录认证应答 设备编号    deviceId             : {}", deviceId, deviceId);
-        log.info("🔶 【0x02】 {} 登录认证应答 登录结果    loginResult          : {}", deviceId, "00".equals(loginResult) ? "成功" : "失败");
+        log.info("-------------------------------------------------------------------------------------------");
+        log.info("🔶 【0x02】 {} 登录认证应答  原始报文    rawMsg                       : {}", deviceId, rawHexMsg);
+        log.info("🔶 【0x02】 {} 登录认证应答  设备编号    deviceId                     : {}", deviceId, deviceId);
+        log.info("🔶 【0x02】 {} 登录认证应答  登录结果    loginResult                  : {}", deviceId, "00".equals(loginResult) ? "成功" : "失败");
         System.out.println();
     }
 }

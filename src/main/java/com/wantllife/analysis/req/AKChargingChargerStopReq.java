@@ -131,17 +131,17 @@ public class AKChargingChargerStopReq extends FrameHeader {
      *
      * @param rawHexMsg 原始报文数据
      * @author KevenPotter
-     * @date 2026-05-11 10:17:24
+     * @date 2026-05-19 14:15:40
      */
     private void log(String rawHexMsg) {
-        log.info("------------------------------------------------------------------------------");
-        log.info("🟢 【0x21】 {} 充电阶段充电机中止 原始报文    rawMsg                       : {}", deviceId, rawHexMsg);
-        log.info("🟢 【0x21】 {} 充电阶段充电机中止 设备编号    deviceId                     : {}", deviceId, deviceId);
-        log.info("🟢 【0x21】 {} 充电阶段充电机中止 枪口编号    gunNo                        : {}", deviceId, gunNo);
-        log.info("🟢 【0x21】 {} 充电阶段充电机中止 交易编号    tradeNo                      : {}", deviceId, tradeNo);
-        log.info("🟢 【0x21】 {} 充电阶段充电机中止 中止原因    chargerStopReason            : {}", deviceId, chargerStopReason);
-        log.info("🟢 【0x21】 {} 充电阶段充电机中止 故障原因    chargerStopFailureDesc       : {}", deviceId, chargerStopFailureDesc);
-        log.info("🟢 【0x21】 {} 充电阶段充电机中止 错误原因    chargerStopErrorReasonDesc   : {}", deviceId, chargerStopErrorReasonDesc);
+        log.info("-------------------------------------------------------------------------------------------");
+        log.info("🟢 【0x21】 {} 充电机器中止  原始报文    rawMsg                       : {}", deviceId, rawHexMsg);
+        log.info("🟢 【0x21】 {} 充电机器中止  设备编号    deviceId                     : {}", deviceId, deviceId);
+        log.info("🟢 【0x21】 {} 充电机器中止  枪口编号    gunNo                        : {}", deviceId, gunNo);
+        log.info("🟢 【0x21】 {} 充电机器中止  交易编号    tradeNo                      : {}", deviceId, tradeNo);
+        log.info("🟢 【0x21】 {} 充电机器中止  中止原因    chargerStopReason            : {}", deviceId, chargerStopReason);
+        log.info("🟢 【0x21】 {} 充电机器中止  故障原因    chargerStopFailureDesc       : {}", deviceId, chargerStopFailureDesc);
+        log.info("🟢 【0x21】 {} 充电机器中止  错误原因    chargerStopErrorReasonDesc   : {}", deviceId, chargerStopErrorReasonDesc);
         System.out.println();
     }
 

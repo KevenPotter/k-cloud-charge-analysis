@@ -80,13 +80,13 @@ public class BBUpgradeReq extends FrameHeader {
      *
      * @param rawHexMsg 原始报文数据
      * @author KevenPotter
-     * @date 2026-05-11 16:35:28
+     * @date 2026-05-19 14:20:32
      */
     private void log(String rawHexMsg) {
-        log.info("------------------------------------------------------------------------------");
-        log.info("🟢 【0x93】 {} 远程更新应答 原始报文    rawMsg                       : {}", deviceId, rawHexMsg);
-        log.info("🟢 【0x93】 {} 远程更新应答 设备编号    deviceId                     : {}", deviceId, deviceId);
-        log.info("🟢 【0x93】 {} 远程更新应答 升级状态    upgradeStatusDesc            : {}", deviceId, upgradeStatusDesc);
+        log.info("-------------------------------------------------------------------------------------------");
+        log.info("🟢 【0x93】 {} 远程更新应答  原始报文    rawMsg                       : {}", deviceId, rawHexMsg);
+        log.info("🟢 【0x93】 {} 远程更新应答  设备编号    deviceId                     : {}", deviceId, deviceId);
+        log.info("🟢 【0x93】 {} 远程更新应答  升级状态    upgradeStatusDesc            : {}", deviceId, upgradeStatusDesc);
         System.out.println();
     }
 

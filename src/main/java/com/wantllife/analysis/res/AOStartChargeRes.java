@@ -112,17 +112,17 @@ public class AOStartChargeRes extends FrameHeader {
      *
      * @param rawHexMsg 原始报文数据
      * @author KevenPotter
-     * @date 2026-05-11 13:52:07
+     * @date 2026-05-19 14:25:51
      */
     private void log(String rawHexMsg) {
-        log.info("------------------------------------------------------------------------------");
-        log.info("🔶 【0x34】 {} 运营平台远程控制启机 原始报文    rawMsg               : {}", deviceId, rawHexMsg);
-        log.info("🔶 【0x34】 {} 运营平台远程控制启机 设备编号    deviceId             : {}", deviceId, deviceId);
-        log.info("🔶 【0x34】 {} 运营平台远程控制启机 枪口编号    gunNo                : {}", deviceId, gunNo);
-        log.info("🔶 【0x34】 {} 运营平台远程控制启机 交易编号    tradeNo              : {}", deviceId, tradeNo);
-        log.info("🔶 【0x34】 {} 运营平台远程控制启机 逻辑卡号    logicalCardNo        : {}", deviceId, logicalCardNo);
-        log.info("🔶 【0x34】 {} 运营平台远程控制启机 物理卡号    physicalCardNo       : {}", deviceId, physicalCardNo);
-        log.info("🔶 【0x34】 {} 运营平台远程控制启机 账户余额    balance              : {}", deviceId, balance);
+        log.info("-------------------------------------------------------------------------------------------");
+        log.info("🔶 【0x34】 {} 远程控制启机  原始报文    rawMsg                       : {}", deviceId, rawHexMsg);
+        log.info("🔶 【0x34】 {} 远程控制启机  设备编号    deviceId                     : {}", deviceId, deviceId);
+        log.info("🔶 【0x34】 {} 远程控制启机  枪口编号    gunNo                        : {}", deviceId, gunNo);
+        log.info("🔶 【0x34】 {} 远程控制启机  交易编号    tradeNo                      : {}", deviceId, tradeNo);
+        log.info("🔶 【0x34】 {} 远程控制启机  逻辑卡号    logicalCardNo                : {}", deviceId, logicalCardNo);
+        log.info("🔶 【0x34】 {} 远程控制启机  物理卡号    physicalCardNo               : {}", deviceId, physicalCardNo);
+        log.info("🔶 【0x34】 {} 远程控制启机  账户余额    balance                      : {}", deviceId, balance);
         System.out.println();
     }
 

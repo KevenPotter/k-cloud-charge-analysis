@@ -83,14 +83,14 @@ public class AVWorkingParamsRes extends FrameHeader {
      *
      * @param rawHexMsg 原始报文数据
      * @author KevenPotter
-     * @date 2026-05-11 15:07:09
+     * @date 2026-05-19 14:28:18
      */
     private void log(String rawHexMsg) {
-        log.info("------------------------------------------------------------------------------");
-        log.info("🔶 【0x52】 {} 充电桩工作参数设置 原始报文    rawMsg               : {}", deviceId, rawHexMsg);
-        log.info("🔶 【0x52】 {} 充电桩工作参数设置 设备编号    deviceId             : {}", deviceId, deviceId);
-        log.info("🔶 【0x52】 {} 充电桩工作参数设置 允许工作    allowWork            : {}", deviceId, allowWork ? "允许工作" : "停止使用");
-        log.info("🔶 【0x52】 {} 充电桩工作参数设置 最大输出    maxOutputPower       : {}", deviceId, maxOutputPower);
+        log.info("-------------------------------------------------------------------------------------------");
+        log.info("🔶 【0x52】 {} 工作参数设置  原始报文    rawMsg                       : {}", deviceId, rawHexMsg);
+        log.info("🔶 【0x52】 {} 工作参数设置  设备编号    deviceId                     : {}", deviceId, deviceId);
+        log.info("🔶 【0x52】 {} 工作参数设置  允许工作    allowWork                    : {}", deviceId, allowWork ? "允许工作" : "停止使用");
+        log.info("🔶 【0x52】 {} 工作参数设置  最大输出    maxOutputPower               : {}", deviceId, maxOutputPower);
         System.out.println();
     }
 

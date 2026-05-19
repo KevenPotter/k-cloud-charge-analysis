@@ -251,28 +251,28 @@ public class AMChargingBMSInfoReq extends FrameHeader {
      *
      * @param rawHexMsg 原始报文数据
      * @author KevenPotter
-     * @date 2026-05-11 13:19:19
+     * @date 2026-05-19 14:16:23
      */
     private void log(String rawHexMsg) {
-        log.info("------------------------------------------------------------------------------");
-        log.info("🟢 【0x25】 {} 充电过程BMS信息 原始报文    rawMsg                       : {}", deviceId, rawHexMsg);
-        log.info("🟢 【0x25】 {} 充电过程BMS信息 设备编号    deviceId                     : {}", deviceId, deviceId);
-        log.info("🟢 【0x25】 {} 充电过程BMS信息 枪口编号    gunNo                        : {}", deviceId, gunNo);
-        log.info("🟢 【0x25】 {} 充电过程BMS信息 交易编号    tradeNo                      : {}", deviceId, tradeNo);
-        log.info("🟢 【0x25】 {} 充电过程BMS信息 单压编号    maxVoltageNo                 : {}", deviceId, maxVoltageNo);
-        log.info("🟢 【0x25】 {} 充电过程BMS信息 最高温度    maxBatteryTemperature        : {}", deviceId, maxBatteryTemperature);
-        log.info("🟢 【0x25】 {} 充电过程BMS信息 检测高温    maxTemperatureCheckNo        : {}", deviceId, maxTemperatureCheckNo);
-        log.info("🟢 【0x25】 {} 充电过程BMS信息 最低温度    minBatteryTemperature        : {}", deviceId, minBatteryTemperature);
-        log.info("🟢 【0x25】 {} 充电过程BMS信息 检测低温    minTemperatureCheckNo        : {}", deviceId, minTemperatureCheckNo);
-        log.info("🟢 【0x25】 {} 充电过程BMS信息 状态原值    statusBits                   : {}", deviceId, statusBits);
-        log.info("🟢 【0x25】 {} 充电过程BMS信息 电压高低    voltageStatusDesc            : {}", deviceId, voltageStatusDesc);
-        log.info("🟢 【0x25】 {} 充电过程BMS信息 率值高低    socStatusDesc                : {}", deviceId, socStatusDesc);
-        log.info("🟢 【0x25】 {} 充电过程BMS信息 充电过流    chargeOverCurrentDesc        : {}", deviceId, chargeOverCurrentDesc);
-        log.info("🟢 【0x25】 {} 充电过程BMS信息 温度过高    batteryTemperatureOverDesc   : {}", deviceId, batteryTemperatureOverDesc);
-        log.info("🟢 【0x25】 {} 充电过程BMS信息 绝缘状态    insulationStatusDesc         : {}", deviceId, insulationStatusDesc);
-        log.info("🟢 【0x25】 {} 充电过程BMS信息 连接状态    connectorStatusDesc          : {}", deviceId, connectorStatusDesc);
-        log.info("🟢 【0x25】 {} 充电过程BMS信息 充电禁止    chargeForbidDesc             : {}", deviceId, chargeForbidDesc);
-        log.info("🟢 【0x25】 {} 充电过程BMS信息 预留位值    reservedDesc                 : {}", deviceId, reservedDesc);
+        log.info("-------------------------------------------------------------------------------------------");
+        log.info("🟢 【0x25】 {} 电池管理信息  原始报文    rawMsg                       : {}", deviceId, rawHexMsg);
+        log.info("🟢 【0x25】 {} 电池管理信息  设备编号    deviceId                     : {}", deviceId, deviceId);
+        log.info("🟢 【0x25】 {} 电池管理信息  枪口编号    gunNo                        : {}", deviceId, gunNo);
+        log.info("🟢 【0x25】 {} 电池管理信息  交易编号    tradeNo                      : {}", deviceId, tradeNo);
+        log.info("🟢 【0x25】 {} 电池管理信息  单压编号    maxVoltageNo                 : {}", deviceId, maxVoltageNo);
+        log.info("🟢 【0x25】 {} 电池管理信息  最高温度    maxBatteryTemperature        : {}", deviceId, maxBatteryTemperature);
+        log.info("🟢 【0x25】 {} 电池管理信息  检测高温    maxTemperatureCheckNo        : {}", deviceId, maxTemperatureCheckNo);
+        log.info("🟢 【0x25】 {} 电池管理信息  最低温度    minBatteryTemperature        : {}", deviceId, minBatteryTemperature);
+        log.info("🟢 【0x25】 {} 电池管理信息  检测低温    minTemperatureCheckNo        : {}", deviceId, minTemperatureCheckNo);
+        log.info("🟢 【0x25】 {} 电池管理信息  状态原值    statusBits                   : {}", deviceId, statusBits);
+        log.info("🟢 【0x25】 {} 电池管理信息  电压高低    voltageStatusDesc            : {}", deviceId, voltageStatusDesc);
+        log.info("🟢 【0x25】 {} 电池管理信息  率值高低    socStatusDesc                : {}", deviceId, socStatusDesc);
+        log.info("🟢 【0x25】 {} 电池管理信息  充电过流    chargeOverCurrentDesc        : {}", deviceId, chargeOverCurrentDesc);
+        log.info("🟢 【0x25】 {} 电池管理信息  温度过高    batteryTemperatureOverDesc   : {}", deviceId, batteryTemperatureOverDesc);
+        log.info("🟢 【0x25】 {} 电池管理信息  绝缘状态    insulationStatusDesc         : {}", deviceId, insulationStatusDesc);
+        log.info("🟢 【0x25】 {} 电池管理信息  连接状态    connectorStatusDesc          : {}", deviceId, connectorStatusDesc);
+        log.info("🟢 【0x25】 {} 电池管理信息  充电禁止    chargeForbidDesc             : {}", deviceId, chargeForbidDesc);
+        log.info("🟢 【0x25】 {} 电池管理信息  预留位值    reservedDesc                 : {}", deviceId, reservedDesc);
         System.out.println();
     }
 
