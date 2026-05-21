@@ -85,7 +85,7 @@ public class KCloudChargeAnalysisConfig {
     @Bean
     public CloudChargeConfig cloudChargeConfig() {
         CloudChargeConfig config = new CloudChargeConfig();
-        config.setLogOutput(true);  // true-开启日志, false-关闭日志
+        config.setLogOutput(true);  // true:开启日志 false:关闭日志
         CloudChargeHolder.setGlobalConfig(config);
         return config;
     }
