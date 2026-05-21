@@ -2,6 +2,7 @@ package com.wantllife.analysis.req;
 
 import cn.hutool.core.util.HexUtil;
 import com.wantllife.analysis.FrameHeader;
+import com.wantllife.config.holder.CloudChargeHolder;
 import com.wantllife.util.StringUtil;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -49,7 +50,7 @@ public class AYGroundLockDataReq extends FrameHeader {
         // 2.自助解析消息体
         parseBody(data);
         // 3.记录日志
-        log(rawHexMsg);
+        if (CloudChargeHolder.isLogOutput()) log(rawHexMsg);
     }
 
     /**

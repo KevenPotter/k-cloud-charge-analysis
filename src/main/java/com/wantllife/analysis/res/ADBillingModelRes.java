@@ -3,6 +3,7 @@ package com.wantllife.analysis.res;
 import cn.hutool.core.util.HexUtil;
 import com.wantllife.analysis.FrameHeader;
 import com.wantllife.analysis.req.ADBillingModelReq;
+import com.wantllife.config.holder.CloudChargeHolder;
 import com.wantllife.domain.vo.StandardBillingModel;
 import com.wantllife.util.StringUtil;
 import lombok.Data;
@@ -108,7 +109,7 @@ public class ADBillingModelRes extends FrameHeader {
         byte[] downMessage = res.buildDownMessage(body);
 
         // 记录日志
-        res.log(HexUtil.encodeHexStr(downMessage), billingModelList);
+        if (CloudChargeHolder.isLogOutput()) res.log(HexUtil.encodeHexStr(downMessage), billingModelList);
 
         return downMessage;
     }

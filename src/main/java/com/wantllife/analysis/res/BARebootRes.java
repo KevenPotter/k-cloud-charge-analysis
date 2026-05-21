@@ -3,6 +3,7 @@ package com.wantllife.analysis.res;
 import cn.hutool.core.util.HexUtil;
 import cn.hutool.core.util.RandomUtil;
 import com.wantllife.analysis.FrameHeader;
+import com.wantllife.config.holder.CloudChargeHolder;
 import com.wantllife.util.StringUtil;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -49,7 +50,7 @@ public class BARebootRes extends FrameHeader {
         byte[] downMessage = res.buildDownMessage(body);
 
         // 记录日志
-        res.log(HexUtil.encodeHexStr(downMessage));
+        if (CloudChargeHolder.isLogOutput()) res.log(HexUtil.encodeHexStr(downMessage));
 
         return downMessage;
     }
