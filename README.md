@@ -41,7 +41,7 @@
 <dependency>
     <groupId>com.wantllife</groupId>
     <artifactId>k-cloud-charge-analysis</artifactId>
-    <version>1.0.0</version>
+    <version>1.1.0</version>
 </dependency>
 ```
 
