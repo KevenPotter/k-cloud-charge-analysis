@@ -6,7 +6,7 @@
 
   <groupId>com.wantllife</groupId>
   <artifactId>k-cloud-charge-analysis</artifactId>
-  <version>1.0.0</version>
+  <version>1.1.0</version>
 
   <name>k-cloud-charge-analysis</name>
   <description>云快充协议解析SDK</description>
