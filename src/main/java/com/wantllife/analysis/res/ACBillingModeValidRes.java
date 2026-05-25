@@ -10,7 +10,7 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 import lombok.extern.slf4j.Slf4j;
 
-import static com.wantllife.constant.CloudFastChargingConstants.DOWN_BILLING_MODE_VALID;
+import static com.wantllife.constant.CloudFastChargingConstants.*;
 
 
 /**
@@ -40,12 +40,15 @@ public class ACBillingModeValidRes extends FrameHeader {
      * @author KevenPotter
      * @date 2026-04-22 16:06:26
      */
-    public static byte[] buildCommand(ACBillingModelValidReq req, String billingModeId, boolean validResult) {
+    public static byte[] buildCommand(ACBillingModelValidReq req, Long billingModeId, boolean validResult) {
+        if (billingModeId == null || billingModeId < 0 || billingModeId > 9999) {
+            throw new IllegalArgumentException(TIP_ICON + " " + PROJECT_NAME + " Billing mode ID must be a number ranging from 0 to 9999 with a maximum of 4 digits");
+        }
         ACBillingModeValidRes res = new ACBillingModeValidRes();
         res.setSeqNo(req.getSeqNo());
         res.setFrameType(DOWN_BILLING_MODE_VALID);
         res.setDeviceId(req.getDeviceId());
-        res.setBillingModeId(billingModeId);
+        res.setBillingModeId(String.format("%04d", billingModeId));
         res.setBillingModeValidResult(validResult ? "00" : "01");
 
         byte[] body = res.buildBody();
