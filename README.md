@@ -151,7 +151,7 @@ public void process(AioSession session, ByteBuffer buffer) {
          case UP_BILLING_MODE_VALID:
             ACBillingModelValidReq billingModelValidReq = new ACBillingModelValidReq(data, rawHexMsg);
             Long billingModeId = billingModelValidReq.getBillingModeId();
-            deviceChannelManager.sendMsg(billingModelValidReq.getDeviceId(), ACBillingModeValidRes.buildCommand(billingModelValidReq, "1096", billingModeId == 1096));
+            deviceChannelManager.sendMsg(billingModelValidReq.getDeviceId(), ACBillingModeValidRes.buildCommand(billingModelValidReq, 1096, billingModeId == 1096));
             break;
          // 充电桩计费模型请求
          case UP_BILLING_MODE:
