@@ -11,6 +11,11 @@ public class CloudFastChargingConstants {
     private CloudFastChargingConstants() {
     }
 
+    /* 提示图标 */
+    public static final String TIP_ICON = "\uD83D\uDD0B";
+    /* 项目名称 */
+    public static final String PROJECT_NAME = "[k-cloud-charge-analysis]";
+
     //=============================== 上行指令 设备->平台 ===============================
     /*登录请求*/
     public static final byte UP_LOGIN = 0x01;

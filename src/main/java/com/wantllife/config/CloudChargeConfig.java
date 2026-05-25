@@ -2,6 +2,9 @@ package com.wantllife.config;
 
 import lombok.extern.slf4j.Slf4j;
 
+import static com.wantllife.constant.CloudFastChargingConstants.PROJECT_NAME;
+import static com.wantllife.constant.CloudFastChargingConstants.TIP_ICON;
+
 /**
  * 云快充协议SDK配置中心
  *
@@ -47,9 +50,9 @@ public class CloudChargeConfig {
      */
     private void printLogStatus(boolean logOutput) {
         if (logOutput) {
-            log.info("📌 [k-cloud-charge-analysis] User configured parse logging as ENABLED ✅");
+            log.info("{} {} User configured parse logging as ENABLED ✅", TIP_ICON, PROJECT_NAME);
         } else {
-            log.info("📌 [k-cloud-charge-analysis] User configured parse logging as DISABLED ❌");
+            log.info("{} {} User configured parse logging as DISABLED ❌", TIP_ICON, PROJECT_NAME);
         }
     }
 }
