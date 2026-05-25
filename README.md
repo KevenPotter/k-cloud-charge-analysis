@@ -93,8 +93,8 @@ public class KCloudChargeAnalysisConfig {
 ```
 
 > 配置变更时，控制台会打印当前配置状态（只有手动配置后才会输入以下日志）：
-> - 开启：`📌 [k-cloud-charge-analysis] User configured parse logging as ENABLED ✅`
-> - 关闭：`📌 [k-cloud-charge-analysis] User configured parse logging as DISABLED ❌`
+> - 开启：`🔋 [k-cloud-charge-analysis] User configured parse logging as ENABLED ✅`
+> - 关闭：`🔋 [k-cloud-charge-analysis] User configured parse logging as DISABLED ❌`
 
 | 配置项 | 类型 | 默认值 | 说明 |
 |--------|------|--------|------|
