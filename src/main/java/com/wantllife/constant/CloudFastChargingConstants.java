@@ -6,7 +6,7 @@ package com.wantllife.constant;
  * @author KevenPotter
  * @date 2026-04-29 15:09:41
  */
-public class CloudFastChargingConstants {
+public final class CloudFastChargingConstants {
 
     private CloudFastChargingConstants() {
     }
