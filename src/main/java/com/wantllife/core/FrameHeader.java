@@ -1,4 +1,4 @@
-package com.wantllife.analysis;
+package com.wantllife.core;
 
 import cn.hutool.core.util.HexUtil;
 import com.wantllife.util.CRCUtil;
@@ -78,17 +78,18 @@ public class FrameHeader {
     /**
      * 构建指令
      *
-     * @param bodyData 消息体
+     * @param bodyData     消息体
+     * @param littleEndian littleEndian true:小端序(低字节在前) false:大端序(高字节在前，设备实际使用)
      * @return 完整报文
      * @author KevenPotter
      * @date 2026-04-21 17:09:32
      */
-    public byte[] buildDownMessage(byte[] bodyData) {
+    public byte[] buildDownMessage(byte[] bodyData, boolean littleEndian) {
         // 1.自动填充默认值
         if (startFlag == null) this.setStartFlag(FRAME_START_FLAG);
         if (encryptFlag == null) this.setEncryptFlag(FRAME_ENCRYPT_FLAG);
-        // 2.自动计算长度
-        int len = 6 + bodyData.length;
+        // 2.自动计算长度(序列号域[2字节]+加密标志[1字节]+帧类型标志[1字节]+消息体[N字节])
+        int len = 4 + bodyData.length;
         this.setDataLength(String.format("%02X", len));
         // 3.转换为字节
         byte[] seqNoBytes = HexUtil.decodeHex(seqNo);
@@ -97,7 +98,7 @@ public class FrameHeader {
         // 4.拼接CRC数据源
         byte[] crcSource = concat(seqNoBytes, encryptFlagBytes, frameTypeBytes, bodyData);
         // 5.计算CRC
-        String crcHex = CRCUtil.getYKCCRC(crcSource, true);
+        String crcHex = CRCUtil.getYKCCRC(crcSource, littleEndian);
         setCRC(crcHex);
         // 6.最终报文
         byte[] startFlagBytes = HexUtil.decodeHex(startFlag);
