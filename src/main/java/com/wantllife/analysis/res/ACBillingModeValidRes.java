@@ -1,7 +1,7 @@
 package com.wantllife.analysis.res;
 
 import cn.hutool.core.util.HexUtil;
-import com.wantllife.analysis.FrameHeader;
+import com.wantllife.core.FrameHeader;
 import com.wantllife.analysis.req.ACBillingModelValidReq;
 import com.wantllife.config.holder.CloudChargeHolder;
 import com.wantllife.util.StringUtil;
@@ -52,7 +52,7 @@ public class ACBillingModeValidRes extends FrameHeader {
         res.setBillingModeValidResult(validResult ? "00" : "01");
 
         byte[] body = res.buildBody();
-        byte[] downMessage = res.buildDownMessage(body);
+        byte[] downMessage = res.buildDownMessage(body, true);
 
         // 记录日志
         if (CloudChargeHolder.isLogOutput()) res.log(HexUtil.encodeHexStr(downMessage));

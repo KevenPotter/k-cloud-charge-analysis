@@ -2,7 +2,7 @@ package com.wantllife.analysis.res;
 
 import cn.hutool.core.util.HexUtil;
 import cn.hutool.core.util.RandomUtil;
-import com.wantllife.analysis.FrameHeader;
+import com.wantllife.core.FrameHeader;
 import com.wantllife.config.holder.CloudChargeHolder;
 import com.wantllife.util.StringUtil;
 import lombok.Data;
@@ -70,7 +70,7 @@ public class BBUpgradeRes extends FrameHeader {
         res.setFilePath(filePath).setExecMethod(execMethod).setTimeout(timeout);
 
         byte[] body = res.buildBody();
-        byte[] downMessage = res.buildDownMessage(body);
+        byte[] downMessage = res.buildDownMessage(body, true);
 
         // 记录日志
         if (CloudChargeHolder.isLogOutput()) res.log(HexUtil.encodeHexStr(downMessage));

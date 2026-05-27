@@ -1,7 +1,7 @@
 package com.wantllife.analysis.res;
 
 import cn.hutool.core.util.HexUtil;
-import com.wantllife.analysis.FrameHeader;
+import com.wantllife.core.FrameHeader;
 import com.wantllife.analysis.req.ADBillingModelReq;
 import com.wantllife.config.holder.CloudChargeHolder;
 import com.wantllife.domain.vo.StandardBillingModel;
@@ -106,7 +106,7 @@ public class ADBillingModelRes extends FrameHeader {
         res.setTimeSlotRates(buildDynamicTimeSlots(billingModelList));
 
         byte[] body = res.buildBody();
-        byte[] downMessage = res.buildDownMessage(body);
+        byte[] downMessage = res.buildDownMessage(body, true);
 
         // 记录日志
         if (CloudChargeHolder.isLogOutput()) res.log(HexUtil.encodeHexStr(downMessage), billingModelList);

@@ -3,7 +3,7 @@ package com.wantllife.analysis.res;
 import cn.hutool.core.convert.NumberChineseFormatter;
 import cn.hutool.core.util.HexUtil;
 import cn.hutool.core.util.RandomUtil;
-import com.wantllife.analysis.FrameHeader;
+import com.wantllife.core.FrameHeader;
 import com.wantllife.config.holder.CloudChargeHolder;
 import com.wantllife.domain.vo.StandardCard;
 import com.wantllife.util.StringUtil;
@@ -55,7 +55,7 @@ public class ATOfflineCardClearRes extends FrameHeader {
         res.setCardList(cardList);
 
         byte[] body = res.buildBody();
-        byte[] downMessage = res.buildDownMessage(body);
+        byte[] downMessage = res.buildDownMessage(body, true);
 
         // 记录日志
         if (CloudChargeHolder.isLogOutput()) res.log(HexUtil.encodeHexStr(downMessage), cardList);

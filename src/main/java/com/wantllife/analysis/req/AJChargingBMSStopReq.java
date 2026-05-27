@@ -1,6 +1,6 @@
 package com.wantllife.analysis.req;
 
-import com.wantllife.analysis.FrameHeader;
+import com.wantllife.core.FrameHeader;
 import com.wantllife.config.holder.CloudChargeHolder;
 import com.wantllife.util.StringUtil;
 import lombok.Data;

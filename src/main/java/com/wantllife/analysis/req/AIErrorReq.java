@@ -1,6 +1,6 @@
 package com.wantllife.analysis.req;
 
-import com.wantllife.analysis.FrameHeader;
+import com.wantllife.core.FrameHeader;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
