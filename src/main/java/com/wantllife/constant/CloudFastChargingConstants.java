@@ -11,10 +11,15 @@ public final class CloudFastChargingConstants {
     private CloudFastChargingConstants() {
     }
 
-    /* 提示图标 */
+    /* 解析器提示图标 */
     public static final String TIP_ICON = "\uD83D\uDD0B";
-    /* 项目名称 */
+    /* 解析器项目名称 */
     public static final String PROJECT_NAME = "[k-cloud-charge-analysis]";
+
+    /*模拟器提示图标*/
+    public static final String SIM_TIP_ICON = "\uD83D\uDC7E";
+    /*模拟器项目名称*/
+    public static final String SIM_PROJECT_NAME = "[k-cloud-charge-simulator]";
 
     //=============================== 上行指令 设备->平台 ===============================
     /*登录请求*/
