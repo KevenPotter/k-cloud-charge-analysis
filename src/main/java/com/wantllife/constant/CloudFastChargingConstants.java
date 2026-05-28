@@ -1,5 +1,8 @@
 package com.wantllife.constant;
 
+
+import static com.wantllife.constant.ColorConstants.*;
+
 /**
  * 云快充协议常量
  *
@@ -14,12 +17,12 @@ public final class CloudFastChargingConstants {
     /* 解析器提示图标 */
     public static final String TIP_ICON = "\uD83D\uDD0B";
     /* 解析器项目名称 */
-    public static final String PROJECT_NAME = "[k-cloud-charge-analysis]";
+    public static final String PROJECT_NAME = GREEN + "[k-cloud-charge-analysis]" + RESET;
 
     /*模拟器提示图标*/
     public static final String SIM_TIP_ICON = "\uD83D\uDC7E";
     /*模拟器项目名称*/
-    public static final String SIM_PROJECT_NAME = "[k-cloud-charge-simulator]";
+    public static final String SIM_PROJECT_NAME = PURPLE + "[k-cloud-charge-simulator]" + RESET;
 
     //=============================== 上行指令 设备->平台 ===============================
     /*登录请求*/
