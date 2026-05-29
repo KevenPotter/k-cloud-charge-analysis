@@ -17,4 +17,26 @@ public final class SimulatorConstants {
     public static final int SO_TIMEOUT_MILLISECOND = 60000;
     /*多设备模拟启动时，设备之间的启动间隔时间(单位：毫秒).防止瞬间并发连接导致服务器端口风暴*/
     public static final long MULTI_DEVICE_START_INTERVAL = 500;
+
+    // ===================== 定时器间隔常量 =====================
+
+    /**
+     * 登录重试间隔(秒) [0X01]
+     */
+    public static final long TIMER_LOGIN_SECOND = 5;
+
+    /**
+     * 计费模型验证重试间隔(秒) [0X05]
+     */
+    public static final long TIMER_BILLING_MODE_VALID_SECOND = 3;
+
+    /**
+     * 计费模型请求重试间隔(秒) [0X09]
+     */
+    public static final long TIMER_BILLING_MODE_SECOND = 3;
+
+    /**
+     * 心跳发送间隔(秒) [0X03]
+     */
+    public static final long TIMER_HEARTBEAT_SECOND = 10;
 }
