@@ -6,6 +6,7 @@ import com.wantllife.simulator.client.TcpClient;
 import com.wantllife.simulator.req.SAALoginReq;
 import com.wantllife.simulator.req.SABHeartbeatReq;
 import com.wantllife.simulator.req.SACBillingModeValidReq;
+import com.wantllife.simulator.req.SADBillingModelReq;
 import com.wantllife.simulator.res.SAALoginRes;
 import com.wantllife.simulator.res.SABHeartbeatRes;
 import com.wantllife.simulator.res.SACBillingModeValidRes;
@@ -106,6 +107,7 @@ public class SimulatorDeviceMessageProcessor {
                     break;
                 // 模拟器计费模型请求应答
                 case SIM_UP_BILLING_MODE:
+                    SADBillingModelReq billingModelReq = new SADBillingModelReq(data, rawHexMsg);
                     handleBillingModelReply();
                     break;
                 // 模拟器读取实时监测数据
