@@ -14,6 +14,7 @@ import java.util.concurrent.TimeUnit;
 
 import static com.wantllife.constant.CloudFastChargingConstants.*;
 import static com.wantllife.constant.SimulatorConstants.*;
+import static com.wantllife.simulator.fake.FakeData.fakeChargingRealTimeMonitor;
 import static com.wantllife.simulator.fake.FakeData.fakeInitRealTimeMonitor;
 
 /**
@@ -115,6 +116,15 @@ public class SimulatorDeviceMessageProcessor {
                     break;
                 // 模拟器运营平台远程控制启机
                 case SIM_UP_START_CHARGE:
+                    SOStartChargeReq startChargeReq = new SOStartChargeReq(data, rawHexMsg);
+                    sendMessage(SOStartChargeRes.buildCommand(startChargeReq));
+                    Thread.sleep(100);
+                    sendMessage(SAERealTimeMonitorRes.buildCommand(
+                                    fakeChargingRealTimeMonitor(
+                                            startChargeReq.getTradeNo(), startChargeReq.getDeviceId(), startChargeReq.getGunNo()
+                                    )
+                            )
+                    );
                     break;
                 // 模拟器运营平台远程停机
                 case SIM_UP_STOP_CHARGE:
