@@ -6,8 +6,6 @@ import lombok.experimental.Accessors;
 
 import java.math.BigDecimal;
 
-import static com.wantllife.util.StringUtil.generateSerial;
-
 /**
  * 实时监控
  *
@@ -18,35 +16,6 @@ import static com.wantllife.util.StringUtil.generateSerial;
 @Accessors(chain = true)
 @AllArgsConstructor
 public class StandardRealTimeMonitor {
-
-    /**
-     * 构建初始对象
-     *
-     * @param deviceId 设备编号
-     * @param gunNo    枪号
-     * @author KevenPotter
-     * @date 2026-06-01 17:23:24
-     */
-    public StandardRealTimeMonitor(String deviceId, Integer gunNo) {
-        this.tradeNo = generateSerial(deviceId, gunNo);
-        this.deviceId = deviceId;
-        this.gunNo = gunNo;
-        this.status = 2;
-        this.haveReturn = 2;
-        this.haveInsert = 1;
-        this.voltage = BigDecimal.valueOf(235.6D);
-        this.current = BigDecimal.valueOf(1.0D);
-        this.temperature = 0;
-        this.gunCode = "0000000000000000";
-        this.soc = 0;
-        this.highestTemperature = -50;
-        this.accumulatedChargingTime = 0;
-        this.remainingChargingTime = 0;
-        this.chargingDegree = BigDecimal.valueOf(0.0000D);
-        this.calculatedChargingDegree = BigDecimal.valueOf(0.0000D);
-        this.chargedAmount = BigDecimal.valueOf(0.0000D);
-        this.hardwareFailure = "00";
-    }
 
     /*交易流水号*/
     private String tradeNo;
