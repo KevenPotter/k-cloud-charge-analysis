@@ -3,14 +3,8 @@ package com.wantllife.simulator.process;
 import cn.hutool.core.util.HexUtil;
 import com.wantllife.domain.vo.StandardDevice;
 import com.wantllife.simulator.client.TcpClient;
-import com.wantllife.simulator.req.SAALoginReq;
-import com.wantllife.simulator.req.SABHeartbeatReq;
-import com.wantllife.simulator.req.SACBillingModeValidReq;
-import com.wantllife.simulator.req.SADBillingModelReq;
-import com.wantllife.simulator.res.SAALoginRes;
-import com.wantllife.simulator.res.SABHeartbeatRes;
-import com.wantllife.simulator.res.SACBillingModeValidRes;
-import com.wantllife.simulator.res.SADBillingModelRes;
+import com.wantllife.simulator.req.*;
+import com.wantllife.simulator.res.*;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.OutputStream;
@@ -20,6 +14,7 @@ import java.util.concurrent.TimeUnit;
 
 import static com.wantllife.constant.CloudFastChargingConstants.*;
 import static com.wantllife.constant.SimulatorConstants.*;
+import static com.wantllife.simulator.fake.FakeData.fakeInitRealTimeMonitor;
 
 /**
  * 默认消息处理器
@@ -112,6 +107,8 @@ public class SimulatorDeviceMessageProcessor {
                     break;
                 // 模拟器读取实时监测数据
                 case SIM_UP_REAL_TIME_MONITOR:
+                    SAERealTimeMonitorReq realTimeMonitorReq = new SAERealTimeMonitorReq(data, rawHexMsg);
+                    sendMessage(SAERealTimeMonitorRes.buildCommand(fakeInitRealTimeMonitor(realTimeMonitorReq.getDeviceId(), realTimeMonitorReq.getGunNo())));
                     break;
                 // 模拟器运营平台确认启动充电
                 case SIM_UP_REQUEST_CHARGING:
@@ -405,4 +402,5 @@ public class SimulatorDeviceMessageProcessor {
             tcpClient.stop();
         }
     }
+
 }
