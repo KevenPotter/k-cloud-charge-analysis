@@ -28,24 +28,24 @@ import static com.wantllife.constant.SimulatorConstants.RECONNECT_INTERVAL_SECON
 @Slf4j
 public class TcpClient {
 
-    /*设备编号*/
+    /** 设备编号 */
     @Getter
     private final String deviceId;
-    /*设备对象*/
+    /** 设备对象 */
     @Getter
     private final StandardDevice device;
 
-    /*TCP服务器IP地址*/
+    /** TCP服务器IP地址 */
     private final String serverIP;
-    /*TCP服务器端口号*/
+    /** TCP服务器端口号 */
     private final int serverPort;
-    /*消息处理器*/
+    /** 消息处理器 */
     private final SimDevMsgProcessor simDevMsgProcessor;
-    /*TCP套接字*/
+    /** TCP套接字 */
     private Socket socket;
-    /*输出流*/
+    /** 输出流 */
     private OutputStream outputStream;
-    /*运行状态*/
+    /** 运行状态 */
     private volatile boolean running = false;
 
     /**
@@ -102,7 +102,7 @@ public class TcpClient {
                 socket.setSoTimeout(SimulatorConstants.SO_TIMEOUT_MILLISECOND);
 
                 // 获取输出流并交给处理器,由处理器全权负责报文发送
-                OutputStream outputStream = socket.getOutputStream();
+                this.outputStream = socket.getOutputStream();
                 simDevMsgProcessor.bindOutputStream(device, outputStream, this);
 
                 // 连接成功,通知处理器执行登录逻辑
