@@ -52,7 +52,7 @@ public class ABHeartbeatRes extends FrameHeader {
         byte[] downMessage = res.buildDownMessage(body, true);
 
         // 记录日志
-        if (CloudChargeHolder.isLogOutput()) res.log(HexUtil.encodeHexStr(downMessage));
+        if (CloudChargeHolder.isAnalysisHeartbeatLogOutput()) res.log(HexUtil.encodeHexStr(downMessage));
 
         return downMessage;
     }

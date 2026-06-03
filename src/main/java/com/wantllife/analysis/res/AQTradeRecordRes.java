@@ -54,7 +54,7 @@ public class AQTradeRecordRes extends FrameHeader {
         byte[] downMessage = res.buildDownMessage(body, true);
 
         // 记录日志
-        if (CloudChargeHolder.isLogOutput()) res.log(HexUtil.encodeHexStr(downMessage));
+        if (CloudChargeHolder.isAnalysisLogOutput()) res.log(HexUtil.encodeHexStr(downMessage));
 
         return downMessage;
     }

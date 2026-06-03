@@ -53,7 +53,7 @@ public class BCApplyParallelChargingReq extends FrameHeader {
         // 2.自助解析消息体
         parseBody(data);
         // 3.记录日志
-        if (CloudChargeHolder.isLogOutput()) log(rawHexMsg);
+        if (CloudChargeHolder.isAnalysisLogOutput()) log(rawHexMsg);
     }
 
     /**

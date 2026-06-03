@@ -109,7 +109,7 @@ public class ADBillingModelRes extends FrameHeader {
         byte[] downMessage = res.buildDownMessage(body, true);
 
         // 记录日志
-        if (CloudChargeHolder.isLogOutput()) res.log(HexUtil.encodeHexStr(downMessage), billingModelList);
+        if (CloudChargeHolder.isAnalysisLogOutput()) res.log(HexUtil.encodeHexStr(downMessage), billingModelList);
 
         return downMessage;
     }

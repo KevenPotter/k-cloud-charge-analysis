@@ -2,8 +2,7 @@ package com.wantllife.config;
 
 import lombok.extern.slf4j.Slf4j;
 
-import static com.wantllife.constant.CloudFastChargingConstants.PROJECT_NAME;
-import static com.wantllife.constant.CloudFastChargingConstants.TIP_ICON;
+import static com.wantllife.constant.CloudFastChargingConstants.*;
 
 /**
  * 云快充协议SDK配置中心
@@ -14,45 +13,168 @@ import static com.wantllife.constant.CloudFastChargingConstants.TIP_ICON;
 @Slf4j
 public class CloudChargeConfig {
 
-    /*日志开关,默认true(打印日志)*/
-    private boolean logOutput = true;
+    /*解析器-日志开关,默认true(打印日志)*/
+    private boolean analysisLogOutput = true;
+    /*解析器-心跳日志开关,默认true(打印日志)*/
+    private boolean analysisHeartbeatLogOutput = true;
+    /*模拟器-日志开关,默认true(打印日志)*/
+    private boolean simulatorLogOutput = true;
+    /*模拟器-心跳日志开关,默认true(打印日志)*/
+    private boolean simulatorHeartbeatLogOutput = true;
 
     /**
-     * 获取日志输出开关状态
+     * 获取解析器-日志输出开关状态
      *
      * @return true:开启日志输出 false:关闭日志输出
      * @author KevenPotter
      * @date 2026-05-20 16:58:22
      */
-    public boolean isLogOutput() {
-        return logOutput;
+    public boolean isAnalysisLogOutput() {
+        return analysisLogOutput;
     }
 
     /**
-     * 设置日志输出开关状态
+     * 设置解析器-日志输出开关状态
      * 配置变更时会自动打印配置变更日志
      *
-     * @param logOutput true:开启日志输出 false:关闭日志输出
+     * @param analysisLogOutput true:开启日志输出 false:关闭日志输出
      * @author KevenPotter
      * @date 2026-05-20 16:59:54
      */
-    public void setLogOutput(boolean logOutput) {
-        this.logOutput = logOutput;
-        printLogStatus(logOutput);
+    public void setAnalysisLogOutput(boolean analysisLogOutput) {
+        this.analysisLogOutput = analysisLogOutput;
+        printAnalysisLogStatus(analysisLogOutput);
     }
 
     /**
-     * 打印日志配置状态
+     * 打印解析器-日志配置状态
      *
-     * @param logOutput 当前日志开关状态
+     * @param analysisLogOutput 当前解析器-日志开关状态
      * @author KevenPotter
      * @date 2026-05-20 17:00:05
      */
-    private void printLogStatus(boolean logOutput) {
-        if (logOutput) {
-            log.info("{} {} User configured parse logging as ENABLED ✅", TIP_ICON, PROJECT_NAME);
+    private void printAnalysisLogStatus(boolean analysisLogOutput) {
+        if (analysisLogOutput) {
+            log.info("{} {} User configured analysis logging as ENABLED ✅", TIP_ICON, PROJECT_NAME);
         } else {
-            log.info("{} {} User configured parse logging as DISABLED ❌", TIP_ICON, PROJECT_NAME);
+            log.info("{} {} User configured analysis logging as DISABLED ❌", TIP_ICON, PROJECT_NAME);
+        }
+    }
+
+    /**
+     * 获取解析器-心跳日志输出开关状态
+     *
+     * @return true:开启日志输出 false:关闭日志输出
+     * @author KevenPotter
+     * @date 2026-06-03 11:03:20
+     */
+    public boolean isAnalysisHeartbeatLogOutput() {
+        return analysisHeartbeatLogOutput;
+    }
+
+    /**
+     * 设置解析器-心跳日志输出开关状态
+     * 配置变更时会自动打印配置变更日志
+     *
+     * @param analysisHeartbeatLogOutput true:开启日志输出 false:关闭日志输出
+     * @author KevenPotter
+     * @date 2026-06-03 11:03:51
+     */
+    public void setAnalysisHeartbeatLogOutput(boolean analysisHeartbeatLogOutput) {
+        this.analysisHeartbeatLogOutput = analysisHeartbeatLogOutput;
+        printAnalysisHeartbeatLogStatus(analysisHeartbeatLogOutput);
+    }
+
+    /**
+     * 打印解析器-心跳日志配置状态
+     *
+     * @param analysisHeartbeatLogOutput 当前解析器-心跳日志开关状态
+     * @author KevenPotter
+     * @date 2026-06-03 11:04:19
+     */
+    private void printAnalysisHeartbeatLogStatus(boolean analysisHeartbeatLogOutput) {
+        if (analysisHeartbeatLogOutput) {
+            log.info("{} {} User configured analysis heartbeat logging as ENABLED ✅", TIP_ICON, PROJECT_NAME);
+        } else {
+            log.info("{} {} User configured analysis heartbeat logging as DISABLED ❌", TIP_ICON, PROJECT_NAME);
+        }
+    }
+
+    /**
+     * 获取模拟器-日志输出开关状态
+     *
+     * @return true:开启日志输出 false:关闭日志输出
+     * @author KevenPotter
+     * @date 2026-06-03 11:04:25
+     */
+    public boolean isSimulatorLogOutput() {
+        return simulatorLogOutput;
+    }
+
+    /**
+     * 设置模拟器-日志输出开关状态
+     * 配置变更时会自动打印配置变更日志
+     *
+     * @param simulatorLogOutput true:开启日志输出 false:关闭日志输出
+     * @author KevenPotter
+     * @date 2026-06-03 11:05:38
+     */
+    public void setSimulatorLogOutput(boolean simulatorLogOutput) {
+        this.simulatorLogOutput = simulatorLogOutput;
+        printSimulatorLogStatus(simulatorLogOutput);
+    }
+
+    /**
+     * 打印模拟器-日志配置状态
+     *
+     * @param simulatorLogOutput 当前模拟器-日志开关状态
+     * @author KevenPotter
+     * @date 2026-06-03 11:05:49
+     */
+    private void printSimulatorLogStatus(boolean simulatorLogOutput) {
+        if (simulatorLogOutput) {
+            log.info("{} {} User configured simulator logging as ENABLED ✅", SIM_TIP_ICON, SIM_PROJECT_NAME);
+        } else {
+            log.info("{} {} User configured simulator logging as DISABLED ❌", SIM_TIP_ICON, SIM_PROJECT_NAME);
+        }
+    }
+
+    /**
+     * 获取模拟器-心跳日志输出开关状态
+     *
+     * @return true:开启日志输出 false:关闭日志输出
+     * @author KevenPotter
+     * @date 2026-06-03 11:06:29
+     */
+    public boolean isSimulatorHeartbeatLogOutput() {
+        return simulatorHeartbeatLogOutput;
+    }
+
+    /**
+     * 设置模拟器-心跳日志输出开关状态
+     * 配置变更时会自动打印配置变更日志
+     *
+     * @param simulatorHeartbeatLogOutput true:开启日志输出 false:关闭日志输出
+     * @author KevenPotter
+     * @date 2026-06-03 11:06:43
+     */
+    public void setSimulatorHeartbeatLogOutput(boolean simulatorHeartbeatLogOutput) {
+        this.simulatorHeartbeatLogOutput = simulatorHeartbeatLogOutput;
+        printSimulatorHeartbeatLogStatus(simulatorHeartbeatLogOutput);
+    }
+
+    /**
+     * 打印模拟器-心跳日志配置状态
+     *
+     * @param simulatorHeartbeatLogOutput 当前模拟器-心跳日志开关状态
+     * @author KevenPotter
+     * @date 2026-06-03 11:07:00
+     */
+    private void printSimulatorHeartbeatLogStatus(boolean simulatorHeartbeatLogOutput) {
+        if (simulatorHeartbeatLogOutput) {
+            log.info("{} {} User configured simulator heartbeat logging as ENABLED ✅", SIM_TIP_ICON, SIM_PROJECT_NAME);
+        } else {
+            log.info("{} {} User configured simulator heartbeat logging as DISABLED ❌", SIM_TIP_ICON, SIM_PROJECT_NAME);
         }
     }
 }

@@ -28,13 +28,47 @@ public class CloudChargeHolder {
     }
 
     /**
-     * 获取日志输出开关状态
+     * 获取解析器-日志输出开关状态
      *
+     * @return true:开启日志输出 false:关闭日志输出
      * @author KevenPotter
      * @date 2026-05-20 15:49:13
      */
-    public static boolean isLogOutput() {
-        return GLOBAL_CONFIG.isLogOutput();
+    public static boolean isAnalysisLogOutput() {
+        return GLOBAL_CONFIG.isAnalysisLogOutput();
+    }
+
+    /**
+     * 获取解析器-心跳日志输出开关状态
+     *
+     * @return true:开启日志输出 false:关闭日志输出
+     * @author KevenPotter
+     * @date 2026-06-03 11:07:26
+     */
+    public static boolean isAnalysisHeartbeatLogOutput() {
+        return GLOBAL_CONFIG.isAnalysisHeartbeatLogOutput();
+    }
+
+    /**
+     * 获取模拟器-日志输出开关状态
+     *
+     * @return true:开启日志输出 false:关闭日志输出
+     * @author KevenPotter
+     * @date 2026-06-03 11:07:45
+     */
+    public static boolean isSimulatorLogOutput() {
+        return GLOBAL_CONFIG.isSimulatorLogOutput();
+    }
+
+    /**
+     * 获取模拟器-心跳日志输出开关状态
+     *
+     * @return true:开启日志输出 false:关闭日志输出
+     * @author KevenPotter
+     * @date 2026-06-03 11:07:58
+     */
+    public static boolean isSimulatorHeartbeatLogOutput() {
+        return GLOBAL_CONFIG.isSimulatorHeartbeatLogOutput();
     }
 
 }
