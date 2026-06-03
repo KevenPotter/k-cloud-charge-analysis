@@ -40,28 +40,28 @@ public class FakeData {
     /**
      * 虚拟充电种实时监控数据
      *
-     * @param tradeNo  交易流水号
-     * @param deviceId 设备编号
-     * @param gunNo    枪号
+     * @param tradeNo                 交易流水号
+     * @param deviceId                设备编号
+     * @param gunNo                   枪号
+     * @param accumulatedChargingTime 累计充电时间
+     * @param remainingChargingTime   剩余时间
+     * @param chargingDegree          充电度数
+     * @param chargedAmount           已充金额
      * @return 返回虚拟充电中实时监控数据
      * @author KevenPotter
      * @date 2026-06-02 10:13:54
      */
-    public static StandardRealTimeMonitor fakeChargingRealTimeMonitor(String tradeNo, String deviceId, Integer gunNo) {
+    public static StandardRealTimeMonitor fakeChargingRealTimeMonitor(
+            String tradeNo, String deviceId, Integer gunNo,
+            int accumulatedChargingTime, int remainingChargingTime,
+            BigDecimal chargingDegree, BigDecimal chargedAmount
+    ) {
         // 1.输出电压 0.0~500.0V ,1位小数
         BigDecimal voltage = BigDecimal.valueOf(RandomUtil.randomDouble(0, 500)).setScale(1, RoundingMode.HALF_UP);
         // 2.输出电流 0.0~250.0A ,1位小数
         BigDecimal current = BigDecimal.valueOf(RandomUtil.randomDouble(0, 250)).setScale(1, RoundingMode.HALF_UP);
         // 3.枪线温度 30~130 (对应真实-20℃~80℃)
         Integer temperature = RandomUtil.randomInt(30, 131);
-        // 4.累计充电时间 0~480 分钟
-        Integer accumulatedChargingTime = RandomUtil.randomInt(0, 481);
-        // 5.剩余充电时间 0~480 分钟
-        Integer remainingChargingTime = RandomUtil.randomInt(0, 481);
-        // 6.充电度数 0~50.0000 ,4位小数
-        BigDecimal chargingDegree = BigDecimal.valueOf(RandomUtil.randomDouble(0, 50)).setScale(4, RoundingMode.HALF_UP);
-        // 7.已充金额 0~200.0000 ,4位小数
-        BigDecimal chargedAmount = BigDecimal.valueOf(RandomUtil.randomDouble(0, 200)).setScale(4, RoundingMode.HALF_UP);
         // 组装
         return new StandardRealTimeMonitor(
                 tradeNo, deviceId, gunNo,

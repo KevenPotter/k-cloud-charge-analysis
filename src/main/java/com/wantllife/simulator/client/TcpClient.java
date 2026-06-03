@@ -156,7 +156,7 @@ public class TcpClient {
                 byte[] data = new byte[len];
                 System.arraycopy(buffer, 0, data, 0, len);
                 // 将原始下行报文交给处理器,不做任何业务处理
-                deviceMessageProcessor.process( data);
+                deviceMessageProcessor.process(data);
             } catch (Exception e) {
                 // 接收异常,执行重连
                 if (running) {

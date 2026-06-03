@@ -39,4 +39,9 @@ public final class SimulatorConstants {
      * 心跳发送间隔(秒) [0X03]
      */
     public static final long TIMER_HEARTBEAT_SECOND = 10;
+
+    /**
+     * 实时监测数据发送间隔(秒) [0X13]
+     */
+    public static final long TIMER_REAL_TIME_MONITOR_SECOND = 10;
 }

@@ -1,13 +1,19 @@
 package com.wantllife.simulator.process;
 
 import cn.hutool.core.util.HexUtil;
+import com.wantllife.constant.SimulatorConstants;
 import com.wantllife.domain.vo.StandardDevice;
+import com.wantllife.domain.vo.StandardRealTimeMonitor;
 import com.wantllife.simulator.client.TcpClient;
+import com.wantllife.simulator.fake.DeviceChargingState;
 import com.wantllife.simulator.req.*;
 import com.wantllife.simulator.res.*;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.OutputStream;
+import java.math.BigDecimal;
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
@@ -44,6 +50,9 @@ public class SimulatorDeviceMessageProcessor {
     /*平台下发的计费模型编码*/
     private Integer platformBillingModeId;
 
+    /*设备独立的充电状态*/
+    private final DeviceChargingState chargingState = new DeviceChargingState();
+
     /*登录定时器*/
     private ScheduledExecutorService loginTimer;
     /*计费验证定时器*/
@@ -52,6 +61,11 @@ public class SimulatorDeviceMessageProcessor {
     private ScheduledExecutorService billingModelTimer;
     /*心跳定时器*/
     private ScheduledExecutorService heartbeatTimer;
+    /*实时监测数据定时器*/
+    private ScheduledExecutorService realTimeMonitorTimer;
+
+    /*实时监测数据[0x13指令]是否已经发送过初始化*/
+    private boolean initRealTimeSent = false;
 
     /**
      * 绑定TCP输出流与客户端实例
@@ -68,6 +82,7 @@ public class SimulatorDeviceMessageProcessor {
         this.gunNo = device.getGunNum();
         this.outputStream = outputStream;
         this.tcpClient = tcpClient;
+        chargingState.setDeviceId(deviceId).setGunNo(gunNo);
     }
 
     /**
@@ -95,6 +110,11 @@ public class SimulatorDeviceMessageProcessor {
                     break;
                 // 模拟器心跳包应答
                 case SIM_UP_HEARTBEAT:
+                    // 心跳第一次发送后 → 上传一次初始化0x13
+                    if (!initRealTimeSent && currentState == DeviceState.READY) {
+                        initRealTimeSent = true;
+                        sendMessage(SAERealTimeMonitorRes.buildCommand(fakeInitRealTimeMonitor(deviceId, gunNo)));
+                    }
                     SABHeartbeatReq heartbeatReq = new SABHeartbeatReq(data, rawHexMsg);
                     break;
                 // 模拟器计费模型验证请求应答
@@ -109,7 +129,24 @@ public class SimulatorDeviceMessageProcessor {
                 // 模拟器读取实时监测数据
                 case SIM_UP_REAL_TIME_MONITOR:
                     SAERealTimeMonitorReq realTimeMonitorReq = new SAERealTimeMonitorReq(data, rawHexMsg);
-                    sendMessage(SAERealTimeMonitorRes.buildCommand(fakeInitRealTimeMonitor(realTimeMonitorReq.getDeviceId(), realTimeMonitorReq.getGunNo())));
+                    StandardRealTimeMonitor currentMonitor;
+                    // 判断:是否正在充电 → 返回对应状态
+                    if (chargingState.isCharging()) {
+                        // 充电中 → 返回实时充电数据
+                        currentMonitor = fakeChargingRealTimeMonitor(
+                                chargingState.getTradeNo(),
+                                deviceId,
+                                gunNo,
+                                chargingState.getAccumulatedMinutes(),
+                                chargingState.getRemainingMinutes(),
+                                chargingState.getChargingDegree(),
+                                chargingState.getChargedAmount()
+                        );
+                    } else {
+                        // 未充电 → 返回初始化空闲状态
+                        currentMonitor = fakeInitRealTimeMonitor(deviceId, gunNo);
+                    }
+                    sendMessage(SAERealTimeMonitorRes.buildCommand(currentMonitor));
                     break;
                 // 模拟器运营平台确认启动充电
                 case SIM_UP_REQUEST_CHARGING:
@@ -119,15 +156,22 @@ public class SimulatorDeviceMessageProcessor {
                     SOStartChargeReq startChargeReq = new SOStartChargeReq(data, rawHexMsg);
                     sendMessage(SOStartChargeRes.buildCommand(startChargeReq));
                     Thread.sleep(100);
-                    sendMessage(SAERealTimeMonitorRes.buildCommand(
-                                    fakeChargingRealTimeMonitor(
-                                            startChargeReq.getTradeNo(), startChargeReq.getDeviceId(), startChargeReq.getGunNo()
-                                    )
-                            )
-                    );
+
+                    // 开始充电 → 启动实时数据上传
+                    startCharging(startChargeReq.getTradeNo());
+//                    sendMessage(SAERealTimeMonitorRes.buildCommand(
+//                                    fakeChargingRealTimeMonitor(
+//                                            startChargeReq.getTradeNo(), startChargeReq.getDeviceId(), startChargeReq.getGunNo()
+//                                    )
+//                            )
+//                    );
                     break;
                 // 模拟器运营平台远程停机
                 case SIM_UP_STOP_CHARGE:
+                    // 停机指令
+//                    SOStopChargeReq stopReq = new SOStopChargeReq(data, rawHexMsg);
+//                    sendMessage(SOStopChargeRes.buildCommand(stopReq));
+//                    stopCharging();
                     break;
                 // 模拟器交易记录确认
                 case SIM_UP_TRADE_RECORD:
@@ -171,6 +215,84 @@ public class SimulatorDeviceMessageProcessor {
 
             }
         } catch (Exception ignored) {
+        }
+    }
+
+    /**
+     * 开始充电
+     *
+     * @author KevenPotter
+     * @date 2026-06-02 16:04:30
+     */
+    private void startCharging(String tradeNo) {
+        chargingState.setTradeNo(tradeNo);
+        chargingState.setCharging(true);
+        chargingState.setChargeStartTime(LocalDateTime.now());
+        startRealTimeMonitorTimer();
+    }
+
+    /**
+     * 停止充电
+     *
+     * @author KevenPotter
+     * @date 2026-06-02 16:04:40
+     */
+    private void stopCharging() {
+        chargingState.setCharging(false);
+        stopRealTimeMonitorTimer();
+    }
+
+    // ===================== 实时数据定时器（10秒/次） =====================
+    private void startRealTimeMonitorTimer() {
+        stopRealTimeMonitorTimer();
+        realTimeMonitorTimer = new ScheduledThreadPoolExecutor(1);
+        realTimeMonitorTimer.scheduleAtFixedRate(() -> {
+            try {
+                if (!chargingState.isCharging()) return;
+
+                // 真实时间计算
+                LocalDateTime now = LocalDateTime.now();
+                Duration between = Duration.between(chargingState.getChargeStartTime(), now);
+                long minutes = between.toMinutes();
+
+                // 越界保护
+                if (minutes >= DeviceChargingState.TOTAL_CHARGE_MINUTES) {
+                    minutes = DeviceChargingState.TOTAL_CHARGE_MINUTES;
+                }
+
+                // 自动计算
+                int accumulated = (int) minutes;
+                int remaining = DeviceChargingState.TOTAL_CHARGE_MINUTES - accumulated;
+                BigDecimal degree = BigDecimal.valueOf(accumulated * 0.5);  // 每分钟0.5度
+                BigDecimal amount = BigDecimal.valueOf(accumulated * 0.8);  // 每分钟0.8元
+
+                // 更新状态
+                chargingState.setAccumulatedMinutes(accumulated);
+                chargingState.setRemainingMinutes(remaining);
+                chargingState.setChargingDegree(degree);
+                chargingState.setChargedAmount(amount);
+
+                // 发送
+                StandardRealTimeMonitor monitor = fakeChargingRealTimeMonitor(
+                        chargingState.getTradeNo(),
+                        deviceId,
+                        gunNo,
+                        accumulated,
+                        remaining,
+                        degree,
+                        amount
+                );
+                sendMessage(SAERealTimeMonitorRes.buildCommand(monitor));
+
+            } catch (Exception ignored) {
+            }
+        }, 0, SimulatorConstants.TIMER_REAL_TIME_MONITOR_SECOND, TimeUnit.SECONDS);
+    }
+
+    private void stopRealTimeMonitorTimer() {
+        if (realTimeMonitorTimer != null) {
+            realTimeMonitorTimer.shutdownNow();
+            realTimeMonitorTimer = null;
         }
     }
 
@@ -239,6 +361,7 @@ public class SimulatorDeviceMessageProcessor {
         currentState = DeviceState.WAIT_LOGIN;
         loginReq = null;
         platformBillingModeId = null;
+        initRealTimeSent = false;
         // 关闭所有旧定时器
         stopAllTimers();
         // 启动登录
@@ -393,6 +516,7 @@ public class SimulatorDeviceMessageProcessor {
         stopBillingValidTimer();
         stopBillingModelTimer();
         stopHeartbeatTimer();
+        stopRealTimeMonitorTimer();
     }
 
     /**
