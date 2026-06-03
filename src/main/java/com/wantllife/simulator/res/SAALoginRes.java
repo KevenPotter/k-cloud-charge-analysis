@@ -13,6 +13,8 @@ import lombok.experimental.Accessors;
 import lombok.extern.slf4j.Slf4j;
 
 import static com.wantllife.constant.CloudFastChargingConstants.SIM_DOWN_LOGIN;
+import static com.wantllife.constant.ColorConstants.PURPLE;
+import static com.wantllife.constant.ColorConstants.RESET;
 
 /**
  * 充电桩登录认证 [0X01]
@@ -124,15 +126,15 @@ public class SAALoginRes extends FrameHeader {
      */
     private void log(String rawHexMsg) {
         log.info("-------------------------------------------------------------------------------------------");
-        log.info("🚀 【0x01】 {} 设备登录认证  原始报文    rawMsg                       : {}", deviceId, rawHexMsg);
-        log.info("🚀 【0x01】 {} 设备登录认证  设备编号    deviceId                     : {}", deviceId, deviceId);
-        log.info("🚀 【0x01】 {} 设备登录认证  设备类型    deviceType                   : {}", deviceId, deviceType);
-        log.info("🚀 【0x01】 {} 设备登录认证  充电枪数    gunNum                       : {}", deviceId, gunNum);
-        log.info("🚀 【0x01】 {} 设备登录认证  协议版本    protocolVersion              : {}", deviceId, protocolVersion);
-        log.info("🚀 【0x01】 {} 设备登录认证  程序版本    programVersion               : {}", deviceId, programVersion);
-        log.info("🚀 【0x01】 {} 设备登录认证  网络类型    networkLinkType              : {}", deviceId, networkLinkType);
-        log.info("🚀 【0x01】 {} 设备登录认证  芯片卡号    simNo                        : {}", deviceId, simNo);
-        log.info("🚀 【0x01】 {} 设备登录认证  运营商家    carrier                      : {}", deviceId, carrier);
+        log.info("🚀 【0x01】 {} 设备登录认证  原始报文    rawMsg                       : {}", PURPLE + deviceId + RESET, rawHexMsg);
+        log.info("🚀 【0x01】 {} 设备登录认证  设备编号    deviceId                     : {}", PURPLE + deviceId + RESET, deviceId);
+        log.info("🚀 【0x01】 {} 设备登录认证  设备类型    deviceType                   : {}", PURPLE + deviceId + RESET, deviceType);
+        log.info("🚀 【0x01】 {} 设备登录认证  充电枪数    gunNum                       : {}", PURPLE + deviceId + RESET, gunNum);
+        log.info("🚀 【0x01】 {} 设备登录认证  协议版本    protocolVersion              : {}", PURPLE + deviceId + RESET, protocolVersion);
+        log.info("🚀 【0x01】 {} 设备登录认证  程序版本    programVersion               : {}", PURPLE + deviceId + RESET, programVersion);
+        log.info("🚀 【0x01】 {} 设备登录认证  网络类型    networkLinkType              : {}", PURPLE + deviceId + RESET, networkLinkType);
+        log.info("🚀 【0x01】 {} 设备登录认证  芯片卡号    simNo                        : {}", PURPLE + deviceId + RESET, simNo);
+        log.info("🚀 【0x01】 {} 设备登录认证  运营商家    carrier                      : {}", PURPLE + deviceId + RESET, carrier);
         System.out.println();
     }
 }

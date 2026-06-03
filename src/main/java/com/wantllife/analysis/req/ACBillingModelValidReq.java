@@ -8,6 +8,9 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 import lombok.extern.slf4j.Slf4j;
 
+import static com.wantllife.constant.ColorConstants.GREEN;
+import static com.wantllife.constant.ColorConstants.RESET;
+
 /**
  * 计费模型验证请求 [0X05]
  *
@@ -60,9 +63,9 @@ public class ACBillingModelValidReq extends FrameHeader {
      */
     private void log(String rawHexMsg) {
         log.info("-------------------------------------------------------------------------------------------");
-        log.info("🟢 【0x05】 {} 计费模型验证  原始报文    rawMsg                       : {}", deviceId, rawHexMsg);
-        log.info("🟢 【0x05】 {} 计费模型验证  设备编号    deviceId                     : {}", deviceId, deviceId);
-        log.info("🟢 【0x05】 {} 计费模型验证  计费编码    billingModeId                : {}", deviceId, billingModeId);
+        log.info("🟢 【0x05】 {} 计费模型验证  原始报文    rawMsg                       : {}", GREEN + deviceId + RESET, rawHexMsg);
+        log.info("🟢 【0x05】 {} 计费模型验证  设备编号    deviceId                     : {}", GREEN + deviceId + RESET, deviceId);
+        log.info("🟢 【0x05】 {} 计费模型验证  计费编码    billingModeId                : {}", GREEN + deviceId + RESET, billingModeId);
         System.out.println();
     }
 

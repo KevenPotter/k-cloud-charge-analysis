@@ -14,6 +14,8 @@ import lombok.extern.slf4j.Slf4j;
 import java.math.BigDecimal;
 
 import static com.wantllife.constant.CloudFastChargingConstants.DOWN_REQUEST_CHARGING;
+import static com.wantllife.constant.ColorConstants.GREEN;
+import static com.wantllife.constant.ColorConstants.RESET;
 
 /**
  * 运营平台确认启动充电 [0X32]
@@ -157,14 +159,14 @@ public class ANRequestChargingRes extends FrameHeader {
      */
     private void log(String rawHexMsg) {
         log.info("-------------------------------------------------------------------------------------------");
-        log.info("🔶 【0x32】 {} 确认启动充电  原始报文    rawMsg                       : {}", deviceId, rawHexMsg);
-        log.info("🔶 【0x32】 {} 确认启动充电  设备编号    deviceId                     : {}", deviceId, deviceId);
-        log.info("🔶 【0x32】 {} 确认启动充电  枪口编号    gunNo                        : {}", deviceId, gunNo);
-        log.info("🔶 【0x32】 {} 确认启动充电  交易编号    tradeNo                      : {}", deviceId, tradeNo);
-        log.info("🔶 【0x32】 {} 确认启动充电  逻辑卡号    logicalCardNo                : {}", deviceId, logicalCardNo);
-        log.info("🔶 【0x32】 {} 确认启动充电  账户余额    balance                      : {}", deviceId, balance);
-        log.info("🔶 【0x32】 {} 确认启动充电  鉴权标志    authResult                   : {}", deviceId, "00".equals(authResult) ? "失败" : "成功");
-        log.info("🔶 【0x32】 {} 确认启动充电  失败原因    failureReasonDesc            : {}", deviceId, failureReasonDesc);
+        log.info("🔶 【0x32】 {} 确认启动充电  原始报文    rawMsg                       : {}", GREEN + deviceId + RESET, rawHexMsg);
+        log.info("🔶 【0x32】 {} 确认启动充电  设备编号    deviceId                     : {}", GREEN + deviceId + RESET, deviceId);
+        log.info("🔶 【0x32】 {} 确认启动充电  枪口编号    gunNo                        : {}", GREEN + deviceId + RESET, gunNo);
+        log.info("🔶 【0x32】 {} 确认启动充电  交易编号    tradeNo                      : {}", GREEN + deviceId + RESET, tradeNo);
+        log.info("🔶 【0x32】 {} 确认启动充电  逻辑卡号    logicalCardNo                : {}", GREEN + deviceId + RESET, logicalCardNo);
+        log.info("🔶 【0x32】 {} 确认启动充电  账户余额    balance                      : {}", GREEN + deviceId + RESET, balance);
+        log.info("🔶 【0x32】 {} 确认启动充电  鉴权标志    authResult                   : {}", GREEN + deviceId + RESET, "00".equals(authResult) ? "失败" : "成功");
+        log.info("🔶 【0x32】 {} 确认启动充电  失败原因    failureReasonDesc            : {}", GREEN + deviceId + RESET, failureReasonDesc);
         System.out.println();
     }
 

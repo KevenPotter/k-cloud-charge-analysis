@@ -8,6 +8,9 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 import lombok.extern.slf4j.Slf4j;
 
+import static com.wantllife.constant.ColorConstants.GREEN;
+import static com.wantllife.constant.ColorConstants.RESET;
+
 /**
  * 远程更新应答 [0X93]
  *
@@ -85,9 +88,9 @@ public class BBUpgradeReq extends FrameHeader {
      */
     private void log(String rawHexMsg) {
         log.info("-------------------------------------------------------------------------------------------");
-        log.info("🟢 【0x93】 {} 远程更新应答  原始报文    rawMsg                       : {}", deviceId, rawHexMsg);
-        log.info("🟢 【0x93】 {} 远程更新应答  设备编号    deviceId                     : {}", deviceId, deviceId);
-        log.info("🟢 【0x93】 {} 远程更新应答  升级状态    upgradeStatusDesc            : {}", deviceId, upgradeStatusDesc);
+        log.info("🟢 【0x93】 {} 远程更新应答  原始报文    rawMsg                       : {}", GREEN + deviceId + RESET, rawHexMsg);
+        log.info("🟢 【0x93】 {} 远程更新应答  设备编号    deviceId                     : {}", GREEN + deviceId + RESET, deviceId);
+        log.info("🟢 【0x93】 {} 远程更新应答  升级状态    upgradeStatusDesc            : {}", GREEN + deviceId + RESET, upgradeStatusDesc);
         System.out.println();
     }
 

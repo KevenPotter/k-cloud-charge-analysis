@@ -8,6 +8,9 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 import lombok.extern.slf4j.Slf4j;
 
+import static com.wantllife.constant.ColorConstants.GREEN;
+import static com.wantllife.constant.ColorConstants.RESET;
+
 /**
  * 远程并充启机命令回复 [0XA3]
  *
@@ -115,14 +118,14 @@ public class BDParallelStartChargeReq extends FrameHeader {
      */
     private void log(String rawHexMsg) {
         log.info("-------------------------------------------------------------------------------------------");
-        log.info("🟢 【0xA3】 {} 并充开电回复  原始报文    rawMsg                       : {}", deviceId, rawHexMsg);
-        log.info("🟢 【0xA3】 {} 并充开电回复  设备编号    deviceId                     : {}", deviceId, deviceId);
-        log.info("🟢 【0xA3】 {} 并充开电回复  枪口编号    gunNo                        : {}", deviceId, gunNo);
-        log.info("🟢 【0xA3】 {} 并充开电回复  交易编号    tradeNo                      : {}", deviceId, tradeNo);
-        log.info("🟢 【0xA3】 {} 并充开电回复  启动结果    startupResult                : {}", deviceId, startupResult == 0 ? "启动失败" : "启动成功");
-        log.info("🟢 【0xA3】 {} 并充开电回复  失败原因    failureReasonDesc            : {}", deviceId, failureReasonDesc);
-        log.info("🟢 【0xA3】 {} 并充开电回复  主辅标记    priAndSecFlagDesc            : {}", deviceId, priAndSecFlagDesc);
-        log.info("🟢 【0xA3】 {} 并充开电回复  并充序号    parallelNo                   : {}", deviceId, parallelNo);
+        log.info("🟢 【0xA3】 {} 并充开电回复  原始报文    rawMsg                       : {}", GREEN + deviceId + RESET, rawHexMsg);
+        log.info("🟢 【0xA3】 {} 并充开电回复  设备编号    deviceId                     : {}", GREEN + deviceId + RESET, deviceId);
+        log.info("🟢 【0xA3】 {} 并充开电回复  枪口编号    gunNo                        : {}", GREEN + deviceId + RESET, gunNo);
+        log.info("🟢 【0xA3】 {} 并充开电回复  交易编号    tradeNo                      : {}", GREEN + deviceId + RESET, tradeNo);
+        log.info("🟢 【0xA3】 {} 并充开电回复  启动结果    startupResult                : {}", GREEN + deviceId + RESET, startupResult == 0 ? "启动失败" : "启动成功");
+        log.info("🟢 【0xA3】 {} 并充开电回复  失败原因    failureReasonDesc            : {}", GREEN + deviceId + RESET, failureReasonDesc);
+        log.info("🟢 【0xA3】 {} 并充开电回复  主辅标记    priAndSecFlagDesc            : {}", GREEN + deviceId + RESET, priAndSecFlagDesc);
+        log.info("🟢 【0xA3】 {} 并充开电回复  并充序号    parallelNo                   : {}", GREEN + deviceId + RESET, parallelNo);
         System.out.println();
     }
 

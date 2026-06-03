@@ -8,6 +8,9 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 import lombok.extern.slf4j.Slf4j;
 
+import static com.wantllife.constant.ColorConstants.GREEN;
+import static com.wantllife.constant.ColorConstants.RESET;
+
 /**
  * 充电阶段充电机中止 [0X21]
  *
@@ -136,13 +139,13 @@ public class AKChargingChargerStopReq extends FrameHeader {
      */
     private void log(String rawHexMsg) {
         log.info("-------------------------------------------------------------------------------------------");
-        log.info("🟢 【0x21】 {} 充电机器中止  原始报文    rawMsg                       : {}", deviceId, rawHexMsg);
-        log.info("🟢 【0x21】 {} 充电机器中止  设备编号    deviceId                     : {}", deviceId, deviceId);
-        log.info("🟢 【0x21】 {} 充电机器中止  枪口编号    gunNo                        : {}", deviceId, gunNo);
-        log.info("🟢 【0x21】 {} 充电机器中止  交易编号    tradeNo                      : {}", deviceId, tradeNo);
-        log.info("🟢 【0x21】 {} 充电机器中止  中止原因    chargerStopReason            : {}", deviceId, chargerStopReason);
-        log.info("🟢 【0x21】 {} 充电机器中止  故障原因    chargerStopFailureDesc       : {}", deviceId, chargerStopFailureDesc);
-        log.info("🟢 【0x21】 {} 充电机器中止  错误原因    chargerStopErrorReasonDesc   : {}", deviceId, chargerStopErrorReasonDesc);
+        log.info("🟢 【0x21】 {} 充电机器中止  原始报文    rawMsg                       : {}", GREEN + deviceId + RESET, rawHexMsg);
+        log.info("🟢 【0x21】 {} 充电机器中止  设备编号    deviceId                     : {}", GREEN + deviceId + RESET, deviceId);
+        log.info("🟢 【0x21】 {} 充电机器中止  枪口编号    gunNo                        : {}", GREEN + deviceId + RESET, gunNo);
+        log.info("🟢 【0x21】 {} 充电机器中止  交易编号    tradeNo                      : {}", GREEN + deviceId + RESET, tradeNo);
+        log.info("🟢 【0x21】 {} 充电机器中止  中止原因    chargerStopReason            : {}", GREEN + deviceId + RESET, chargerStopReason);
+        log.info("🟢 【0x21】 {} 充电机器中止  故障原因    chargerStopFailureDesc       : {}", GREEN + deviceId + RESET, chargerStopFailureDesc);
+        log.info("🟢 【0x21】 {} 充电机器中止  错误原因    chargerStopErrorReasonDesc   : {}", GREEN + deviceId + RESET, chargerStopErrorReasonDesc);
         System.out.println();
     }
 

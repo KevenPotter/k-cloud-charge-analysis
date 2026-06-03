@@ -13,6 +13,9 @@ import lombok.extern.slf4j.Slf4j;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.wantllife.constant.ColorConstants.GREEN;
+import static com.wantllife.constant.ColorConstants.RESET;
+
 /**
  * 离线卡数据清除应答 [0X45]
  *
@@ -120,15 +123,15 @@ public class ATOfflineCardClearReq extends FrameHeader {
      */
     private void log(String rawHexMsg) {
         log.info("-------------------------------------------------------------------------------------------");
-        log.info("🟢 【0x45】 {} 电卡清除应答  原始报文    rawMsg                       : {}", deviceId, rawHexMsg);
-        log.info("🟢 【0x45】 {} 电卡清除应答  设备编号    deviceId                     : {}", deviceId, deviceId);
+        log.info("🟢 【0x45】 {} 电卡清除应答  原始报文    rawMsg                       : {}", GREEN + deviceId + RESET, rawHexMsg);
+        log.info("🟢 【0x45】 {} 电卡清除应答  设备编号    deviceId                     : {}", GREEN + deviceId + RESET, deviceId);
 
         for (int i = 0; i < clearResultList.size(); i++) {
             System.out.println();
             ClearResult clearResult = clearResultList.get(i);
-            log.info("🟢 【0x45】 {} 电卡清除应答  第{}物号    physicalCardNo               : {}", deviceId, NumberChineseFormatter.format(i, false, false), clearResult.getPhysicalCardNo());
-            log.info("🟢 【0x45】 {} 电卡清除应答  清除标记    clearResult                  : {}", deviceId, clearResult.getClearResult() == 0 ? "清除失败" : "清除成功");
-            log.info("🟢 【0x45】 {} 电卡清除应答  失败原因    failReasonDesc               : {}", deviceId, clearResult.getFailReasonDesc());
+            log.info("🟢 【0x45】 {} 电卡清除应答  第{}物号    physicalCardNo               : {}", GREEN + deviceId + RESET, NumberChineseFormatter.format(i, false, false), clearResult.getPhysicalCardNo());
+            log.info("🟢 【0x45】 {} 电卡清除应答  清除标记    clearResult                  : {}", GREEN + deviceId + RESET, clearResult.getClearResult() == 0 ? "清除失败" : "清除成功");
+            log.info("🟢 【0x45】 {} 电卡清除应答  失败原因    failReasonDesc               : {}", GREEN + deviceId + RESET, clearResult.getFailReasonDesc());
         }
         System.out.println();
     }

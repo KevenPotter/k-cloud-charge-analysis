@@ -11,6 +11,8 @@ import lombok.experimental.Accessors;
 import lombok.extern.slf4j.Slf4j;
 
 import static com.wantllife.constant.CloudFastChargingConstants.DOWN_TRADE_RECORD;
+import static com.wantllife.constant.ColorConstants.GREEN;
+import static com.wantllife.constant.ColorConstants.RESET;
 
 
 /**
@@ -85,9 +87,9 @@ public class AQTradeRecordRes extends FrameHeader {
      */
     private void log(String rawHexMsg) {
         log.info("-------------------------------------------------------------------------------------------");
-        log.info("🔶 【0x40】 {} 交易记录确认  原始报文    rawMsg                       : {}", deviceId, rawHexMsg);
-        log.info("🔶 【0x40】 {} 交易记录确认  交易编号    tradeNo                      : {}", deviceId, tradeNo);
-        log.info("🔶 【0x40】 {} 交易记录确认  确认结果    confirmResult                : {}", deviceId, "00".equals(confirmResult) ? "上传成功" : "非法账单");
+        log.info("🔶 【0x40】 {} 交易记录确认  原始报文    rawMsg                       : {}", GREEN + deviceId + RESET, rawHexMsg);
+        log.info("🔶 【0x40】 {} 交易记录确认  交易编号    tradeNo                      : {}", GREEN + deviceId + RESET, tradeNo);
+        log.info("🔶 【0x40】 {} 交易记录确认  确认结果    confirmResult                : {}", GREEN + deviceId + RESET, "00".equals(confirmResult) ? "上传成功" : "非法账单");
         System.out.println();
     }
 

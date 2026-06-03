@@ -8,6 +8,9 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 import lombok.extern.slf4j.Slf4j;
 
+import static com.wantllife.constant.ColorConstants.GREEN;
+import static com.wantllife.constant.ColorConstants.RESET;
+
 /**
  * 远程重启应答 [0X91]
  *
@@ -61,9 +64,9 @@ public class BARebootReq extends FrameHeader {
      */
     private void log(String rawHexMsg) {
         log.info("-------------------------------------------------------------------------------------------");
-        log.info("🟢 【0x91】 {} 远程重启应答  原始报文    rawMsg                       : {}", deviceId, rawHexMsg);
-        log.info("🟢 【0x91】 {} 远程重启应答  设备编号    deviceId                     : {}", deviceId, deviceId);
-        log.info("🟢 【0x91】 {} 远程重启应答  设置结果    setResult                    : {}", deviceId, setResult == 0 ? "重启失败" : "重启成功");
+        log.info("🟢 【0x91】 {} 远程重启应答  原始报文    rawMsg                       : {}", GREEN + deviceId + RESET, rawHexMsg);
+        log.info("🟢 【0x91】 {} 远程重启应答  设备编号    deviceId                     : {}", GREEN + deviceId + RESET, deviceId);
+        log.info("🟢 【0x91】 {} 远程重启应答  设置结果    setResult                    : {}", GREEN + deviceId + RESET, setResult == 0 ? "重启失败" : "重启成功");
         System.out.println();
     }
 

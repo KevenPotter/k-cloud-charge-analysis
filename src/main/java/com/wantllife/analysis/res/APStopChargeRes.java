@@ -11,6 +11,8 @@ import lombok.experimental.Accessors;
 import lombok.extern.slf4j.Slf4j;
 
 import static com.wantllife.constant.CloudFastChargingConstants.DOWN_STOP_CHARGE;
+import static com.wantllife.constant.ColorConstants.GREEN;
+import static com.wantllife.constant.ColorConstants.RESET;
 
 
 /**
@@ -82,9 +84,9 @@ public class APStopChargeRes extends FrameHeader {
      */
     private void log(String rawHexMsg) {
         log.info("-------------------------------------------------------------------------------------------");
-        log.info("🔶 【0x36】 {} 远程控制停机  原始报文    rawMsg                       : {}", deviceId, rawHexMsg);
-        log.info("🔶 【0x36】 {} 远程控制停机  设备编号    deviceId                     : {}", deviceId, deviceId);
-        log.info("🔶 【0x36】 {} 远程控制停机  枪口编号    gunNo                        : {}", deviceId, gunNo);
+        log.info("🔶 【0x36】 {} 远程控制停机  原始报文    rawMsg                       : {}", GREEN + deviceId + RESET, rawHexMsg);
+        log.info("🔶 【0x36】 {} 远程控制停机  设备编号    deviceId                     : {}", GREEN + deviceId + RESET, deviceId);
+        log.info("🔶 【0x36】 {} 远程控制停机  枪口编号    gunNo                        : {}", GREEN + deviceId + RESET, gunNo);
         System.out.println();
     }
 

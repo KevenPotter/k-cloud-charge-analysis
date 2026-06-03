@@ -16,6 +16,8 @@ import java.math.RoundingMode;
 import java.util.List;
 
 import static com.wantllife.constant.CloudFastChargingConstants.DOWN_BILLING_MODE_SET;
+import static com.wantllife.constant.ColorConstants.GREEN;
+import static com.wantllife.constant.ColorConstants.RESET;
 
 
 /**
@@ -271,31 +273,31 @@ public class AXBillingModeSetRes extends FrameHeader {
      */
     private void log(String rawHexMsg, List<StandardBillingModel> billingModelList) {
         log.info("-------------------------------------------------------------------------------------------");
-        log.info("🔶 【0x58】 {} 计费模型设置  原始报文    rawMsg                       : {}", deviceId, rawHexMsg);
-        log.info("🔶 【0x58】 {} 计费模型设置  设备编号    deviceId                     : {}", deviceId, deviceId);
-        log.info("🔶 【0x58】 {} 计费模型设置  计费编码    billingModeId                : {}", deviceId, billingModeId);
-        log.info("🔶 【0x58】 {} 计费模型设置  尖电费率    sharpEleFee                  : {}", deviceId, sharpEleFee);
-        log.info("🔶 【0x58】 {} 计费模型设置  尖服费率    sharpServiceFee              : {}", deviceId, sharpServiceFee);
-        log.info("🔶 【0x58】 {} 计费模型设置  峰电费率    peakEleFee                   : {}", deviceId, peakEleFee);
-        log.info("🔶 【0x58】 {} 计费模型设置  峰服费率    peakServiceFee               : {}", deviceId, peakServiceFee);
-        log.info("🔶 【0x58】 {} 计费模型设置  平电费率    flatEleFee                   : {}", deviceId, flatEleFee);
-        log.info("🔶 【0x58】 {} 计费模型设置  平服费率    flatServiceFee               : {}", deviceId, flatServiceFee);
-        log.info("🔶 【0x58】 {} 计费模型设置  谷电费率    valleyEleFee                 : {}", deviceId, valleyEleFee);
-        log.info("🔶 【0x58】 {} 计费模型设置  谷服费率    valleyServiceFee             : {}", deviceId, valleyServiceFee);
-        log.info("🔶 【0x58】 {} 计费模型设置  计损比例    lossRatio                    : {}", deviceId, lossRatio);
+        log.info("🔶 【0x58】 {} 计费模型设置  原始报文    rawMsg                       : {}", GREEN + deviceId + RESET, rawHexMsg);
+        log.info("🔶 【0x58】 {} 计费模型设置  设备编号    deviceId                     : {}", GREEN + deviceId + RESET, deviceId);
+        log.info("🔶 【0x58】 {} 计费模型设置  计费编码    billingModeId                : {}", GREEN + deviceId + RESET, billingModeId);
+        log.info("🔶 【0x58】 {} 计费模型设置  尖电费率    sharpEleFee                  : {}", GREEN + deviceId + RESET, sharpEleFee);
+        log.info("🔶 【0x58】 {} 计费模型设置  尖服费率    sharpServiceFee              : {}", GREEN + deviceId + RESET, sharpServiceFee);
+        log.info("🔶 【0x58】 {} 计费模型设置  峰电费率    peakEleFee                   : {}", GREEN + deviceId + RESET, peakEleFee);
+        log.info("🔶 【0x58】 {} 计费模型设置  峰服费率    peakServiceFee               : {}", GREEN + deviceId + RESET, peakServiceFee);
+        log.info("🔶 【0x58】 {} 计费模型设置  平电费率    flatEleFee                   : {}", GREEN + deviceId + RESET, flatEleFee);
+        log.info("🔶 【0x58】 {} 计费模型设置  平服费率    flatServiceFee               : {}", GREEN + deviceId + RESET, flatServiceFee);
+        log.info("🔶 【0x58】 {} 计费模型设置  谷电费率    valleyEleFee                 : {}", GREEN + deviceId + RESET, valleyEleFee);
+        log.info("🔶 【0x58】 {} 计费模型设置  谷服费率    valleyServiceFee             : {}", GREEN + deviceId + RESET, valleyServiceFee);
+        log.info("🔶 【0x58】 {} 计费模型设置  计损比例    lossRatio                    : {}", GREEN + deviceId + RESET, lossRatio);
         for (StandardBillingModel mode : billingModelList) {
             switch (mode.getTimeSlotType()) {
                 case 1:
-                    log.info("🔶 【0x58】 {} 计费模型设置  尖时间段    sharpTime                    : {}-{}", deviceId, mode.getStartTime(), mode.getEndTime());
+                    log.info("🔶 【0x58】 {} 计费模型设置  尖时间段    sharpTime                    : {}-{}", GREEN + deviceId + RESET, mode.getStartTime(), mode.getEndTime());
                     break;
                 case 2:
-                    log.info("🔶 【0x58】 {} 计费模型设置  峰时间段    peakTime                     : {}-{}", deviceId, mode.getStartTime(), mode.getEndTime());
+                    log.info("🔶 【0x58】 {} 计费模型设置  峰时间段    peakTime                     : {}-{}", GREEN + deviceId + RESET, mode.getStartTime(), mode.getEndTime());
                     break;
                 case 3:
-                    log.info("🔶 【0x58】 {} 计费模型设置  平时间段    flatTime                     : {}-{}", deviceId, mode.getStartTime(), mode.getEndTime());
+                    log.info("🔶 【0x58】 {} 计费模型设置  平时间段    flatTime                     : {}-{}", GREEN + deviceId + RESET, mode.getStartTime(), mode.getEndTime());
                     break;
                 case 4:
-                    log.info("🔶 【0x58】 {} 计费模型设置  谷时间段    valleyTime                   : {}-{}", deviceId, mode.getStartTime(), mode.getEndTime());
+                    log.info("🔶 【0x58】 {} 计费模型设置  谷时间段    valleyTime                   : {}-{}", GREEN + deviceId + RESET, mode.getStartTime(), mode.getEndTime());
                     break;
             }
         }

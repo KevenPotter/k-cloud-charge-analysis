@@ -13,6 +13,8 @@ import lombok.extern.slf4j.Slf4j;
 import java.math.BigDecimal;
 
 import static com.wantllife.constant.CloudFastChargingConstants.DOWN_BALANCE_UPDATE;
+import static com.wantllife.constant.ColorConstants.GREEN;
+import static com.wantllife.constant.ColorConstants.RESET;
 
 
 /**
@@ -102,11 +104,11 @@ public class ARBalanceUpdateRes extends FrameHeader {
      */
     private void log(String rawHexMsg) {
         log.info("-------------------------------------------------------------------------------------------");
-        log.info("🔶 【0x42】 {} 远程余额更新  原始报文    rawMsg                       : {}", deviceId, rawHexMsg);
-        log.info("🔶 【0x42】 {} 远程余额更新  设备编号    deviceId                     : {}", deviceId, deviceId);
-        log.info("🔶 【0x42】 {} 远程余额更新  枪口编号    gunNo                        : {}", deviceId, gunNo);
-        log.info("🔶 【0x42】 {} 远程余额更新  物理卡号    physicalCardNo               : {}", deviceId, physicalCardNo);
-        log.info("🔶 【0x42】 {} 远程余额更新  改后金额    balance                      : {}", deviceId, balance);
+        log.info("🔶 【0x42】 {} 远程余额更新  原始报文    rawMsg                       : {}", GREEN + deviceId + RESET, rawHexMsg);
+        log.info("🔶 【0x42】 {} 远程余额更新  设备编号    deviceId                     : {}", GREEN + deviceId + RESET, deviceId);
+        log.info("🔶 【0x42】 {} 远程余额更新  枪口编号    gunNo                        : {}", GREEN + deviceId + RESET, gunNo);
+        log.info("🔶 【0x42】 {} 远程余额更新  物理卡号    physicalCardNo               : {}", GREEN + deviceId + RESET, physicalCardNo);
+        log.info("🔶 【0x42】 {} 远程余额更新  改后金额    balance                      : {}", GREEN + deviceId + RESET, balance);
         System.out.println();
     }
 

@@ -8,6 +8,9 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 import lombok.extern.slf4j.Slf4j;
 
+import static com.wantllife.constant.ColorConstants.GREEN;
+import static com.wantllife.constant.ColorConstants.RESET;
+
 /**
  * 计费模型应答 [0X57]
  *
@@ -61,9 +64,9 @@ public class AXBillingModeSetReq extends FrameHeader {
      */
     private void log(String rawHexMsg) {
         log.info("-------------------------------------------------------------------------------------------");
-        log.info("🟢 【0x57】 {} 计费模型应答  原始报文    rawMsg                       : {}", deviceId, rawHexMsg);
-        log.info("🟢 【0x57】 {} 计费模型应答  设备编号    deviceId                     : {}", deviceId, deviceId);
-        log.info("🟢 【0x57】 {} 计费模型应答  设置结果    setResult                    : {}", deviceId, setResult == 0 ? "设置失败" : "设置成功");
+        log.info("🟢 【0x57】 {} 计费模型应答  原始报文    rawMsg                       : {}", GREEN + deviceId + RESET, rawHexMsg);
+        log.info("🟢 【0x57】 {} 计费模型应答  设备编号    deviceId                     : {}", GREEN + deviceId + RESET, deviceId);
+        log.info("🟢 【0x57】 {} 计费模型应答  设置结果    setResult                    : {}", GREEN + deviceId + RESET, setResult == 0 ? "设置失败" : "设置成功");
         System.out.println();
     }
 

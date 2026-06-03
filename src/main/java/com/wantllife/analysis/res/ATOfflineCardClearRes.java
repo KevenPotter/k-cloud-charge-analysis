@@ -15,6 +15,8 @@ import lombok.extern.slf4j.Slf4j;
 import java.util.List;
 
 import static com.wantllife.constant.CloudFastChargingConstants.DOWN_OFFLINE_CARD_CLEAR;
+import static com.wantllife.constant.ColorConstants.GREEN;
+import static com.wantllife.constant.ColorConstants.RESET;
 
 
 /**
@@ -101,13 +103,13 @@ public class ATOfflineCardClearRes extends FrameHeader {
      */
     private void log(String rawHexMsg, List<StandardCard> cardList) {
         log.info("-------------------------------------------------------------------------------------------");
-        log.info("🔶 【0x46】 {} 电卡数据清除  原始报文    rawMsg                       : {}", deviceId, rawHexMsg);
-        log.info("🔶 【0x46】 {} 电卡数据清除  设备编号    deviceId                     : {}", deviceId, deviceId);
-        log.info("🔶 【0x46】 {} 电卡数据清除  清除个数    clearCounts                  : {}", deviceId, clearCounts);
+        log.info("🔶 【0x46】 {} 电卡数据清除  原始报文    rawMsg                       : {}", GREEN + deviceId + RESET, rawHexMsg);
+        log.info("🔶 【0x46】 {} 电卡数据清除  设备编号    deviceId                     : {}", GREEN + deviceId + RESET, deviceId);
+        log.info("🔶 【0x46】 {} 电卡数据清除  清除个数    clearCounts                  : {}", GREEN + deviceId + RESET, clearCounts);
 
         for (int i = 0; i < clearCounts; i++) {
             StandardCard card = cardList.get(i);
-            log.info("🔶 【0x46】 {} 电卡数据清除  第{}物号    physicalCardNo               : {}", deviceId, NumberChineseFormatter.format(i, false, false), card.getPhysicalCardNo());
+            log.info("🔶 【0x46】 {} 电卡数据清除  第{}物号    physicalCardNo               : {}", GREEN + deviceId + RESET, NumberChineseFormatter.format(i, false, false), card.getPhysicalCardNo());
         }
         System.out.println();
     }

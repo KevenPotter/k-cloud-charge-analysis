@@ -3,8 +3,8 @@ package com.wantllife.analysis.res;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.HexUtil;
 import cn.hutool.core.util.RandomUtil;
-import com.wantllife.core.FrameHeader;
 import com.wantllife.config.holder.CloudChargeHolder;
+import com.wantllife.core.FrameHeader;
 import com.wantllife.util.StringUtil;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -15,6 +15,8 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 import static com.wantllife.constant.CloudFastChargingConstants.DOWN_PARALLEL_START_CHARGE;
+import static com.wantllife.constant.ColorConstants.GREEN;
+import static com.wantllife.constant.ColorConstants.RESET;
 
 
 /**
@@ -125,14 +127,14 @@ public class BDParallelStartChargeRes extends FrameHeader {
      */
     private void log(String rawHexMsg) {
         log.info("-------------------------------------------------------------------------------------------");
-        log.info("🔶 【0xA4】 {} 远程并充启机  原始报文    rawMsg                       : {}", deviceId, rawHexMsg);
-        log.info("🔶 【0xA4】 {} 远程并充启机  设备编号    deviceId                     : {}", deviceId, deviceId);
-        log.info("🔶 【0xA4】 {} 远程并充启机  枪口编号    gunNo                        : {}", deviceId, gunNo);
-        log.info("🔶 【0xA4】 {} 远程并充启机  交易编号    tradeNo                      : {}", deviceId, tradeNo);
-        log.info("🔶 【0xA4】 {} 远程并充启机  逻辑卡号    logicalCardNo                : {}", deviceId, logicalCardNo);
-        log.info("🔶 【0xA4】 {} 远程并充启机  物理卡号    physicalCardNo               : {}", deviceId, physicalCardNo);
-        log.info("🔶 【0xA4】 {} 远程并充启机  账户余额    balance                      : {}", deviceId, balance);
-        log.info("🔶 【0xA4】 {} 远程并充启机  并充序号    parallelNo                   : {}", deviceId, parallelNo);
+        log.info("🔶 【0xA4】 {} 远程并充启机  原始报文    rawMsg                       : {}", GREEN + deviceId + RESET, rawHexMsg);
+        log.info("🔶 【0xA4】 {} 远程并充启机  设备编号    deviceId                     : {}", GREEN + deviceId + RESET, deviceId);
+        log.info("🔶 【0xA4】 {} 远程并充启机  枪口编号    gunNo                        : {}", GREEN + deviceId + RESET, gunNo);
+        log.info("🔶 【0xA4】 {} 远程并充启机  交易编号    tradeNo                      : {}", GREEN + deviceId + RESET, tradeNo);
+        log.info("🔶 【0xA4】 {} 远程并充启机  逻辑卡号    logicalCardNo                : {}", GREEN + deviceId + RESET, logicalCardNo);
+        log.info("🔶 【0xA4】 {} 远程并充启机  物理卡号    physicalCardNo               : {}", GREEN + deviceId + RESET, physicalCardNo);
+        log.info("🔶 【0xA4】 {} 远程并充启机  账户余额    balance                      : {}", GREEN + deviceId + RESET, balance);
+        log.info("🔶 【0xA4】 {} 远程并充启机  并充序号    parallelNo                   : {}", GREEN + deviceId + RESET, parallelNo);
         System.out.println();
     }
 

@@ -9,6 +9,9 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 import lombok.extern.slf4j.Slf4j;
 
+import static com.wantllife.constant.ColorConstants.GREEN;
+import static com.wantllife.constant.ColorConstants.RESET;
+
 /**
  * 充电桩返回数据 [0X63]
  *
@@ -72,11 +75,11 @@ public class AZLockUpDownReq extends FrameHeader {
      */
     private void log(String rawHexMsg) {
         log.info("-------------------------------------------------------------------------------------------");
-        log.info("🟢 【0x63】 {} 设备返回数据  原始报文    rawMsg                       : {}", deviceId, rawHexMsg);
-        log.info("🟢 【0x63】 {} 设备返回数据  设备编号    deviceId                     : {}", deviceId, deviceId);
-        log.info("🟢 【0x63】 {} 设备返回数据  枪口编号    gunNo                        : {}", deviceId, gunNo);
-        log.info("🟢 【0x63】 {} 设备返回数据  控制标志    upDownStatus                 : {}", deviceId, upDownStatus == 1 ? "鉴权成功" : "鉴权失败");
-        log.info("🟢 【0x63】 {} 设备返回数据  预留位值    reserved                     : {}", deviceId, reserved);
+        log.info("🟢 【0x63】 {} 设备返回数据  原始报文    rawMsg                       : {}", GREEN + deviceId + RESET, rawHexMsg);
+        log.info("🟢 【0x63】 {} 设备返回数据  设备编号    deviceId                     : {}", GREEN + deviceId + RESET, deviceId);
+        log.info("🟢 【0x63】 {} 设备返回数据  枪口编号    gunNo                        : {}", GREEN + deviceId + RESET, gunNo);
+        log.info("🟢 【0x63】 {} 设备返回数据  控制标志    upDownStatus                 : {}", GREEN + deviceId + RESET, upDownStatus == 1 ? "鉴权成功" : "鉴权失败");
+        log.info("🟢 【0x63】 {} 设备返回数据  预留位值    reserved                     : {}", GREEN + deviceId + RESET, reserved);
         System.out.println();
     }
 

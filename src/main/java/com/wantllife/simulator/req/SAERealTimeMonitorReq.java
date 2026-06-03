@@ -8,6 +8,9 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 import lombok.extern.slf4j.Slf4j;
 
+import static com.wantllife.constant.ColorConstants.PURPLE;
+import static com.wantllife.constant.ColorConstants.RESET;
+
 /**
  * 读取实时监测数据 [0X12]
  *
@@ -61,9 +64,9 @@ public class SAERealTimeMonitorReq extends FrameHeader {
      */
     private void log(String rawHexMsg) {
         log.info("-------------------------------------------------------------------------------------------");
-        log.info("👨‍🚀 【0x12】 {} 读取监测数据  原始报文    rawMsg                       : {}", deviceId, rawHexMsg);
-        log.info("👨‍🚀 【0x12】 {} 读取监测数据  设备编号    deviceId                     : {}", deviceId, deviceId);
-        log.info("👨‍🚀 【0x12】 {} 读取监测数据  枪口编号    gunNo                        : {}", deviceId, gunNo);
+        log.info("👨‍🚀 【0x12】 {} 读取监测数据  原始报文    rawMsg                       : {}", PURPLE + deviceId + RESET, rawHexMsg);
+        log.info("👨‍🚀 【0x12】 {} 读取监测数据  设备编号    deviceId                     : {}", PURPLE + deviceId + RESET, deviceId);
+        log.info("👨‍🚀 【0x12】 {} 读取监测数据  枪口编号    gunNo                        : {}", PURPLE + deviceId + RESET, gunNo);
         System.out.println();
     }
 }

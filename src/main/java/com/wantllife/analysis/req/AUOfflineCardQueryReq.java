@@ -13,6 +13,9 @@ import lombok.extern.slf4j.Slf4j;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.wantllife.constant.ColorConstants.GREEN;
+import static com.wantllife.constant.ColorConstants.RESET;
+
 /**
  * 离线卡数据查询应答 [0X47]
  *
@@ -116,14 +119,14 @@ public class AUOfflineCardQueryReq extends FrameHeader {
      */
     private void log(String rawHexMsg) {
         log.info("-------------------------------------------------------------------------------------------");
-        log.info("🟢 【0x47】 {} 电卡查询应答  原始报文    rawMsg                       : {}", deviceId, rawHexMsg);
-        log.info("🟢 【0x47】 {} 电卡查询应答  设备编号    deviceId                     : {}", deviceId, deviceId);
+        log.info("🟢 【0x47】 {} 电卡查询应答  原始报文    rawMsg                       : {}", GREEN + deviceId + RESET, rawHexMsg);
+        log.info("🟢 【0x47】 {} 电卡查询应答  设备编号    deviceId                     : {}", GREEN + deviceId + RESET, deviceId);
 
         for (int i = 0; i < queryResultList.size(); i++) {
             System.out.println();
             QueryResult queryResult = queryResultList.get(i);
-            log.info("🟢 【0x47】 {} 电卡查询应答  第{}物号    physicalCardNo               : {}", deviceId, NumberChineseFormatter.format(i, false, false), queryResult.getPhysicalCardNo());
-            log.info("🟢 【0x47】 {} 电卡查询应答  查询结果    queryResult                  : {}", deviceId, queryResult.getQueryResult() == 0 ? "卡不存在" : "卡存在");
+            log.info("🟢 【0x47】 {} 电卡查询应答  第{}物号    physicalCardNo               : {}", GREEN + deviceId + RESET, NumberChineseFormatter.format(i, false, false), queryResult.getPhysicalCardNo());
+            log.info("🟢 【0x47】 {} 电卡查询应答  查询结果    queryResult                  : {}", GREEN + deviceId + RESET, queryResult.getQueryResult() == 0 ? "卡不存在" : "卡存在");
         }
         System.out.println();
     }

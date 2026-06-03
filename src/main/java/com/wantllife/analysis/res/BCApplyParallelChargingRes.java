@@ -14,6 +14,8 @@ import lombok.extern.slf4j.Slf4j;
 import java.math.BigDecimal;
 
 import static com.wantllife.constant.CloudFastChargingConstants.DOWN_APPLY_PARALLEL_CHARGING;
+import static com.wantllife.constant.ColorConstants.GREEN;
+import static com.wantllife.constant.ColorConstants.RESET;
 
 
 /**
@@ -164,15 +166,15 @@ public class BCApplyParallelChargingRes extends FrameHeader {
      */
     private void log(String rawHexMsg) {
         log.info("-------------------------------------------------------------------------------------------");
-        log.info("🔶 【0xA2】 {} 确认并充开电  原始报文    rawMsg                       : {}", deviceId, rawHexMsg);
-        log.info("🔶 【0xA2】 {} 确认并充开电  设备编号    deviceId                     : {}", deviceId, deviceId);
-        log.info("🔶 【0xA2】 {} 确认并充开电  枪口编号    gunNo                        : {}", deviceId, gunNo);
-        log.info("🔶 【0xA2】 {} 确认并充开电  交易编号    tradeNo                      : {}", deviceId, tradeNo);
-        log.info("🔶 【0xA2】 {} 确认并充开电  逻辑卡号    logicalCardNo                : {}", deviceId, logicalCardNo);
-        log.info("🔶 【0xA2】 {} 确认并充开电  账户余额    balance                      : {}", deviceId, balance);
-        log.info("🔶 【0xA2】 {} 确认并充开电  鉴权标志    authResult                   : {}", deviceId, "00".equals(authResult) ? "失败" : "成功");
-        log.info("🔶 【0xA2】 {} 确认并充开电  失败原因    failureReasonDesc            : {}", deviceId, failureReasonDesc);
-        log.info("🔶 【0xA2】 {} 确认并充开电  并充序号    parallelNo                   : {}", deviceId, parallelNo);
+        log.info("🔶 【0xA2】 {} 确认并充开电  原始报文    rawMsg                       : {}", GREEN + deviceId + RESET, rawHexMsg);
+        log.info("🔶 【0xA2】 {} 确认并充开电  设备编号    deviceId                     : {}", GREEN + deviceId + RESET, deviceId);
+        log.info("🔶 【0xA2】 {} 确认并充开电  枪口编号    gunNo                        : {}", GREEN + deviceId + RESET, gunNo);
+        log.info("🔶 【0xA2】 {} 确认并充开电  交易编号    tradeNo                      : {}", GREEN + deviceId + RESET, tradeNo);
+        log.info("🔶 【0xA2】 {} 确认并充开电  逻辑卡号    logicalCardNo                : {}", GREEN + deviceId + RESET, logicalCardNo);
+        log.info("🔶 【0xA2】 {} 确认并充开电  账户余额    balance                      : {}", GREEN + deviceId + RESET, balance);
+        log.info("🔶 【0xA2】 {} 确认并充开电  鉴权标志    authResult                   : {}", GREEN + deviceId + RESET, "00".equals(authResult) ? "失败" : "成功");
+        log.info("🔶 【0xA2】 {} 确认并充开电  失败原因    failureReasonDesc            : {}", GREEN + deviceId + RESET, failureReasonDesc);
+        log.info("🔶 【0xA2】 {} 确认并充开电  并充序号    parallelNo                   : {}", GREEN + deviceId + RESET, parallelNo);
         System.out.println();
     }
 

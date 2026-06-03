@@ -11,6 +11,8 @@ import lombok.experimental.Accessors;
 import lombok.extern.slf4j.Slf4j;
 
 import static com.wantllife.constant.CloudFastChargingConstants.DOWN_LOCK_UP_DOWN;
+import static com.wantllife.constant.ColorConstants.GREEN;
+import static com.wantllife.constant.ColorConstants.RESET;
 
 
 /**
@@ -95,11 +97,11 @@ public class AZLockUpDownRes extends FrameHeader {
      */
     private void log(String rawHexMsg) {
         log.info("-------------------------------------------------------------------------------------------");
-        log.info("🔶 【0x62】 {} 遥控地锁升降  原始报文    rawMsg                       : {}", deviceId, rawHexMsg);
-        log.info("🔶 【0x62】 {} 遥控地锁升降  设备编号    deviceId                     : {}", deviceId, deviceId);
-        log.info("🔶 【0x62】 {} 遥控地锁升降  枪口编号    gunNo                        : {}", deviceId, gunNo);
-        log.info("🔶 【0x62】 {} 遥控地锁升降  升降地锁    upOrDown                     : {}", deviceId, upOrDown == 0 ? "降锁" : "升锁");
-        log.info("🔶 【0x62】 {} 遥控地锁升降  预留位值    reserved                     : {}", deviceId, reserved);
+        log.info("🔶 【0x62】 {} 遥控地锁升降  原始报文    rawMsg                       : {}", GREEN + deviceId + RESET, rawHexMsg);
+        log.info("🔶 【0x62】 {} 遥控地锁升降  设备编号    deviceId                     : {}", GREEN + deviceId + RESET, deviceId);
+        log.info("🔶 【0x62】 {} 遥控地锁升降  枪口编号    gunNo                        : {}", GREEN + deviceId + RESET, gunNo);
+        log.info("🔶 【0x62】 {} 遥控地锁升降  升降地锁    upOrDown                     : {}", GREEN + deviceId + RESET, upOrDown == 0 ? "降锁" : "升锁");
+        log.info("🔶 【0x62】 {} 遥控地锁升降  预留位值    reserved                     : {}", GREEN + deviceId + RESET, reserved);
         System.out.println();
     }
 

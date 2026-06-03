@@ -14,6 +14,9 @@ import java.math.RoundingMode;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import static com.wantllife.constant.ColorConstants.PURPLE;
+import static com.wantllife.constant.ColorConstants.RESET;
+
 /**
  * 计费模型请求应答 [0X0A]
  *
@@ -296,31 +299,31 @@ public class SADBillingModelReq extends FrameHeader {
      */
     private void log(String rawHexMsg) {
         log.info("-------------------------------------------------------------------------------------------");
-        log.info("👨‍🚀 【0x0A】 {} 计费模型应答  原始报文    rawMsg                       : {}", deviceId, rawHexMsg);
-        log.info("👨‍🚀 【0x0A】 {} 计费模型应答  设备编号    deviceId                     : {}", deviceId, deviceId);
-        log.info("👨‍🚀 【0x0A】 {} 计费模型应答  计费编码    billingModeId                : {}", deviceId, billingModeId);
-        log.info("👨‍🚀 【0x0A】 {} 计费模型应答  尖电费率    sharpEleFee                  : {}", deviceId, sharpEleFee);
-        log.info("👨‍🚀 【0x0A】 {} 计费模型应答  尖服费率    sharpServiceFee              : {}", deviceId, sharpServiceFee);
-        log.info("👨‍🚀 【0x0A】 {} 计费模型应答  峰电费率    peakEleFee                   : {}", deviceId, peakEleFee);
-        log.info("👨‍🚀 【0x0A】 {} 计费模型应答  峰服费率    peakServiceFee               : {}", deviceId, peakServiceFee);
-        log.info("👨‍🚀 【0x0A】 {} 计费模型应答  平电费率    flatEleFee                   : {}", deviceId, flatEleFee);
-        log.info("👨‍🚀 【0x0A】 {} 计费模型应答  平服费率    flatServiceFee               : {}", deviceId, flatServiceFee);
-        log.info("👨‍🚀 【0x0A】 {} 计费模型应答  谷电费率    valleyEleFee                 : {}", deviceId, valleyEleFee);
-        log.info("👨‍🚀 【0x0A】 {} 计费模型应答  谷服费率    valleyServiceFee             : {}", deviceId, valleyServiceFee);
-        log.info("👨‍🚀 【0x0A】 {} 计费模型应答  计损比例    lossRatio                    : {}", deviceId, lossRatio);
+        log.info("👨‍🚀 【0x0A】 {} 计费模型应答  原始报文    rawMsg                       : {}", PURPLE + deviceId + RESET, rawHexMsg);
+        log.info("👨‍🚀 【0x0A】 {} 计费模型应答  设备编号    deviceId                     : {}", PURPLE + deviceId + RESET, deviceId);
+        log.info("👨‍🚀 【0x0A】 {} 计费模型应答  计费编码    billingModeId                : {}", PURPLE + deviceId + RESET, billingModeId);
+        log.info("👨‍🚀 【0x0A】 {} 计费模型应答  尖电费率    sharpEleFee                  : {}", PURPLE + deviceId + RESET, sharpEleFee);
+        log.info("👨‍🚀 【0x0A】 {} 计费模型应答  尖服费率    sharpServiceFee              : {}", PURPLE + deviceId + RESET, sharpServiceFee);
+        log.info("👨‍🚀 【0x0A】 {} 计费模型应答  峰电费率    peakEleFee                   : {}", PURPLE + deviceId + RESET, peakEleFee);
+        log.info("👨‍🚀 【0x0A】 {} 计费模型应答  峰服费率    peakServiceFee               : {}", PURPLE + deviceId + RESET, peakServiceFee);
+        log.info("👨‍🚀 【0x0A】 {} 计费模型应答  平电费率    flatEleFee                   : {}", PURPLE + deviceId + RESET, flatEleFee);
+        log.info("👨‍🚀 【0x0A】 {} 计费模型应答  平服费率    flatServiceFee               : {}", PURPLE + deviceId + RESET, flatServiceFee);
+        log.info("👨‍🚀 【0x0A】 {} 计费模型应答  谷电费率    valleyEleFee                 : {}", PURPLE + deviceId + RESET, valleyEleFee);
+        log.info("👨‍🚀 【0x0A】 {} 计费模型应答  谷服费率    valleyServiceFee             : {}", PURPLE + deviceId + RESET, valleyServiceFee);
+        log.info("👨‍🚀 【0x0A】 {} 计费模型应答  计损比例    lossRatio                    : {}", PURPLE + deviceId + RESET, lossRatio);
         for (StandardBillingModel mode : billingModelList) {
             switch (mode.getTimeSlotType()) {
                 case 1:
-                    log.info("👨‍🚀 【0x0A】 {} 计费模型应答  尖时间段    sharpTime                    : {}-{}", deviceId, mode.getStartTime(), mode.getEndTime());
+                    log.info("👨‍🚀 【0x0A】 {} 计费模型应答  尖时间段    sharpTime                    : {}-{}", PURPLE + deviceId + RESET, mode.getStartTime(), mode.getEndTime());
                     break;
                 case 2:
-                    log.info("👨‍🚀 【0x0A】 {} 计费模型应答  峰时间段    peakTime                     : {}-{}", deviceId, mode.getStartTime(), mode.getEndTime());
+                    log.info("👨‍🚀 【0x0A】 {} 计费模型应答  峰时间段    peakTime                     : {}-{}", PURPLE + deviceId + RESET, mode.getStartTime(), mode.getEndTime());
                     break;
                 case 3:
-                    log.info("👨‍🚀 【0x0A】 {} 计费模型应答  平时间段    flatTime                     : {}-{}", deviceId, mode.getStartTime(), mode.getEndTime());
+                    log.info("👨‍🚀 【0x0A】 {} 计费模型应答  平时间段    flatTime                     : {}-{}", PURPLE + deviceId + RESET, mode.getStartTime(), mode.getEndTime());
                     break;
                 case 4:
-                    log.info("👨‍🚀 【0x0A】 {} 计费模型应答  谷时间段    valleyTime                   : {}-{}", deviceId, mode.getStartTime(), mode.getEndTime());
+                    log.info("👨‍🚀 【0x0A】 {} 计费模型应答  谷时间段    valleyTime                   : {}-{}", PURPLE + deviceId + RESET, mode.getStartTime(), mode.getEndTime());
                     break;
             }
         }

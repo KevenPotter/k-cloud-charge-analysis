@@ -8,6 +8,9 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 import lombok.extern.slf4j.Slf4j;
 
+import static com.wantllife.constant.ColorConstants.PURPLE;
+import static com.wantllife.constant.ColorConstants.RESET;
+
 /**
  * 计费模型验证请求应答 [0X06]
  *
@@ -65,10 +68,10 @@ public class SACBillingModeValidReq extends FrameHeader {
      */
     private void log(String rawHexMsg) {
         log.info("-------------------------------------------------------------------------------------------");
-        log.info("👨‍🚀 【0x06】 {} 计费验证应答  原始报文    rawMsg                       : {}", deviceId, rawHexMsg);
-        log.info("👨‍🚀 【0x06】 {} 计费验证应答  设备编号    deviceId                     : {}", deviceId, deviceId);
-        log.info("👨‍🚀 【0x06】 {} 计费验证应答  计费编码    billingModeId                : {}", deviceId, billingModeId);
-        log.info("👨‍🚀 【0x06】 {} 计费验证应答  验证结果    billingModeValidResult       : {}", deviceId, billingModeValidResult == 0 ? "一致" : "不一致");
+        log.info("👨‍🚀 【0x06】 {} 计费验证应答  原始报文    rawMsg                       : {}", PURPLE + deviceId + RESET, rawHexMsg);
+        log.info("👨‍🚀 【0x06】 {} 计费验证应答  设备编号    deviceId                     : {}", PURPLE + deviceId + RESET, deviceId);
+        log.info("👨‍🚀 【0x06】 {} 计费验证应答  计费编码    billingModeId                : {}", PURPLE + deviceId + RESET, billingModeId);
+        log.info("👨‍🚀 【0x06】 {} 计费验证应答  验证结果    billingModeValidResult       : {}", PURPLE + deviceId + RESET, billingModeValidResult == 0 ? "一致" : "不一致");
         System.out.println();
     }
 }

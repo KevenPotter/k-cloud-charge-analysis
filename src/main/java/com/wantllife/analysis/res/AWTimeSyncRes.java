@@ -11,6 +11,8 @@ import lombok.experimental.Accessors;
 import lombok.extern.slf4j.Slf4j;
 
 import static com.wantllife.constant.CloudFastChargingConstants.DOWN_TIME_SYNC;
+import static com.wantllife.constant.ColorConstants.GREEN;
+import static com.wantllife.constant.ColorConstants.RESET;
 import static com.wantllife.util.TimeUtil.transformCP56Time;
 
 
@@ -85,9 +87,9 @@ public class AWTimeSyncRes extends FrameHeader {
      */
     private void log(String rawHexMsg) {
         log.info("-------------------------------------------------------------------------------------------");
-        log.info("🔶 【0x56】 {} 设备对时设置  原始报文    rawMsg                       : {}", deviceId, rawHexMsg);
-        log.info("🔶 【0x56】 {} 设备对时设置  设备编号    deviceId                     : {}", deviceId, deviceId);
-        log.info("🔶 【0x56】 {} 设备对时设置  当前时间    currentTime                  : {}", deviceId, currentTime);
+        log.info("🔶 【0x56】 {} 设备对时设置  原始报文    rawMsg                       : {}", GREEN + deviceId + RESET, rawHexMsg);
+        log.info("🔶 【0x56】 {} 设备对时设置  设备编号    deviceId                     : {}", GREEN + deviceId + RESET, deviceId);
+        log.info("🔶 【0x56】 {} 设备对时设置  当前时间    currentTime                  : {}", GREEN + deviceId + RESET, currentTime);
         System.out.println();
     }
 

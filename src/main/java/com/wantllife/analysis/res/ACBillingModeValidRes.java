@@ -11,6 +11,8 @@ import lombok.experimental.Accessors;
 import lombok.extern.slf4j.Slf4j;
 
 import static com.wantllife.constant.CloudFastChargingConstants.*;
+import static com.wantllife.constant.ColorConstants.GREEN;
+import static com.wantllife.constant.ColorConstants.RESET;
 
 
 /**
@@ -90,10 +92,10 @@ public class ACBillingModeValidRes extends FrameHeader {
      */
     private void log(String rawHexMsg) {
         log.info("-------------------------------------------------------------------------------------------");
-        log.info("🔶 【0x06】 {} 计费验证应答  原始报文    rawMsg                       : {}", deviceId, rawHexMsg);
-        log.info("🔶 【0x06】 {} 计费验证应答  设备编号    deviceId                     : {}", deviceId, deviceId);
-        log.info("🔶 【0x06】 {} 计费验证应答  计费编码    billingModeId                : {}", deviceId, billingModeId);
-        log.info("🔶 【0x06】 {} 计费验证应答  验证结果    billingModeValidResult       : {}", deviceId, "00".equals(billingModeValidResult) ? "一致" : "不一致");
+        log.info("🔶 【0x06】 {} 计费验证应答  原始报文    rawMsg                       : {}", GREEN + deviceId + RESET, rawHexMsg);
+        log.info("🔶 【0x06】 {} 计费验证应答  设备编号    deviceId                     : {}", GREEN + deviceId + RESET, deviceId);
+        log.info("🔶 【0x06】 {} 计费验证应答  计费编码    billingModeId                : {}", GREEN + deviceId + RESET, billingModeId);
+        log.info("🔶 【0x06】 {} 计费验证应答  验证结果    billingModeValidResult       : {}", GREEN + deviceId + RESET, "00".equals(billingModeValidResult) ? "一致" : "不一致");
         System.out.println();
     }
 }

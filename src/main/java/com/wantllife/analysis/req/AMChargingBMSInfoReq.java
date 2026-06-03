@@ -8,6 +8,9 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 import lombok.extern.slf4j.Slf4j;
 
+import static com.wantllife.constant.ColorConstants.GREEN;
+import static com.wantllife.constant.ColorConstants.RESET;
+
 /**
  * 充电过程BMS信息 [0X25]
  *
@@ -256,24 +259,24 @@ public class AMChargingBMSInfoReq extends FrameHeader {
      */
     private void log(String rawHexMsg) {
         log.info("-------------------------------------------------------------------------------------------");
-        log.info("🟢 【0x25】 {} 电池管理信息  原始报文    rawMsg                       : {}", deviceId, rawHexMsg);
-        log.info("🟢 【0x25】 {} 电池管理信息  设备编号    deviceId                     : {}", deviceId, deviceId);
-        log.info("🟢 【0x25】 {} 电池管理信息  枪口编号    gunNo                        : {}", deviceId, gunNo);
-        log.info("🟢 【0x25】 {} 电池管理信息  交易编号    tradeNo                      : {}", deviceId, tradeNo);
-        log.info("🟢 【0x25】 {} 电池管理信息  单压编号    maxVoltageNo                 : {}", deviceId, maxVoltageNo);
-        log.info("🟢 【0x25】 {} 电池管理信息  最高温度    maxBatteryTemperature        : {}", deviceId, maxBatteryTemperature);
-        log.info("🟢 【0x25】 {} 电池管理信息  检测高温    maxTemperatureCheckNo        : {}", deviceId, maxTemperatureCheckNo);
-        log.info("🟢 【0x25】 {} 电池管理信息  最低温度    minBatteryTemperature        : {}", deviceId, minBatteryTemperature);
-        log.info("🟢 【0x25】 {} 电池管理信息  检测低温    minTemperatureCheckNo        : {}", deviceId, minTemperatureCheckNo);
-        log.info("🟢 【0x25】 {} 电池管理信息  状态原值    statusBits                   : {}", deviceId, statusBits);
-        log.info("🟢 【0x25】 {} 电池管理信息  电压高低    voltageStatusDesc            : {}", deviceId, voltageStatusDesc);
-        log.info("🟢 【0x25】 {} 电池管理信息  率值高低    socStatusDesc                : {}", deviceId, socStatusDesc);
-        log.info("🟢 【0x25】 {} 电池管理信息  充电过流    chargeOverCurrentDesc        : {}", deviceId, chargeOverCurrentDesc);
-        log.info("🟢 【0x25】 {} 电池管理信息  温度过高    batteryTemperatureOverDesc   : {}", deviceId, batteryTemperatureOverDesc);
-        log.info("🟢 【0x25】 {} 电池管理信息  绝缘状态    insulationStatusDesc         : {}", deviceId, insulationStatusDesc);
-        log.info("🟢 【0x25】 {} 电池管理信息  连接状态    connectorStatusDesc          : {}", deviceId, connectorStatusDesc);
-        log.info("🟢 【0x25】 {} 电池管理信息  充电禁止    chargeForbidDesc             : {}", deviceId, chargeForbidDesc);
-        log.info("🟢 【0x25】 {} 电池管理信息  预留位值    reservedDesc                 : {}", deviceId, reservedDesc);
+        log.info("🟢 【0x25】 {} 电池管理信息  原始报文    rawMsg                       : {}", GREEN + deviceId + RESET, rawHexMsg);
+        log.info("🟢 【0x25】 {} 电池管理信息  设备编号    deviceId                     : {}", GREEN + deviceId + RESET, deviceId);
+        log.info("🟢 【0x25】 {} 电池管理信息  枪口编号    gunNo                        : {}", GREEN + deviceId + RESET, gunNo);
+        log.info("🟢 【0x25】 {} 电池管理信息  交易编号    tradeNo                      : {}", GREEN + deviceId + RESET, tradeNo);
+        log.info("🟢 【0x25】 {} 电池管理信息  单压编号    maxVoltageNo                 : {}", GREEN + deviceId + RESET, maxVoltageNo);
+        log.info("🟢 【0x25】 {} 电池管理信息  最高温度    maxBatteryTemperature        : {}", GREEN + deviceId + RESET, maxBatteryTemperature);
+        log.info("🟢 【0x25】 {} 电池管理信息  检测高温    maxTemperatureCheckNo        : {}", GREEN + deviceId + RESET, maxTemperatureCheckNo);
+        log.info("🟢 【0x25】 {} 电池管理信息  最低温度    minBatteryTemperature        : {}", GREEN + deviceId + RESET, minBatteryTemperature);
+        log.info("🟢 【0x25】 {} 电池管理信息  检测低温    minTemperatureCheckNo        : {}", GREEN + deviceId + RESET, minTemperatureCheckNo);
+        log.info("🟢 【0x25】 {} 电池管理信息  状态原值    statusBits                   : {}", GREEN + deviceId + RESET, statusBits);
+        log.info("🟢 【0x25】 {} 电池管理信息  电压高低    voltageStatusDesc            : {}", GREEN + deviceId + RESET, voltageStatusDesc);
+        log.info("🟢 【0x25】 {} 电池管理信息  率值高低    socStatusDesc                : {}", GREEN + deviceId + RESET, socStatusDesc);
+        log.info("🟢 【0x25】 {} 电池管理信息  充电过流    chargeOverCurrentDesc        : {}", GREEN + deviceId + RESET, chargeOverCurrentDesc);
+        log.info("🟢 【0x25】 {} 电池管理信息  温度过高    batteryTemperatureOverDesc   : {}", GREEN + deviceId + RESET, batteryTemperatureOverDesc);
+        log.info("🟢 【0x25】 {} 电池管理信息  绝缘状态    insulationStatusDesc         : {}", GREEN + deviceId + RESET, insulationStatusDesc);
+        log.info("🟢 【0x25】 {} 电池管理信息  连接状态    connectorStatusDesc          : {}", GREEN + deviceId + RESET, connectorStatusDesc);
+        log.info("🟢 【0x25】 {} 电池管理信息  充电禁止    chargeForbidDesc             : {}", GREEN + deviceId + RESET, chargeForbidDesc);
+        log.info("🟢 【0x25】 {} 电池管理信息  预留位值    reservedDesc                 : {}", GREEN + deviceId + RESET, reservedDesc);
         System.out.println();
     }
 

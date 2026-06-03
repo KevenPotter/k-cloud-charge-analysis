@@ -13,6 +13,8 @@ import lombok.extern.slf4j.Slf4j;
 import java.nio.charset.StandardCharsets;
 
 import static com.wantllife.constant.CloudFastChargingConstants.DOWN_UPGRADE;
+import static com.wantllife.constant.ColorConstants.GREEN;
+import static com.wantllife.constant.ColorConstants.RESET;
 
 
 /**
@@ -128,17 +130,17 @@ public class BBUpgradeRes extends FrameHeader {
      */
     private void log(String rawHexMsg) {
         log.info("-------------------------------------------------------------------------------------------");
-        log.info("🔶 【0x94】 {} 远程更新操作  原始报文    rawMsg                       : {}", deviceId, rawHexMsg);
-        log.info("🔶 【0x94】 {} 远程更新操作  设备编号    deviceId                     : {}", deviceId, deviceId);
-        log.info("🔶 【0x94】 {} 远程更新操作  设备类型    deviceType                   : {}", deviceId, deviceType == 1 ? "直流" : "交流");
-        log.info("🔶 【0x94】 {} 远程更新操作  设备功率    devicePower                  : {}", deviceId, devicePower);
-        log.info("🔶 【0x94】 {} 远程更新操作  升级地址    address                      : {}", deviceId, address);
-        log.info("🔶 【0x94】 {} 远程更新操作  升级端口    port                         : {}", deviceId, port);
-        log.info("🔶 【0x94】 {} 远程更新操作  用户名称    username                     : {}", deviceId, username);
-        log.info("🔶 【0x94】 {} 远程更新操作  输入密码    password                     : {}", deviceId, password);
-        log.info("🔶 【0x94】 {} 远程更新操作  文件路径    filePath                     : {}", deviceId, filePath);
-        log.info("🔶 【0x94】 {} 远程更新操作  执行控制    execMethod                   : {}", deviceId, execMethod == 1 ? "立即执行" : "空闲执行");
-        log.info("🔶 【0x94】 {} 远程更新操作  超时时间    timeout                      : {}", deviceId, timeout);
+        log.info("🔶 【0x94】 {} 远程更新操作  原始报文    rawMsg                       : {}", GREEN + deviceId + RESET, rawHexMsg);
+        log.info("🔶 【0x94】 {} 远程更新操作  设备编号    deviceId                     : {}", GREEN + deviceId + RESET, deviceId);
+        log.info("🔶 【0x94】 {} 远程更新操作  设备类型    deviceType                   : {}", GREEN + deviceId + RESET, deviceType == 1 ? "直流" : "交流");
+        log.info("🔶 【0x94】 {} 远程更新操作  设备功率    devicePower                  : {}", GREEN + deviceId + RESET, devicePower);
+        log.info("🔶 【0x94】 {} 远程更新操作  升级地址    address                      : {}", GREEN + deviceId + RESET, address);
+        log.info("🔶 【0x94】 {} 远程更新操作  升级端口    port                         : {}", GREEN + deviceId + RESET, port);
+        log.info("🔶 【0x94】 {} 远程更新操作  用户名称    username                     : {}", GREEN + deviceId + RESET, username);
+        log.info("🔶 【0x94】 {} 远程更新操作  输入密码    password                     : {}", GREEN + deviceId + RESET, password);
+        log.info("🔶 【0x94】 {} 远程更新操作  文件路径    filePath                     : {}", GREEN + deviceId + RESET, filePath);
+        log.info("🔶 【0x94】 {} 远程更新操作  执行控制    execMethod                   : {}", GREEN + deviceId + RESET, execMethod == 1 ? "立即执行" : "空闲执行");
+        log.info("🔶 【0x94】 {} 远程更新操作  超时时间    timeout                      : {}", GREEN + deviceId + RESET, timeout);
         System.out.println();
     }
 

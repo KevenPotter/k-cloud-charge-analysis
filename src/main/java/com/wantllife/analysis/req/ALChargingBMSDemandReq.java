@@ -10,6 +10,9 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.math.BigDecimal;
 
+import static com.wantllife.constant.ColorConstants.GREEN;
+import static com.wantllife.constant.ColorConstants.RESET;
+
 /**
  * 充电过程BMS需求与充电机输出 [0X23]
  *
@@ -150,22 +153,22 @@ public class ALChargingBMSDemandReq extends FrameHeader {
      */
     private void log(String rawHexMsg) {
         log.info("-------------------------------------------------------------------------------------------");
-        log.info("🟢 【0x23】 {} 电池需求输出  原始报文    rawMsg                       : {}", deviceId, rawHexMsg);
-        log.info("🟢 【0x23】 {} 电池需求输出  设备编号    deviceId                     : {}", deviceId, deviceId);
-        log.info("🟢 【0x23】 {} 电池需求输出  枪口编号    gunNo                        : {}", deviceId, gunNo);
-        log.info("🟢 【0x23】 {} 电池需求输出  交易编号    tradeNo                      : {}", deviceId, tradeNo);
-        log.info("🟢 【0x23】 {} 电池需求输出  电压需求    voltageDemand                : {}", deviceId, voltageDemand);
-        log.info("🟢 【0x23】 {} 电池需求输出  电流需求    currentDemand                : {}", deviceId, currentDemand);
-        log.info("🟢 【0x23】 {} 电池需求输出  充电模式    chargeModeDesc               : {}", deviceId, chargeModeDesc);
-        log.info("🟢 【0x23】 {} 电池需求输出  电压测值    voltageMeasure               : {}", deviceId, voltageMeasure);
-        log.info("🟢 【0x23】 {} 电池需求输出  电流测值    currentMeasure               : {}", deviceId, currentMeasure);
-        log.info("🟢 【0x23】 {} 电池需求输出  最高单压    maxVoltage                   : {}", deviceId, maxVoltage);
-        log.info("🟢 【0x23】 {} 电池需求输出  电压组号    maxVoltageGroupNo            : {}", deviceId, maxVoltageGroupNo);
-        log.info("🟢 【0x23】 {} 电池需求输出  充电率值    SOC                          : {}", deviceId, soc);
-        log.info("🟢 【0x23】 {} 电池需求输出  剩余时间    remainingChargingTime        : {}", deviceId, remainingChargingTime);
-        log.info("🟢 【0x23】 {} 电池需求输出  电压输出    voltageOutput                : {}", deviceId, voltageOutput);
-        log.info("🟢 【0x23】 {} 电池需求输出  电流输出    currentOutput                : {}", deviceId, currentOutput);
-        log.info("🟢 【0x23】 {} 电池需求输出  累充时间    accumulatedChargingTime      : {}", deviceId, accumulatedChargingTime);
+        log.info("🟢 【0x23】 {} 电池需求输出  原始报文    rawMsg                       : {}", GREEN + deviceId + RESET, rawHexMsg);
+        log.info("🟢 【0x23】 {} 电池需求输出  设备编号    deviceId                     : {}", GREEN + deviceId + RESET, deviceId);
+        log.info("🟢 【0x23】 {} 电池需求输出  枪口编号    gunNo                        : {}", GREEN + deviceId + RESET, gunNo);
+        log.info("🟢 【0x23】 {} 电池需求输出  交易编号    tradeNo                      : {}", GREEN + deviceId + RESET, tradeNo);
+        log.info("🟢 【0x23】 {} 电池需求输出  电压需求    voltageDemand                : {}", GREEN + deviceId + RESET, voltageDemand);
+        log.info("🟢 【0x23】 {} 电池需求输出  电流需求    currentDemand                : {}", GREEN + deviceId + RESET, currentDemand);
+        log.info("🟢 【0x23】 {} 电池需求输出  充电模式    chargeModeDesc               : {}", GREEN + deviceId + RESET, chargeModeDesc);
+        log.info("🟢 【0x23】 {} 电池需求输出  电压测值    voltageMeasure               : {}", GREEN + deviceId + RESET, voltageMeasure);
+        log.info("🟢 【0x23】 {} 电池需求输出  电流测值    currentMeasure               : {}", GREEN + deviceId + RESET, currentMeasure);
+        log.info("🟢 【0x23】 {} 电池需求输出  最高单压    maxVoltage                   : {}", GREEN + deviceId + RESET, maxVoltage);
+        log.info("🟢 【0x23】 {} 电池需求输出  电压组号    maxVoltageGroupNo            : {}", GREEN + deviceId + RESET, maxVoltageGroupNo);
+        log.info("🟢 【0x23】 {} 电池需求输出  充电率值    SOC                          : {}", GREEN + deviceId + RESET, soc);
+        log.info("🟢 【0x23】 {} 电池需求输出  剩余时间    remainingChargingTime        : {}", GREEN + deviceId + RESET, remainingChargingTime);
+        log.info("🟢 【0x23】 {} 电池需求输出  电压输出    voltageOutput                : {}", GREEN + deviceId + RESET, voltageOutput);
+        log.info("🟢 【0x23】 {} 电池需求输出  电流输出    currentOutput                : {}", GREEN + deviceId + RESET, currentOutput);
+        log.info("🟢 【0x23】 {} 电池需求输出  累充时间    accumulatedChargingTime      : {}", GREEN + deviceId + RESET, accumulatedChargingTime);
         System.out.println();
     }
 

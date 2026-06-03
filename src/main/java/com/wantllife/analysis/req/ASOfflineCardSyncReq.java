@@ -1,12 +1,15 @@
 package com.wantllife.analysis.req;
 
-import com.wantllife.core.FrameHeader;
 import com.wantllife.config.holder.CloudChargeHolder;
+import com.wantllife.core.FrameHeader;
 import com.wantllife.util.StringUtil;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 import lombok.extern.slf4j.Slf4j;
+
+import static com.wantllife.constant.ColorConstants.GREEN;
+import static com.wantllife.constant.ColorConstants.RESET;
 
 /**
  * 离线卡数据同步应答 [0X43]
@@ -88,10 +91,10 @@ public class ASOfflineCardSyncReq extends FrameHeader {
      */
     private void log(String rawHexMsg) {
         log.info("-------------------------------------------------------------------------------------------");
-        log.info("🟢 【0x43】 {} 电卡同步应答  原始报文    rawMsg                       : {}", deviceId, rawHexMsg);
-        log.info("🟢 【0x43】 {} 电卡同步应答  设备编号    deviceId                     : {}", deviceId, deviceId);
-        log.info("🟢 【0x43】 {} 电卡同步应答  保存结果    saveResult                   : {}", deviceId, saveResult == 0 ? "保存失败" : "保存成功");
-        log.info("🟢 【0x43】 {} 电卡同步应答  失败原因    failReasonDesc               : {}", deviceId, failReasonDesc);
+        log.info("🟢 【0x43】 {} 电卡同步应答  原始报文    rawMsg                       : {}", GREEN + deviceId + RESET, rawHexMsg);
+        log.info("🟢 【0x43】 {} 电卡同步应答  设备编号    deviceId                     : {}", GREEN + deviceId + RESET, deviceId);
+        log.info("🟢 【0x43】 {} 电卡同步应答  保存结果    saveResult                   : {}", GREEN + deviceId + RESET, saveResult == 0 ? "保存失败" : "保存成功");
+        log.info("🟢 【0x43】 {} 电卡同步应答  失败原因    failReasonDesc               : {}", GREEN + deviceId + RESET, failReasonDesc);
         System.out.println();
     }
 

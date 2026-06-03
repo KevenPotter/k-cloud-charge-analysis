@@ -11,6 +11,9 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.math.BigDecimal;
 
+import static com.wantllife.constant.ColorConstants.GREEN;
+import static com.wantllife.constant.ColorConstants.RESET;
+
 /**
  * 充电握手 [0x15]
  *
@@ -207,22 +210,22 @@ public class AFChargingHandshakeReq extends FrameHeader {
      */
     private void log(String rawHexMsg) {
         log.info("-------------------------------------------------------------------------------------------");
-        log.info("🟢 【0x15】 {} 充电握手上传  原始报文    rawMsg                       : {}", deviceId, rawHexMsg);
-        log.info("🟢 【0x15】 {} 充电握手上传  设备编号    deviceId                     : {}", deviceId, deviceId);
-        log.info("🟢 【0x15】 {} 充电握手上传  枪口编号    gunNo                        : {}", deviceId, gunNo);
-        log.info("🟢 【0x15】 {} 充电握手上传  交易编号    tradeNo                      : {}", deviceId, tradeNo);
-        log.info("🟢 【0x15】 {} 充电握手上传  通信版本    communicationProtocolVersion : {}", deviceId, communicationProtocolVersion);
-        log.info("🟢 【0x15】 {} 充电握手上传  电池类型    batteryDesc                  : {}", deviceId, batteryDesc);
-        log.info("🟢 【0x15】 {} 充电握手上传  额定容量    batteryRated                 : {}", deviceId, batteryRated);
-        log.info("🟢 【0x15】 {} 充电握手上传  额定电压    batteryTotalVoltage          : {}", deviceId, batteryTotalVoltage);
-        log.info("🟢 【0x15】 {} 充电握手上传  厂商名称    batteryManufacturer          : {}", deviceId, batteryManufacturer);
-        log.info("🟢 【0x15】 {} 充电握手上传  电池序号    batterySerialNo              : {}", deviceId, batterySerialNo);
-        log.info("🟢 【0x15】 {} 充电握手上传  生产日期    ProductionDate               : {}-{}-{}", deviceId, batteryProductionYear, batteryProductionMonth, batteryProductionDay);
-        log.info("🟢 【0x15】 {} 充电握手上传  充电次数    batteryChargeCounts          : {}", deviceId, batteryChargeCounts);
-        log.info("🟢 【0x15】 {} 充电握手上传  产权标识    propertyIdentificationDesc   : {}", deviceId, batteryPropertyIdentificationDesc);
-        log.info("🟢 【0x15】 {} 充电握手上传  预留位值    reserved                     : {}", deviceId, reserved);
-        log.info("🟢 【0x15】 {} 充电握手上传  车识别码    VIN                          : {}", deviceId, vin);
-        log.info("🟢 【0x15】 {} 充电握手上传  软件版本    softwareVersionDesc          : {}", deviceId, softwareVersionDesc);
+        log.info("🟢 【0x15】 {} 充电握手上传  原始报文    rawMsg                       : {}", GREEN + deviceId + RESET, rawHexMsg);
+        log.info("🟢 【0x15】 {} 充电握手上传  设备编号    deviceId                     : {}", GREEN + deviceId + RESET, deviceId);
+        log.info("🟢 【0x15】 {} 充电握手上传  枪口编号    gunNo                        : {}", GREEN + deviceId + RESET, gunNo);
+        log.info("🟢 【0x15】 {} 充电握手上传  交易编号    tradeNo                      : {}", GREEN + deviceId + RESET, tradeNo);
+        log.info("🟢 【0x15】 {} 充电握手上传  通信版本    communicationProtocolVersion : {}", GREEN + deviceId + RESET, communicationProtocolVersion);
+        log.info("🟢 【0x15】 {} 充电握手上传  电池类型    batteryDesc                  : {}", GREEN + deviceId + RESET, batteryDesc);
+        log.info("🟢 【0x15】 {} 充电握手上传  额定容量    batteryRated                 : {}", GREEN + deviceId + RESET, batteryRated);
+        log.info("🟢 【0x15】 {} 充电握手上传  额定电压    batteryTotalVoltage          : {}", GREEN + deviceId + RESET, batteryTotalVoltage);
+        log.info("🟢 【0x15】 {} 充电握手上传  厂商名称    batteryManufacturer          : {}", GREEN + deviceId + RESET, batteryManufacturer);
+        log.info("🟢 【0x15】 {} 充电握手上传  电池序号    batterySerialNo              : {}", GREEN + deviceId + RESET, batterySerialNo);
+        log.info("🟢 【0x15】 {} 充电握手上传  生产日期    ProductionDate               : {}-{}-{}", GREEN + deviceId + RESET, batteryProductionYear, batteryProductionMonth, batteryProductionDay);
+        log.info("🟢 【0x15】 {} 充电握手上传  充电次数    batteryChargeCounts          : {}", GREEN + deviceId + RESET, batteryChargeCounts);
+        log.info("🟢 【0x15】 {} 充电握手上传  产权标识    propertyIdentificationDesc   : {}", GREEN + deviceId + RESET, batteryPropertyIdentificationDesc);
+        log.info("🟢 【0x15】 {} 充电握手上传  预留位值    reserved                     : {}", GREEN + deviceId + RESET, reserved);
+        log.info("🟢 【0x15】 {} 充电握手上传  车识别码    VIN                          : {}", GREEN + deviceId + RESET, vin);
+        log.info("🟢 【0x15】 {} 充电握手上传  软件版本    softwareVersionDesc          : {}", GREEN + deviceId + RESET, softwareVersionDesc);
         System.out.println();
     }
 

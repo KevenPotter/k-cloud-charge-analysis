@@ -15,6 +15,8 @@ import lombok.extern.slf4j.Slf4j;
 import java.util.List;
 
 import static com.wantllife.constant.CloudFastChargingConstants.DOWN_OFFLINE_CARD_QUERY;
+import static com.wantllife.constant.ColorConstants.GREEN;
+import static com.wantllife.constant.ColorConstants.RESET;
 
 /**
  * 离线卡数据查询 [0X48]
@@ -100,13 +102,13 @@ public class AUOfflineCardQueryRes extends FrameHeader {
      */
     private void log(String rawHexMsg, List<StandardCard> cardList) {
         log.info("-------------------------------------------------------------------------------------------");
-        log.info("🔶 【0x48】 {} 电卡数据查询  原始报文    rawMsg                       : {}", deviceId, rawHexMsg);
-        log.info("🔶 【0x48】 {} 电卡数据查询  设备编号    deviceId                     : {}", deviceId, deviceId);
-        log.info("🔶 【0x48】 {} 电卡数据查询  离线卡数    offlineCounts                : {}", deviceId, offlineCounts);
+        log.info("🔶 【0x48】 {} 电卡数据查询  原始报文    rawMsg                       : {}", GREEN + deviceId + RESET, rawHexMsg);
+        log.info("🔶 【0x48】 {} 电卡数据查询  设备编号    deviceId                     : {}", GREEN + deviceId + RESET, deviceId);
+        log.info("🔶 【0x48】 {} 电卡数据查询  离线卡数    offlineCounts                : {}", GREEN + deviceId + RESET, offlineCounts);
 
         for (int i = 0; i < offlineCounts; i++) {
             StandardCard card = cardList.get(i);
-            log.info("🔶 【0x48】 {} 电卡数据查询  第{}物号    physicalCardNo               : {}", deviceId, NumberChineseFormatter.format(i, false, false), card.getPhysicalCardNo());
+            log.info("🔶 【0x48】 {} 电卡数据查询  第{}物号    physicalCardNo               : {}", GREEN + deviceId + RESET, NumberChineseFormatter.format(i, false, false), card.getPhysicalCardNo());
         }
         System.out.println();
     }

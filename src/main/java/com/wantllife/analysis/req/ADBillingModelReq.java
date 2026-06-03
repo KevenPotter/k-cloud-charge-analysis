@@ -8,6 +8,9 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 import lombok.extern.slf4j.Slf4j;
 
+import static com.wantllife.constant.ColorConstants.GREEN;
+import static com.wantllife.constant.ColorConstants.RESET;
+
 /**
  * 充电桩计费模型请求 [0X09]
  *
@@ -55,8 +58,8 @@ public class ADBillingModelReq extends FrameHeader {
      */
     private void log(String rawHexMsg) {
         log.info("-------------------------------------------------------------------------------------------");
-        log.info("🟢 【0x09】 {} 计费模型请求  原始报文    rawMsg                       : {}", deviceId, rawHexMsg);
-        log.info("🟢 【0x09】 {} 计费模型请求  设备编号    deviceId                     : {}", deviceId, deviceId);
+        log.info("🟢 【0x09】 {} 计费模型请求  原始报文    rawMsg                       : {}", GREEN + deviceId + RESET, rawHexMsg);
+        log.info("🟢 【0x09】 {} 计费模型请求  设备编号    deviceId                     : {}", GREEN + deviceId + RESET, deviceId);
         System.out.println();
     }
 

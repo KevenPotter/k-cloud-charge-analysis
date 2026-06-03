@@ -10,6 +10,9 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.math.BigDecimal;
 
+import static com.wantllife.constant.ColorConstants.PURPLE;
+import static com.wantllife.constant.ColorConstants.RESET;
+
 /**
  * 运营平台远程控制启机 [0X34]
  *
@@ -88,13 +91,13 @@ public class SAOStartChargeReq extends FrameHeader {
      */
     private void log(String rawHexMsg) {
         log.info("-------------------------------------------------------------------------------------------");
-        log.info("👨‍🚀 【0x34】 {} 远程控制启机  原始报文    rawMsg                       : {}", deviceId, rawHexMsg);
-        log.info("👨‍🚀 【0x34】 {} 远程控制启机  设备编号    deviceId                     : {}", deviceId, deviceId);
-        log.info("👨‍🚀 【0x34】 {} 远程控制启机  枪口编号    gunNo                        : {}", deviceId, gunNo);
-        log.info("👨‍🚀 【0x34】 {} 远程控制启机  交易编号    tradeNo                      : {}", deviceId, tradeNo);
-        log.info("👨‍🚀 【0x34】 {} 远程控制启机  逻辑卡号    logicalCardNo                : {}", deviceId, logicalCardNo);
-        log.info("👨‍🚀 【0x34】 {} 远程控制启机  物理卡号    physicalCardNo               : {}", deviceId, physicalCardNo);
-        log.info("👨‍🚀 【0x34】 {} 远程控制启机  账户余额    balance                      : {}", deviceId, balance);
+        log.info("👨‍🚀 【0x34】 {} 远程控制启机  原始报文    rawMsg                       : {}", PURPLE + deviceId + RESET, rawHexMsg);
+        log.info("👨‍🚀 【0x34】 {} 远程控制启机  设备编号    deviceId                     : {}", PURPLE + deviceId + RESET, deviceId);
+        log.info("👨‍🚀 【0x34】 {} 远程控制启机  枪口编号    gunNo                        : {}", PURPLE + deviceId + RESET, gunNo);
+        log.info("👨‍🚀 【0x34】 {} 远程控制启机  交易编号    tradeNo                      : {}", PURPLE + deviceId + RESET, tradeNo);
+        log.info("👨‍🚀 【0x34】 {} 远程控制启机  逻辑卡号    logicalCardNo                : {}", PURPLE + deviceId + RESET, logicalCardNo);
+        log.info("👨‍🚀 【0x34】 {} 远程控制启机  物理卡号    physicalCardNo               : {}", PURPLE + deviceId + RESET, physicalCardNo);
+        log.info("👨‍🚀 【0x34】 {} 远程控制启机  账户余额    balance                      : {}", PURPLE + deviceId + RESET, balance);
         System.out.println();
     }
 }

@@ -9,6 +9,9 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 import lombok.extern.slf4j.Slf4j;
 
+import static com.wantllife.constant.ColorConstants.GREEN;
+import static com.wantllife.constant.ColorConstants.RESET;
+
 /**
  * 余额更新应答 [0X41]
  *
@@ -93,10 +96,10 @@ public class ARBalanceUpdateReq extends FrameHeader {
      */
     private void log(String rawHexMsg) {
         log.info("-------------------------------------------------------------------------------------------");
-        log.info("🟢 【0x41】 {} 余额更新应答  原始报文    rawMsg                       : {}", deviceId, rawHexMsg);
-        log.info("🟢 【0x41】 {} 余额更新应答  设备编号    deviceId                     : {}", deviceId, deviceId);
-        log.info("🟢 【0x41】 {} 余额更新应答  物理卡号    physicalCardNo               : {}", deviceId, physicalCardNo);
-        log.info("🟢 【0x41】 {} 余额更新应答  修改结果    updateResultDesc             : {}", deviceId, updateResultDesc);
+        log.info("🟢 【0x41】 {} 余额更新应答  原始报文    rawMsg                       : {}", GREEN + deviceId + RESET, rawHexMsg);
+        log.info("🟢 【0x41】 {} 余额更新应答  设备编号    deviceId                     : {}", GREEN + deviceId + RESET, deviceId);
+        log.info("🟢 【0x41】 {} 余额更新应答  物理卡号    physicalCardNo               : {}", GREEN + deviceId + RESET, physicalCardNo);
+        log.info("🟢 【0x41】 {} 余额更新应答  修改结果    updateResultDesc             : {}", GREEN + deviceId + RESET, updateResultDesc);
         System.out.println();
     }
 

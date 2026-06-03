@@ -11,6 +11,8 @@ import lombok.experimental.Accessors;
 import lombok.extern.slf4j.Slf4j;
 
 import static com.wantllife.constant.CloudFastChargingConstants.DOWN_WORKING_PARAMS;
+import static com.wantllife.constant.ColorConstants.GREEN;
+import static com.wantllife.constant.ColorConstants.RESET;
 
 
 /**
@@ -88,10 +90,10 @@ public class AVWorkingParamsRes extends FrameHeader {
      */
     private void log(String rawHexMsg) {
         log.info("-------------------------------------------------------------------------------------------");
-        log.info("🔶 【0x52】 {} 工作参数设置  原始报文    rawMsg                       : {}", deviceId, rawHexMsg);
-        log.info("🔶 【0x52】 {} 工作参数设置  设备编号    deviceId                     : {}", deviceId, deviceId);
-        log.info("🔶 【0x52】 {} 工作参数设置  允许工作    allowWork                    : {}", deviceId, allowWork ? "允许工作" : "停止使用");
-        log.info("🔶 【0x52】 {} 工作参数设置  最大输出    maxOutputPower               : {}", deviceId, maxOutputPower);
+        log.info("🔶 【0x52】 {} 工作参数设置  原始报文    rawMsg                       : {}", GREEN + deviceId + RESET, rawHexMsg);
+        log.info("🔶 【0x52】 {} 工作参数设置  设备编号    deviceId                     : {}", GREEN + deviceId + RESET, deviceId);
+        log.info("🔶 【0x52】 {} 工作参数设置  允许工作    allowWork                    : {}", GREEN + deviceId + RESET, allowWork ? "允许工作" : "停止使用");
+        log.info("🔶 【0x52】 {} 工作参数设置  最大输出    maxOutputPower               : {}", GREEN + deviceId + RESET, maxOutputPower);
         System.out.println();
     }
 

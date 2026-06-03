@@ -11,6 +11,8 @@ import lombok.experimental.Accessors;
 import lombok.extern.slf4j.Slf4j;
 
 import static com.wantllife.constant.CloudFastChargingConstants.DOWN_HEARTBEAT;
+import static com.wantllife.constant.ColorConstants.GREEN;
+import static com.wantllife.constant.ColorConstants.RESET;
 
 
 /**
@@ -86,10 +88,10 @@ public class ABHeartbeatRes extends FrameHeader {
      */
     private void log(String rawHexMsg) {
         log.info("-------------------------------------------------------------------------------------------");
-        log.info("🔶 【0x04】 {} 心跳检测应答  原始报文    rawMsg                       : {}", deviceId, rawHexMsg);
-        log.info("🔶 【0x04】 {} 心跳检测应答  设备编号    deviceId                     : {}", deviceId, deviceId);
-        log.info("🔶 【0x04】 {} 心跳检测应答  枪口编号    gunNo                        : {}", deviceId, gunNo);
-        log.info("🔶 【0x04】 {} 心跳检测应答  心跳应答    heartbeatResult              : {}", deviceId, heartbeatResult);
+        log.info("🔶 【0x04】 {} 心跳检测应答  原始报文    rawMsg                       : {}", GREEN + deviceId + RESET, rawHexMsg);
+        log.info("🔶 【0x04】 {} 心跳检测应答  设备编号    deviceId                     : {}", GREEN + deviceId + RESET, deviceId);
+        log.info("🔶 【0x04】 {} 心跳检测应答  枪口编号    gunNo                        : {}", GREEN + deviceId + RESET, gunNo);
+        log.info("🔶 【0x04】 {} 心跳检测应答  心跳应答    heartbeatResult              : {}", GREEN + deviceId + RESET, heartbeatResult);
         System.out.println();
     }
 }

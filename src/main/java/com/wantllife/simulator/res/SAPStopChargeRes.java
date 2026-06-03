@@ -12,6 +12,8 @@ import lombok.experimental.Accessors;
 import lombok.extern.slf4j.Slf4j;
 
 import static com.wantllife.constant.CloudFastChargingConstants.SIM_DOWN_STOP_CHARGE;
+import static com.wantllife.constant.ColorConstants.PURPLE;
+import static com.wantllife.constant.ColorConstants.RESET;
 
 /**
  * 远程停机命令回复 [0X35]
@@ -92,11 +94,11 @@ public class SAPStopChargeRes extends FrameHeader {
      */
     private void log(String rawHexMsg) {
         log.info("-------------------------------------------------------------------------------------------");
-        log.info("🚀 【0x35】 {} 远程关电回复  原始报文    rawMsg                       : {}", deviceId, rawHexMsg);
-        log.info("🚀 【0x35】 {} 远程关电回复  设备编号    deviceId                     : {}", deviceId, deviceId);
-        log.info("🚀 【0x35】 {} 远程关电回复  枪口编号    gunNo                        : {}", deviceId, gunNo);
-        log.info("🚀 【0x35】 {} 远程关电回复  停止结果    stopResult                   : {}", deviceId, stopResult == 0 ? "停止失败" : "停止成功");
-        log.info("🚀 【0x35】 {} 远程关电回复  失败原因    failureReason                : {}", deviceId, failureReason);
+        log.info("🚀 【0x35】 {} 远程关电回复  原始报文    rawMsg                       : {}", PURPLE + deviceId + RESET, rawHexMsg);
+        log.info("🚀 【0x35】 {} 远程关电回复  设备编号    deviceId                     : {}", PURPLE + deviceId + RESET, deviceId);
+        log.info("🚀 【0x35】 {} 远程关电回复  枪口编号    gunNo                        : {}", PURPLE + deviceId + RESET, gunNo);
+        log.info("🚀 【0x35】 {} 远程关电回复  停止结果    stopResult                   : {}", PURPLE + deviceId + RESET, stopResult == 0 ? "停止失败" : "停止成功");
+        log.info("🚀 【0x35】 {} 远程关电回复  失败原因    failureReason                : {}", PURPLE + deviceId + RESET, failureReason);
         System.out.println();
     }
 }

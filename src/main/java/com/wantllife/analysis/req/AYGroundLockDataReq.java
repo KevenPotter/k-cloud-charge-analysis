@@ -9,6 +9,9 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 import lombok.extern.slf4j.Slf4j;
 
+import static com.wantllife.constant.ColorConstants.GREEN;
+import static com.wantllife.constant.ColorConstants.RESET;
+
 /**
  * 地锁数据上送 [0X61]
  *
@@ -148,14 +151,14 @@ public class AYGroundLockDataReq extends FrameHeader {
      */
     private void log(String rawHexMsg) {
         log.info("-------------------------------------------------------------------------------------------");
-        log.info("🟢 【0x61】 {} 地锁数据上送  原始报文    rawMsg                       : {}", deviceId, rawHexMsg);
-        log.info("🟢 【0x61】 {} 地锁数据上送  设备编号    deviceId                     : {}", deviceId, deviceId);
-        log.info("🟢 【0x61】 {} 地锁数据上送  枪口编号    gunNo                        : {}", deviceId, gunNo);
-        log.info("🟢 【0x61】 {} 地锁数据上送  车锁状态    lockStatusDesc               : {}", deviceId, lockStatusDesc);
-        log.info("🟢 【0x61】 {} 地锁数据上送  车位状态    parkingStatusDesc            : {}", deviceId, parkingStatusDesc);
-        log.info("🟢 【0x61】 {} 地锁数据上送  电量状态    batteryStatus                : {}", deviceId, batteryStatus);
-        log.info("🟢 【0x61】 {} 地锁数据上送  报警状态    alarmStatusDesc              : {}", deviceId, alarmStatusDesc);
-        log.info("🟢 【0x61】 {} 地锁数据上送  预留位值    reserved                     : {}", deviceId, reserved);
+        log.info("🟢 【0x61】 {} 地锁数据上送  原始报文    rawMsg                       : {}", GREEN + deviceId + RESET, rawHexMsg);
+        log.info("🟢 【0x61】 {} 地锁数据上送  设备编号    deviceId                     : {}", GREEN + deviceId + RESET, deviceId);
+        log.info("🟢 【0x61】 {} 地锁数据上送  枪口编号    gunNo                        : {}", GREEN + deviceId + RESET, gunNo);
+        log.info("🟢 【0x61】 {} 地锁数据上送  车锁状态    lockStatusDesc               : {}", GREEN + deviceId + RESET, lockStatusDesc);
+        log.info("🟢 【0x61】 {} 地锁数据上送  车位状态    parkingStatusDesc            : {}", GREEN + deviceId + RESET, parkingStatusDesc);
+        log.info("🟢 【0x61】 {} 地锁数据上送  电量状态    batteryStatus                : {}", GREEN + deviceId + RESET, batteryStatus);
+        log.info("🟢 【0x61】 {} 地锁数据上送  报警状态    alarmStatusDesc              : {}", GREEN + deviceId + RESET, alarmStatusDesc);
+        log.info("🟢 【0x61】 {} 地锁数据上送  预留位值    reserved                     : {}", GREEN + deviceId + RESET, reserved);
         System.out.println();
     }
 

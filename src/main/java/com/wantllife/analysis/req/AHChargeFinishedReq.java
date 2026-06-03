@@ -10,6 +10,9 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.math.BigDecimal;
 
+import static com.wantllife.constant.ColorConstants.GREEN;
+import static com.wantllife.constant.ColorConstants.RESET;
+
 /**
  * 充电结束 [0X19]
  *
@@ -109,18 +112,18 @@ public class AHChargeFinishedReq extends FrameHeader {
      */
     private void log(String rawHexMsg) {
         log.info("-------------------------------------------------------------------------------------------");
-        log.info("🟢 【0x19】 {} 充电结束上传  原始报文    rawMsg                       : {}", deviceId, rawHexMsg);
-        log.info("🟢 【0x19】 {} 充电结束上传  设备编号    deviceId                     : {}", deviceId, deviceId);
-        log.info("🟢 【0x19】 {} 充电结束上传  枪口编号    gunNo                        : {}", deviceId, gunNo);
-        log.info("🟢 【0x19】 {} 充电结束上传  交易编号    tradeNo                      : {}", deviceId, tradeNo);
-        log.info("🟢 【0x19】 {} 充电结束上传  荷电状态    stopSoc                      : {}", deviceId, stopSoc);
-        log.info("🟢 【0x19】 {} 充电结束上传  最低电压    minVoltage                   : {}", deviceId, minVoltage);
-        log.info("🟢 【0x19】 {} 充电结束上传  最高电压    maxVoltage                   : {}", deviceId, maxVoltage);
-        log.info("🟢 【0x19】 {} 充电结束上传  最低温度    minTemperature               : {}", deviceId, minTemperature);
-        log.info("🟢 【0x19】 {} 充电结束上传  最高温度    maxTemperature               : {}", deviceId, maxTemperature);
-        log.info("🟢 【0x19】 {} 充电结束上传  累充时间    chargeTime                   : {}", deviceId, chargeTime);
-        log.info("🟢 【0x19】 {} 充电结束上传  输出能量    outputEnergy                 : {}", deviceId, outputEnergy);
-        log.info("🟢 【0x19】 {} 充电结束上传  电机编号    chargeNo                     : {}", deviceId, chargeNo);
+        log.info("🟢 【0x19】 {} 充电结束上传  原始报文    rawMsg                       : {}", GREEN + deviceId + RESET, rawHexMsg);
+        log.info("🟢 【0x19】 {} 充电结束上传  设备编号    deviceId                     : {}", GREEN + deviceId + RESET, deviceId);
+        log.info("🟢 【0x19】 {} 充电结束上传  枪口编号    gunNo                        : {}", GREEN + deviceId + RESET, gunNo);
+        log.info("🟢 【0x19】 {} 充电结束上传  交易编号    tradeNo                      : {}", GREEN + deviceId + RESET, tradeNo);
+        log.info("🟢 【0x19】 {} 充电结束上传  荷电状态    stopSoc                      : {}", GREEN + deviceId + RESET, stopSoc);
+        log.info("🟢 【0x19】 {} 充电结束上传  最低电压    minVoltage                   : {}", GREEN + deviceId + RESET, minVoltage);
+        log.info("🟢 【0x19】 {} 充电结束上传  最高电压    maxVoltage                   : {}", GREEN + deviceId + RESET, maxVoltage);
+        log.info("🟢 【0x19】 {} 充电结束上传  最低温度    minTemperature               : {}", GREEN + deviceId + RESET, minTemperature);
+        log.info("🟢 【0x19】 {} 充电结束上传  最高温度    maxTemperature               : {}", GREEN + deviceId + RESET, maxTemperature);
+        log.info("🟢 【0x19】 {} 充电结束上传  累充时间    chargeTime                   : {}", GREEN + deviceId + RESET, chargeTime);
+        log.info("🟢 【0x19】 {} 充电结束上传  输出能量    outputEnergy                 : {}", GREEN + deviceId + RESET, outputEnergy);
+        log.info("🟢 【0x19】 {} 充电结束上传  电机编号    chargeNo                     : {}", GREEN + deviceId + RESET, chargeNo);
         System.out.println();
     }
 

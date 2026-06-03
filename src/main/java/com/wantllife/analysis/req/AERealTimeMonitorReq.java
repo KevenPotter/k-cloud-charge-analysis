@@ -1,8 +1,8 @@
 package com.wantllife.analysis.req;
 
 import cn.hutool.core.util.HexUtil;
-import com.wantllife.core.FrameHeader;
 import com.wantllife.config.holder.CloudChargeHolder;
+import com.wantllife.core.FrameHeader;
 import com.wantllife.util.StringUtil;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -10,6 +10,9 @@ import lombok.experimental.Accessors;
 import lombok.extern.slf4j.Slf4j;
 
 import java.math.BigDecimal;
+
+import static com.wantllife.constant.ColorConstants.GREEN;
+import static com.wantllife.constant.ColorConstants.RESET;
 
 /**
  * 上传实时监测数据 [0X13]
@@ -222,25 +225,25 @@ public class AERealTimeMonitorReq extends FrameHeader {
      */
     private void log(String rawHexMsg) {
         log.info("-------------------------------------------------------------------------------------------");
-        log.info("🟢 【0x13】 {} 实时监测数据  原始报文    rawMsg                       : {}", deviceId, rawHexMsg);
-        log.info("🟢 【0x13】 {} 实时监测数据  设备编号    deviceId                     : {}", deviceId, deviceId);
-        log.info("🟢 【0x13】 {} 实时监测数据  枪口编号    gunNo                        : {}", deviceId, gunNo);
-        log.info("🟢 【0x13】 {} 实时监测数据  交易编号    tradeNo                      : {}", deviceId, tradeNo);
-        log.info("🟢 【0x13】 {} 实时监测数据  设备状态    statusDesc                   : {}", deviceId, statusDesc);
-        log.info("🟢 【0x13】 {} 实时监测数据  插枪归位    haveReturnDesc               : {}", deviceId, haveReturnDesc);
-        log.info("🟢 【0x13】 {} 实时监测数据  是否插枪    haveInsert                   : {}", deviceId, haveInsert == 0 ? "未插枪" : "已插枪");
-        log.info("🟢 【0x13】 {} 实时监测数据  输出电压    voltage                      : {}", deviceId, voltage);
-        log.info("🟢 【0x13】 {} 实时监测数据  输出电流    current                      : {}", deviceId, current);
-        log.info("🟢 【0x13】 {} 实时监测数据  枪线温度    temperature                  : {}", deviceId, temperature);
-        log.info("🟢 【0x13】 {} 实时监测数据  枪线编码    gunCode                      : {}", deviceId, gunCode);
-        log.info("🟢 【0x13】 {} 实时监测数据  充电率值    SOC                          : {}", deviceId, soc);
-        log.info("🟢 【0x13】 {} 实时监测数据  最高温度    highestTemperature           : {}", deviceId, highestTemperature);
-        log.info("🟢 【0x13】 {} 实时监测数据  累充时间    accumulatedChargingTime      : {}", deviceId, accumulatedChargingTime);
-        log.info("🟢 【0x13】 {} 实时监测数据  剩余时间    remainingChargingTime        : {}", deviceId, remainingChargingTime);
-        log.info("🟢 【0x13】 {} 实时监测数据  充电度数    chargingDegree               : {}", deviceId, chargingDegree);
-        log.info("🟢 【0x13】 {} 实时监测数据  计损度数    calculatedChargingDegree     : {}", deviceId, calculatedChargingDegree);
-        log.info("🟢 【0x13】 {} 实时监测数据  已充金额    chargedAmount                : {}", deviceId, chargedAmount);
-        log.info("🟢 【0x13】 {} 实时监测数据  故障描述    hardwareFailureDesc          : {}", deviceId, hardwareFailureDesc);
+        log.info("🟢 【0x13】 {} 实时监测数据  原始报文    rawMsg                       : {}", GREEN + deviceId + RESET, rawHexMsg);
+        log.info("🟢 【0x13】 {} 实时监测数据  设备编号    deviceId                     : {}", GREEN + deviceId + RESET, deviceId);
+        log.info("🟢 【0x13】 {} 实时监测数据  枪口编号    gunNo                        : {}", GREEN + deviceId + RESET, gunNo);
+        log.info("🟢 【0x13】 {} 实时监测数据  交易编号    tradeNo                      : {}", GREEN + deviceId + RESET, tradeNo);
+        log.info("🟢 【0x13】 {} 实时监测数据  设备状态    statusDesc                   : {}", GREEN + deviceId + RESET, statusDesc);
+        log.info("🟢 【0x13】 {} 实时监测数据  插枪归位    haveReturnDesc               : {}", GREEN + deviceId + RESET, haveReturnDesc);
+        log.info("🟢 【0x13】 {} 实时监测数据  是否插枪    haveInsert                   : {}", GREEN + deviceId + RESET, haveInsert == 0 ? "未插枪" : "已插枪");
+        log.info("🟢 【0x13】 {} 实时监测数据  输出电压    voltage                      : {}", GREEN + deviceId + RESET, voltage);
+        log.info("🟢 【0x13】 {} 实时监测数据  输出电流    current                      : {}", GREEN + deviceId + RESET, current);
+        log.info("🟢 【0x13】 {} 实时监测数据  枪线温度    temperature                  : {}", GREEN + deviceId + RESET, temperature);
+        log.info("🟢 【0x13】 {} 实时监测数据  枪线编码    gunCode                      : {}", GREEN + deviceId + RESET, gunCode);
+        log.info("🟢 【0x13】 {} 实时监测数据  充电率值    SOC                          : {}", GREEN + deviceId + RESET, soc);
+        log.info("🟢 【0x13】 {} 实时监测数据  最高温度    highestTemperature           : {}", GREEN + deviceId + RESET, highestTemperature);
+        log.info("🟢 【0x13】 {} 实时监测数据  累充时间    accumulatedChargingTime      : {}", GREEN + deviceId + RESET, accumulatedChargingTime);
+        log.info("🟢 【0x13】 {} 实时监测数据  剩余时间    remainingChargingTime        : {}", GREEN + deviceId + RESET, remainingChargingTime);
+        log.info("🟢 【0x13】 {} 实时监测数据  充电度数    chargingDegree               : {}", GREEN + deviceId + RESET, chargingDegree);
+        log.info("🟢 【0x13】 {} 实时监测数据  计损度数    calculatedChargingDegree     : {}", GREEN + deviceId + RESET, calculatedChargingDegree);
+        log.info("🟢 【0x13】 {} 实时监测数据  已充金额    chargedAmount                : {}", GREEN + deviceId + RESET, chargedAmount);
+        log.info("🟢 【0x13】 {} 实时监测数据  故障描述    hardwareFailureDesc          : {}", GREEN + deviceId + RESET, hardwareFailureDesc);
         System.out.println();
     }
 

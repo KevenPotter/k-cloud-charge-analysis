@@ -8,6 +8,9 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 import lombok.extern.slf4j.Slf4j;
 
+import static com.wantllife.constant.ColorConstants.PURPLE;
+import static com.wantllife.constant.ColorConstants.RESET;
+
 /**
  * 心跳包应答 [0X04]
  *
@@ -64,10 +67,10 @@ public class SABHeartbeatReq extends FrameHeader {
      */
     private void log(String rawHexMsg) {
         log.info("-------------------------------------------------------------------------------------------");
-        log.info("👨‍🚀 【0X04】 {} 心跳检测应答  原始报文    rawMsg                       : {}", deviceId, rawHexMsg);
-        log.info("👨‍🚀 【0X04】 {} 心跳检测应答  设备编号    deviceId                     : {}", deviceId, deviceId);
-        log.info("👨‍🚀 【0X04】 {} 心跳检测应答  枪口编号    gunNo                        : {}", deviceId, gunNo);
-        log.info("👨‍🚀 【0X04】 {} 心跳检测应答  心跳应答    heartbeatResult              : {}", deviceId, heartbeatResult);
+        log.info("👨‍🚀 【0X04】 {} 心跳检测应答  原始报文    rawMsg                       : {}", PURPLE + deviceId + RESET, rawHexMsg);
+        log.info("👨‍🚀 【0X04】 {} 心跳检测应答  设备编号    deviceId                     : {}", PURPLE + deviceId + RESET, deviceId);
+        log.info("👨‍🚀 【0X04】 {} 心跳检测应答  枪口编号    gunNo                        : {}", PURPLE + deviceId + RESET, gunNo);
+        log.info("👨‍🚀 【0X04】 {} 心跳检测应答  心跳应答    heartbeatResult              : {}", PURPLE + deviceId + RESET, heartbeatResult);
         System.out.println();
     }
 }

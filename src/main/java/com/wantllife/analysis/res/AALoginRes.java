@@ -11,6 +11,8 @@ import lombok.experimental.Accessors;
 import lombok.extern.slf4j.Slf4j;
 
 import static com.wantllife.constant.CloudFastChargingConstants.DOWN_LOGIN;
+import static com.wantllife.constant.ColorConstants.GREEN;
+import static com.wantllife.constant.ColorConstants.RESET;
 
 /**
  * 登录认证应答 [0X02]
@@ -80,9 +82,9 @@ public class AALoginRes extends FrameHeader {
      */
     private void log(String rawHexMsg) {
         log.info("-------------------------------------------------------------------------------------------");
-        log.info("🔶 【0x02】 {} 登录认证应答  原始报文    rawMsg                       : {}", deviceId, rawHexMsg);
-        log.info("🔶 【0x02】 {} 登录认证应答  设备编号    deviceId                     : {}", deviceId, deviceId);
-        log.info("🔶 【0x02】 {} 登录认证应答  登录结果    loginResult                  : {}", deviceId, "00".equals(loginResult) ? "成功" : "失败");
+        log.info("🔶 【0x02】 {} 登录认证应答  原始报文    rawMsg                       : {}", GREEN + deviceId + RESET, rawHexMsg);
+        log.info("🔶 【0x02】 {} 登录认证应答  设备编号    deviceId                     : {}", GREEN + deviceId + RESET, deviceId);
+        log.info("🔶 【0x02】 {} 登录认证应答  登录结果    loginResult                  : {}", GREEN + deviceId + RESET, "00".equals(loginResult) ? "成功" : "失败");
         System.out.println();
     }
 }

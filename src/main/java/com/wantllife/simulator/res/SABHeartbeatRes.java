@@ -13,6 +13,8 @@ import lombok.experimental.Accessors;
 import lombok.extern.slf4j.Slf4j;
 
 import static com.wantllife.constant.CloudFastChargingConstants.SIM_DOWN_HEARTBEAT;
+import static com.wantllife.constant.ColorConstants.PURPLE;
+import static com.wantllife.constant.ColorConstants.RESET;
 
 /**
  * 充电桩心跳包 [0X03]
@@ -89,10 +91,10 @@ public class SABHeartbeatRes extends FrameHeader {
      */
     private void log(String rawHexMsg) {
         log.info("-------------------------------------------------------------------------------------------");
-        log.info("🚀 【0x03】 {} 设备心跳检测  原始报文    rawMsg                       : {}", deviceId, rawHexMsg);
-        log.info("🚀 【0x03】 {} 设备心跳检测  设备编号    deviceId                     : {}", deviceId, deviceId);
-        log.info("🚀 【0x03】 {} 设备心跳检测  枪口编号    gunNo                        : {}", deviceId, gunNo);
-        log.info("🚀 【0x03】 {} 设备心跳检测  枪口状态    gunStatus                    : {}", deviceId, gunStatus == 0 ? "正常" : "故障");
+        log.info("🚀 【0x03】 {} 设备心跳检测  原始报文    rawMsg                       : {}", PURPLE + deviceId + RESET, rawHexMsg);
+        log.info("🚀 【0x03】 {} 设备心跳检测  设备编号    deviceId                     : {}", PURPLE + deviceId + RESET, deviceId);
+        log.info("🚀 【0x03】 {} 设备心跳检测  枪口编号    gunNo                        : {}", PURPLE + deviceId + RESET, gunNo);
+        log.info("🚀 【0x03】 {} 设备心跳检测  枪口状态    gunStatus                    : {}", PURPLE + deviceId + RESET, gunStatus == 0 ? "正常" : "故障");
         System.out.println();
     }
 }

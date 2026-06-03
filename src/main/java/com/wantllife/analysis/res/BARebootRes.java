@@ -11,6 +11,8 @@ import lombok.experimental.Accessors;
 import lombok.extern.slf4j.Slf4j;
 
 import static com.wantllife.constant.CloudFastChargingConstants.DOWN_REBOOT;
+import static com.wantllife.constant.ColorConstants.GREEN;
+import static com.wantllife.constant.ColorConstants.RESET;
 
 
 /**
@@ -81,9 +83,9 @@ public class BARebootRes extends FrameHeader {
      */
     private void log(String rawHexMsg) {
         log.info("-------------------------------------------------------------------------------------------");
-        log.info("🔶 【0x92】 {} 远程重启操作  原始报文    rawMsg                       : {}", deviceId, rawHexMsg);
-        log.info("🔶 【0x92】 {} 远程重启操作  设备编号    deviceId                     : {}", deviceId, deviceId);
-        log.info("🔶 【0x92】 {} 远程重启操作  执行方式    execMethod                   : {}", deviceId, execMethod == 1 ? "立即执行" : "空闲执行");
+        log.info("🔶 【0x92】 {} 远程重启操作  原始报文    rawMsg                       : {}", GREEN + deviceId + RESET, rawHexMsg);
+        log.info("🔶 【0x92】 {} 远程重启操作  设备编号    deviceId                     : {}", GREEN + deviceId + RESET, deviceId);
+        log.info("🔶 【0x92】 {} 远程重启操作  执行方式    execMethod                   : {}", GREEN + deviceId + RESET, execMethod == 1 ? "立即执行" : "空闲执行");
         System.out.println();
     }
 

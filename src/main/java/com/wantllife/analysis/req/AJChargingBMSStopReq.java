@@ -8,6 +8,9 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 import lombok.extern.slf4j.Slf4j;
 
+import static com.wantllife.constant.ColorConstants.GREEN;
+import static com.wantllife.constant.ColorConstants.RESET;
+
 /**
  * 充电阶段BMS中止 [0X1D]
  *
@@ -138,13 +141,13 @@ public class AJChargingBMSStopReq extends FrameHeader {
      */
     private void log(String rawHexMsg) {
         log.info("-------------------------------------------------------------------------------------------");
-        log.info("🟢 【0x1D】 {} 电池管理中止  原始报文    rawMsg                       : {}", deviceId, rawHexMsg);
-        log.info("🟢 【0x1D】 {} 电池管理中止  设备编号    deviceId                     : {}", deviceId, deviceId);
-        log.info("🟢 【0x1D】 {} 电池管理中止  枪口编号    gunNo                        : {}", deviceId, gunNo);
-        log.info("🟢 【0x1D】 {} 电池管理中止  交易编号    tradeNo                      : {}", deviceId, tradeNo);
-        log.info("🟢 【0x1D】 {} 电池管理中止  中止原因    bmsStopReasonDesc            : {}", deviceId, bmsStopReasonDesc);
-        log.info("🟢 【0x1D】 {} 电池管理中止  故障原因    bmsStopFailureDesc           : {}", deviceId, bmsStopFailureDesc);
-        log.info("🟢 【0x1D】 {} 电池管理中止  错误原因    bmsStopErrorReasonDesc       : {}", deviceId, bmsStopErrorReasonDesc);
+        log.info("🟢 【0x1D】 {} 电池管理中止  原始报文    rawMsg                       : {}", GREEN + deviceId + RESET, rawHexMsg);
+        log.info("🟢 【0x1D】 {} 电池管理中止  设备编号    deviceId                     : {}", GREEN + deviceId + RESET, deviceId);
+        log.info("🟢 【0x1D】 {} 电池管理中止  枪口编号    gunNo                        : {}", GREEN + deviceId + RESET, gunNo);
+        log.info("🟢 【0x1D】 {} 电池管理中止  交易编号    tradeNo                      : {}", GREEN + deviceId + RESET, tradeNo);
+        log.info("🟢 【0x1D】 {} 电池管理中止  中止原因    bmsStopReasonDesc            : {}", GREEN + deviceId + RESET, bmsStopReasonDesc);
+        log.info("🟢 【0x1D】 {} 电池管理中止  故障原因    bmsStopFailureDesc           : {}", GREEN + deviceId + RESET, bmsStopFailureDesc);
+        log.info("🟢 【0x1D】 {} 电池管理中止  错误原因    bmsStopErrorReasonDesc       : {}", GREEN + deviceId + RESET, bmsStopErrorReasonDesc);
         System.out.println();
     }
 

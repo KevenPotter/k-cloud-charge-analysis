@@ -8,6 +8,9 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 import lombok.extern.slf4j.Slf4j;
 
+import static com.wantllife.constant.ColorConstants.GREEN;
+import static com.wantllife.constant.ColorConstants.RESET;
+
 /**
  * 充电桩登录认证 [0X01]
  *
@@ -155,15 +158,15 @@ public class AALoginReq extends FrameHeader {
      */
     private void log(String rawHexMsg) {
         log.info("-------------------------------------------------------------------------------------------");
-        log.info("🟢 【0x01】 {} 设备登录认证  原始报文    rawMsg                       : {}", deviceId, rawHexMsg);
-        log.info("🟢 【0x01】 {} 设备登录认证  设备编号    deviceId                     : {}", deviceId, deviceId);
-        log.info("🟢 【0x01】 {} 设备登录认证  设备类型    deviceTypeDesc               : {}", deviceId, deviceTypeDesc);
-        log.info("🟢 【0x01】 {} 设备登录认证  充电枪数    gunNum                       : {}", deviceId, gunNum);
-        log.info("🟢 【0x01】 {} 设备登录认证  协议版本    protocolVersion              : {}", deviceId, protocolVersion);
-        log.info("🟢 【0x01】 {} 设备登录认证  程序版本    programVersion               : {}", deviceId, programVersion);
-        log.info("🟢 【0x01】 {} 设备登录认证  网络类型    networkLinkTypeDesc          : {}", deviceId, networkLinkTypeDesc);
-        log.info("🟢 【0x01】 {} 设备登录认证  芯片卡号    simNo                        : {}", deviceId, simNo);
-        log.info("🟢 【0x01】 {} 设备登录认证  运营商家    carrierDesc                  : {}", deviceId, carrierDesc);
+        log.info("🟢 【0x01】 {} 设备登录认证  原始报文    rawMsg                       : {}", GREEN + deviceId + RESET, rawHexMsg);
+        log.info("🟢 【0x01】 {} 设备登录认证  设备编号    deviceId                     : {}", GREEN + deviceId + RESET, deviceId);
+        log.info("🟢 【0x01】 {} 设备登录认证  设备类型    deviceTypeDesc               : {}", GREEN + deviceId + RESET, deviceTypeDesc);
+        log.info("🟢 【0x01】 {} 设备登录认证  充电枪数    gunNum                       : {}", GREEN + deviceId + RESET, gunNum);
+        log.info("🟢 【0x01】 {} 设备登录认证  协议版本    protocolVersion              : {}", GREEN + deviceId + RESET, protocolVersion);
+        log.info("🟢 【0x01】 {} 设备登录认证  程序版本    programVersion               : {}", GREEN + deviceId + RESET, programVersion);
+        log.info("🟢 【0x01】 {} 设备登录认证  网络类型    networkLinkTypeDesc          : {}", GREEN + deviceId + RESET, networkLinkTypeDesc);
+        log.info("🟢 【0x01】 {} 设备登录认证  芯片卡号    simNo                        : {}", GREEN + deviceId + RESET, simNo);
+        log.info("🟢 【0x01】 {} 设备登录认证  运营商家    carrierDesc                  : {}", GREEN + deviceId + RESET, carrierDesc);
         System.out.println();
     }
 

@@ -15,6 +15,8 @@ import lombok.extern.slf4j.Slf4j;
 import java.util.List;
 
 import static com.wantllife.constant.CloudFastChargingConstants.DOWN_OFFLINE_CARD_SYNC;
+import static com.wantllife.constant.ColorConstants.GREEN;
+import static com.wantllife.constant.ColorConstants.RESET;
 
 
 /**
@@ -105,14 +107,14 @@ public class ASOfflineCardSyncRes extends FrameHeader {
      */
     private void log(String rawHexMsg, List<StandardCard> cardList) {
         log.info("-------------------------------------------------------------------------------------------");
-        log.info("🔶 【0x44】 {} 电卡数据同步  原始报文    rawMsg                       : {}", deviceId, rawHexMsg);
-        log.info("🔶 【0x44】 {} 电卡数据同步  设备编号    deviceId                     : {}", deviceId, deviceId);
-        log.info("🔶 【0x44】 {} 电卡数据同步  下发个数    cardCounts                   : {}", deviceId, cardCounts);
+        log.info("🔶 【0x44】 {} 电卡数据同步  原始报文    rawMsg                       : {}", GREEN + deviceId + RESET, rawHexMsg);
+        log.info("🔶 【0x44】 {} 电卡数据同步  设备编号    deviceId                     : {}", GREEN + deviceId + RESET, deviceId);
+        log.info("🔶 【0x44】 {} 电卡数据同步  下发个数    cardCounts                   : {}", GREEN + deviceId + RESET, cardCounts);
 
         for (int i = 0; i < cardCounts; i++) {
             StandardCard card = cardList.get(i);
-            log.info("🔶 【0x44】 {} 电卡数据同步  第{}逻号    logicalCardNo                : {}", deviceId, NumberChineseFormatter.format(i, false, false), card.getLogicalCardNo());
-            log.info("🔶 【0x44】 {} 电卡数据同步  第{}物号    physicalCardNo               : {}", deviceId, NumberChineseFormatter.format(i, false, false), card.getPhysicalCardNo());
+            log.info("🔶 【0x44】 {} 电卡数据同步  第{}逻号    logicalCardNo                : {}", GREEN + deviceId + RESET, NumberChineseFormatter.format(i, false, false), card.getLogicalCardNo());
+            log.info("🔶 【0x44】 {} 电卡数据同步  第{}物号    physicalCardNo               : {}", GREEN + deviceId + RESET, NumberChineseFormatter.format(i, false, false), card.getPhysicalCardNo());
         }
         System.out.println();
     }

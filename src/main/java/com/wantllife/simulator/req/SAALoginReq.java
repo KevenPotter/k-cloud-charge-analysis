@@ -8,6 +8,9 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 import lombok.extern.slf4j.Slf4j;
 
+import static com.wantllife.constant.ColorConstants.PURPLE;
+import static com.wantllife.constant.ColorConstants.RESET;
+
 /**
  * 登录认证应答 [0X02]
  *
@@ -60,9 +63,9 @@ public class SAALoginReq extends FrameHeader {
      */
     private void log(String rawHexMsg) {
         log.info("-------------------------------------------------------------------------------------------");
-        log.info("👨‍🚀 【0x02】 {} 登录认证应答  原始报文    rawMsg                       : {}", deviceId, rawHexMsg);
-        log.info("👨‍🚀 【0x02】 {} 登录认证应答  设备编号    deviceId                     : {}", deviceId, deviceId);
-        log.info("👨‍🚀 【0x02】 {} 登录认证应答  登录结果    loginResult                  : {}", deviceId, loginResult == 0 ? "成功" : "失败");
+        log.info("👨‍🚀 【0x02】 {} 登录认证应答  原始报文    rawMsg                       : {}", PURPLE + deviceId + RESET, rawHexMsg);
+        log.info("👨‍🚀 【0x02】 {} 登录认证应答  设备编号    deviceId                     : {}", PURPLE + deviceId + RESET, deviceId);
+        log.info("👨‍🚀 【0x02】 {} 登录认证应答  登录结果    loginResult                  : {}", PURPLE + deviceId + RESET, loginResult == 0 ? "成功" : "失败");
         System.out.println();
     }
 }

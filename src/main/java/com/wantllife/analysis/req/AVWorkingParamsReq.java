@@ -8,6 +8,9 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 import lombok.extern.slf4j.Slf4j;
 
+import static com.wantllife.constant.ColorConstants.GREEN;
+import static com.wantllife.constant.ColorConstants.RESET;
+
 /**
  * 充电桩工作参数设置应答 [0X51]
  *
@@ -61,9 +64,9 @@ public class AVWorkingParamsReq extends FrameHeader {
      */
     private void log(String rawHexMsg) {
         log.info("-------------------------------------------------------------------------------------------");
-        log.info("🟢 【0x51】 {} 工作参数设置  原始报文    rawMsg                       : {}", deviceId, rawHexMsg);
-        log.info("🟢 【0x51】 {} 工作参数设置  设备编号    deviceId                     : {}", deviceId, deviceId);
-        log.info("🟢 【0x51】 {} 工作参数设置  设置结果    setResult                    : {}", deviceId, setResult == 0 ? "设置失败" : "设置成功");
+        log.info("🟢 【0x51】 {} 工作参数设置  原始报文    rawMsg                       : {}", GREEN + deviceId + RESET, rawHexMsg);
+        log.info("🟢 【0x51】 {} 工作参数设置  设备编号    deviceId                     : {}", GREEN + deviceId + RESET, deviceId);
+        log.info("🟢 【0x51】 {} 工作参数设置  设置结果    setResult                    : {}", GREEN + deviceId + RESET, setResult == 0 ? "设置失败" : "设置成功");
         System.out.println();
     }
 

@@ -10,6 +10,9 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 import lombok.extern.slf4j.Slf4j;
 
+import static com.wantllife.constant.ColorConstants.GREEN;
+import static com.wantllife.constant.ColorConstants.RESET;
+
 /**
  * 充电桩主动申请启动充电 [0X31]
  *
@@ -114,14 +117,14 @@ public class ANRequestChargingReq extends FrameHeader {
      */
     private void log(String rawHexMsg) {
         log.info("-------------------------------------------------------------------------------------------");
-        log.info("🟢 【0x31】 {} 主动申请充电  原始报文    rawMsg                       : {}", deviceId, rawHexMsg);
-        log.info("🟢 【0x31】 {} 主动申请充电  设备编号    deviceId                     : {}", deviceId, deviceId);
-        log.info("🟢 【0x31】 {} 主动申请充电  枪口编号    gunNo                        : {}", deviceId, gunNo);
-        log.info("🟢 【0x31】 {} 主动申请充电  启动方式    startupModeDesc              : {}", deviceId, startupModeDesc);
-        log.info("🟢 【0x31】 {} 主动申请充电  需要密码    needPassword                 : {}", deviceId, needPassword == 0 ? "不需要密码" : "需要密码");
-        log.info("🟢 【0x31】 {} 主动申请充电  卡号信息    accountOrCardNo              : {}", deviceId, accountOrCardNo);
-        log.info("🟢 【0x31】 {} 主动申请充电  输入密码    password                     : {}", deviceId, password);
-        log.info("🟢 【0x31】 {} 主动申请充电  车识别码    VIN                          : {}", deviceId, vin);
+        log.info("🟢 【0x31】 {} 主动申请充电  原始报文    rawMsg                       : {}", GREEN + deviceId + RESET, rawHexMsg);
+        log.info("🟢 【0x31】 {} 主动申请充电  设备编号    deviceId                     : {}", GREEN + deviceId + RESET, deviceId);
+        log.info("🟢 【0x31】 {} 主动申请充电  枪口编号    gunNo                        : {}", GREEN + deviceId + RESET, gunNo);
+        log.info("🟢 【0x31】 {} 主动申请充电  启动方式    startupModeDesc              : {}", GREEN + deviceId + RESET, startupModeDesc);
+        log.info("🟢 【0x31】 {} 主动申请充电  需要密码    needPassword                 : {}", GREEN + deviceId + RESET, needPassword == 0 ? "不需要密码" : "需要密码");
+        log.info("🟢 【0x31】 {} 主动申请充电  卡号信息    accountOrCardNo              : {}", GREEN + deviceId + RESET, accountOrCardNo);
+        log.info("🟢 【0x31】 {} 主动申请充电  输入密码    password                     : {}", GREEN + deviceId + RESET, password);
+        log.info("🟢 【0x31】 {} 主动申请充电  车识别码    VIN                          : {}", GREEN + deviceId + RESET, vin);
         System.out.println();
     }
 
