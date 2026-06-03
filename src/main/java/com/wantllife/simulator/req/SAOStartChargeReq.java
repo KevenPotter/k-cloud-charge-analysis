@@ -20,7 +20,7 @@ import java.math.BigDecimal;
 @Data
 @Accessors(chain = true)
 @EqualsAndHashCode(callSuper = true)
-public class SOStartChargeReq extends FrameHeader {
+public class SAOStartChargeReq extends FrameHeader {
 
 
     /*设备编号*/
@@ -37,7 +37,7 @@ public class SOStartChargeReq extends FrameHeader {
     private BigDecimal balance;
 
     /* 有参构造 */
-    public SOStartChargeReq(byte[] data, String rawHexMsg) {
+    public SAOStartChargeReq(byte[] data, String rawHexMsg) {
         // 1.自助解析帧头
         parseFrameHeader(data, rawHexMsg);
         // 2.自助解析消息体

@@ -4,14 +4,12 @@ import cn.hutool.core.util.HexUtil;
 import cn.hutool.core.util.StrUtil;
 import com.wantllife.config.holder.CloudChargeHolder;
 import com.wantllife.core.FrameHeader;
-import com.wantllife.simulator.req.SOStartChargeReq;
+import com.wantllife.simulator.req.SAOStartChargeReq;
 import com.wantllife.util.StringUtil;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 import lombok.extern.slf4j.Slf4j;
-
-import java.math.BigDecimal;
 
 import static com.wantllife.constant.CloudFastChargingConstants.SIM_DOWN_START_CHARGE;
 
@@ -25,7 +23,7 @@ import static com.wantllife.constant.CloudFastChargingConstants.SIM_DOWN_START_C
 @Data
 @Accessors(chain = true)
 @EqualsAndHashCode(callSuper = true)
-public class SOStartChargeRes extends FrameHeader {
+public class SAOStartChargeRes extends FrameHeader {
 
     /*交易流水号*/
     private String tradeNo;
@@ -46,8 +44,8 @@ public class SOStartChargeRes extends FrameHeader {
      * @author KevenPotter
      * @date 2026-06-02 11:39:59
      */
-    public static byte[] buildCommand(SOStartChargeReq startChargeReq) {
-        SOStartChargeRes res = new SOStartChargeRes();
+    public static byte[] buildCommand(SAOStartChargeReq startChargeReq) {
+        SAOStartChargeRes res = new SAOStartChargeRes();
         res.setSeqNo(startChargeReq.getSeqNo());
         res.setFrameType(SIM_DOWN_START_CHARGE);
         res.setTradeNo(startChargeReq.getTradeNo());

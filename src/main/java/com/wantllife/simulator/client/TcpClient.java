@@ -4,7 +4,7 @@ import cn.hutool.core.thread.ThreadUtil;
 import com.wantllife.constant.SimulatorConstants;
 import com.wantllife.domain.vo.StandardDevice;
 import com.wantllife.simulator.manager.TcpConnectionManager;
-import com.wantllife.simulator.process.SimulatorDeviceMessageProcessor;
+import com.wantllife.simulator.process.SimDevMsgProcessor;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
@@ -40,7 +40,7 @@ public class TcpClient {
     /*TCP服务器端口号*/
     private final int serverPort;
     /*消息处理器*/
-    private final SimulatorDeviceMessageProcessor deviceMessageProcessor;
+    private final SimDevMsgProcessor simDevMsgProcessor;
     /*TCP套接字*/
     private Socket socket;
     /*输出流*/
@@ -62,7 +62,7 @@ public class TcpClient {
         this.serverPort = serverPort;
         this.device = device;
         this.deviceId = device.getDeviceId();
-        this.deviceMessageProcessor = new SimulatorDeviceMessageProcessor();
+        this.simDevMsgProcessor = new SimDevMsgProcessor();
     }
 
     /**
@@ -103,11 +103,11 @@ public class TcpClient {
 
                 // 获取输出流并交给处理器,由处理器全权负责报文发送
                 OutputStream outputStream = socket.getOutputStream();
-                deviceMessageProcessor.bindOutputStream(device, outputStream, this);
+                simDevMsgProcessor.bindOutputStream(device, outputStream, this);
 
                 // 连接成功,通知处理器执行登录逻辑
                 log.info("{} {} {} TCP connection successful", SIM_TIP_ICON, SIM_PROJECT_NAME, deviceId);
-                deviceMessageProcessor.onConnected(deviceId);
+                simDevMsgProcessor.onConnected(deviceId);
 
             } catch (Exception e) {
                 // 连接失败,按配置间隔重试
@@ -156,7 +156,7 @@ public class TcpClient {
                 byte[] data = new byte[len];
                 System.arraycopy(buffer, 0, data, 0, len);
                 // 将原始下行报文交给处理器,不做任何业务处理
-                deviceMessageProcessor.process(data);
+                simDevMsgProcessor.process(data);
             } catch (Exception e) {
                 // 接收异常,执行重连
                 if (running) {
