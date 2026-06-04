@@ -175,6 +175,8 @@ public class SimDevMsgProcessor {
                     break;
                 // 模拟器离线卡数据清除
                 case SIM_UP_OFFLINE_CARD_CLEAR:
+                    SATOfflineCardClearReq offlineCardClearReq = new SATOfflineCardClearReq(data, rawHexMsg);
+                    sendMessage(SATOfflineCardClearRes.buildCommand(offlineCardClearReq));
                     break;
                 // 模拟器离线卡数据查询
                 case SIM_UP_OFFLINE_CARD_QUERY:
