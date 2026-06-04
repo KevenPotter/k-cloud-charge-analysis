@@ -165,6 +165,8 @@ public class SimDevMsgProcessor {
                     break;
                 // 模拟器远程账户余额更新
                 case SIM_UP_BALANCE_UPDATE:
+                    SARBalanceUpdateReq balanceUpdateReq = new SARBalanceUpdateReq(data, rawHexMsg);
+                    sendMessage(SARBalanceUpdateRes.buildCommand(balanceUpdateReq));
                     break;
                 // 模拟器离线卡数据同步
                 case SIM_UP_OFFLINE_CARD_SYNC:
