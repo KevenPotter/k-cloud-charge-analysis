@@ -180,6 +180,8 @@ public class SimDevMsgProcessor {
                     break;
                 // 模拟器离线卡数据查询
                 case SIM_UP_OFFLINE_CARD_QUERY:
+                    SAUOfflineCardQueryReq offlineCardQueryReq = new SAUOfflineCardQueryReq(data, rawHexMsg);
+                    sendMessage(SAUOfflineCardQueryRes.buildCommand(offlineCardQueryReq));
                     break;
                 // 模拟器充电桩工作参数设置
                 case SIM_UP_WORKING_PARAMS:
