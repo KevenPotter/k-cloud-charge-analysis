@@ -170,6 +170,8 @@ public class SimDevMsgProcessor {
                     break;
                 // 模拟器离线卡数据同步
                 case SIM_UP_OFFLINE_CARD_SYNC:
+                    SASOfflineCardSyncReq offlineCardSyncReq = new SASOfflineCardSyncReq(data, rawHexMsg);
+                    sendMessage(SASOfflineCardSyncRes.buildCommand(offlineCardSyncReq));
                     break;
                 // 模拟器离线卡数据清除
                 case SIM_UP_OFFLINE_CARD_CLEAR:
