@@ -185,6 +185,8 @@ public class SimDevMsgProcessor {
                     break;
                 // 模拟器充电桩工作参数设置
                 case SIM_UP_WORKING_PARAMS:
+                    SAVWorkingParamsReq workingParamsReq = new SAVWorkingParamsReq(data, rawHexMsg);
+                    sendMessage(SAVWorkingParamsRes.buildCommand(workingParamsReq));
                     break;
                 // 模拟器对时设置
                 case SIM_UP_TIME_SYNC:
