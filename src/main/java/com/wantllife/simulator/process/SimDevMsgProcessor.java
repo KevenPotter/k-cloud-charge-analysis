@@ -190,6 +190,8 @@ public class SimDevMsgProcessor {
                     break;
                 // 模拟器对时设置
                 case SIM_UP_TIME_SYNC:
+                    SAWTimeSyncReq timeSyncReq = new SAWTimeSyncReq(data, rawHexMsg);
+                    sendMessage(SAWTimeSyncRes.buildCommand(timeSyncReq));
                     break;
                 // 模拟器计费模型设置
                 case SIM_UP_BILLING_MODE_SET:
