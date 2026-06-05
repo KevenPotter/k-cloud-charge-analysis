@@ -200,6 +200,8 @@ public class SimDevMsgProcessor {
                     break;
                 // 模拟器遥控地锁升锁与降锁
                 case SIM_UP_LOCK_UP_DOWN:
+                    SAZLockUpDownReq lockUpDownReq = new SAZLockUpDownReq(data, rawHexMsg);
+                    sendMessage(SAZLockUpDownRes.buildCommand(lockUpDownReq));
                     break;
                 // 模拟器远程重启
                 case SIM_UP_REBOOT:
