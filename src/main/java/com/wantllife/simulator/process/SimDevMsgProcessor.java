@@ -195,6 +195,8 @@ public class SimDevMsgProcessor {
                     break;
                 // 模拟器计费模型设置
                 case SIM_UP_BILLING_MODE_SET:
+                    SAXBillingModeSetReq billingModeSetReq = new SAXBillingModeSetReq(data, rawHexMsg);
+                    sendMessage(SAXBillingModeSetRes.buildCommand(billingModeSetReq));
                     break;
                 // 模拟器遥控地锁升锁与降锁
                 case SIM_UP_LOCK_UP_DOWN:
