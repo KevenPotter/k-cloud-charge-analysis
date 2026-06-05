@@ -210,6 +210,8 @@ public class SimDevMsgProcessor {
                     break;
                 // 模拟器远程更新
                 case SIM_UP_UPGRADE:
+                    SBBUpgradeReq upgradeReq = new SBBUpgradeReq(data, rawHexMsg);
+                    sendMessage(SBBUpgradeRes.buildCommand(upgradeReq));
                     break;
                 // 模拟器运营平台确认并充启动充电
                 case SIM_UP_APPLY_PARALLEL_CHARGING:
