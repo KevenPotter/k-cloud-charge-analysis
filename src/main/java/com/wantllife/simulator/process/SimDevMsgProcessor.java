@@ -205,6 +205,8 @@ public class SimDevMsgProcessor {
                     break;
                 // 模拟器远程重启
                 case SIM_UP_REBOOT:
+                    SBARebootReq rebootReq = new SBARebootReq(data, rawHexMsg);
+                    sendMessage(SBARebootRes.buildCommand(rebootReq));
                     break;
                 // 模拟器远程更新
                 case SIM_UP_UPGRADE:
