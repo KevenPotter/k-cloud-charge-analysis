@@ -44,4 +44,14 @@ public final class SimulatorConstants {
      * 实时监测数据发送间隔(秒) [0X13]
      */
     public static final long TIMER_REAL_TIME_MONITOR_SECOND = 10;
+
+    /**
+     * 远程重启延迟重连时间(秒)
+     */
+    public static final long DELAY_REBOOT_SECOND = 10;
+
+    /**
+     * 远程升级延迟重连时间(秒)
+     */
+    public static final long DELAY_UPGRADE_SECOND = 30;
 }

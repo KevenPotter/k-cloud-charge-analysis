@@ -188,7 +188,7 @@ public class TcpClient {
      * @author KevenPotter
      * @date 2026-05-26 16:04:29
      */
-    private void closeSocket() {
+    public void closeSocket() {
         try {
             if (socket != null) {
                 socket.close();
@@ -209,5 +209,27 @@ public class TcpClient {
         closeSocket();
         TcpConnectionManager.remove(deviceId, this);
         log.info("{} {} {} stopped", SIM_TIP_ICON, SIM_PROJECT_NAME, deviceId);
+    }
+
+    /**
+     * 延迟重连(用于远程重启/升级)
+     *
+     * @param delaySeconds 延迟秒数
+     * @author KevenPotter
+     * @date 2026-06-08 16:04:25
+     */
+    public void restart(long delaySeconds) {
+        log.info("{} {} {} will RESTART after {} seconds (remote reboot/upgrade)", SIM_TIP_ICON, SIM_PROJECT_NAME, deviceId, delaySeconds);
+        // 1.完全停止当前客户端（结束所有线程）
+        this.stop();
+        // 2.延迟后重新启动
+        ThreadUtil.execAsync(() -> {
+            try {
+                TimeUnit.SECONDS.sleep(delaySeconds);
+            } catch (InterruptedException ignored) {
+            }
+            // 3.完全重新启动
+            this.start();
+        });
     }
 }

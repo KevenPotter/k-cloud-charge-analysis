@@ -207,11 +207,15 @@ public class SimDevMsgProcessor {
                 case SIM_UP_REBOOT:
                     SBARebootReq rebootReq = new SBARebootReq(data, rawHexMsg);
                     sendMessage(SBARebootRes.buildCommand(rebootReq));
+                    // 远程重启:断开连接 → ?秒后重连
+                    tcpClient.restart(DELAY_REBOOT_SECOND);
                     break;
                 // 模拟器远程更新
                 case SIM_UP_UPGRADE:
                     SBBUpgradeReq upgradeReq = new SBBUpgradeReq(data, rawHexMsg);
                     sendMessage(SBBUpgradeRes.buildCommand(upgradeReq));
+                    // 远程升级:断开连接 → ?秒重连
+                    tcpClient.restart(DELAY_UPGRADE_SECOND);
                     break;
                 // 模拟器运营平台确认并充启动充电
                 case SIM_UP_APPLY_PARALLEL_CHARGING:
@@ -553,7 +557,7 @@ public class SimDevMsgProcessor {
                 outputStream.flush();
             }
         } catch (Exception e) {
-            tcpClient.stop();
+            tcpClient.closeSocket();
         }
     }
 
