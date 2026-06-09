@@ -5,7 +5,7 @@
 [![Maven](https://img.shields.io/badge/Maven-3.9+-blue.svg)](https://maven.apache.org/)
 [![Java](https://img.shields.io/badge/Java-8+-green.svg)](https://www.oracle.com/java/)
 [![MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![GitHub Stars](https://img.shields.io/github/stars/KevenPotter/k-cloud-charge-analysis?style=social)](https://github.com/KevenPotter/k-cloud-charge-analysis)
+[![GitHub Stars](https://img.shields.io/github/stars/KevenPotter/k-cloud-charge-analysis)](https://github.com/KevenPotter/k-cloud-charge-analysis)
 
 ---
 
