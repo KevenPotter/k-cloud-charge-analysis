@@ -1,6 +1,8 @@
 package com.wantllife.domain.vo;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
 import java.math.BigDecimal;
@@ -13,6 +15,8 @@ import java.math.BigDecimal;
  */
 @Data
 @Accessors(chain = true)
+@NoArgsConstructor
+@AllArgsConstructor
 public class StandardChargeOrder {
 
     /*充电订单主键编号*/
