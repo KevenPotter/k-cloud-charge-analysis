@@ -143,7 +143,7 @@ public class AKChargingChargerStopReq extends FrameHeader {
         log.info("🟢 【0x21】 {} 充电机器中止  设备编号    deviceId                     : {}", GREEN + deviceId + RESET, deviceId);
         log.info("🟢 【0x21】 {} 充电机器中止  枪口编号    gunNo                        : {}", GREEN + deviceId + RESET, gunNo);
         log.info("🟢 【0x21】 {} 充电机器中止  交易编号    tradeNo                      : {}", GREEN + deviceId + RESET, tradeNo);
-        log.info("🟢 【0x21】 {} 充电机器中止  中止原因    chargerStopReason            : {}", GREEN + deviceId + RESET, chargerStopReason);
+        log.info("🟢 【0x21】 {} 充电机器中止  中止原因    chargerStopReasonDesc        : {}", GREEN + deviceId + RESET, chargerStopReasonDesc);
         log.info("🟢 【0x21】 {} 充电机器中止  故障原因    chargerStopFailureDesc       : {}", GREEN + deviceId + RESET, chargerStopFailureDesc);
         log.info("🟢 【0x21】 {} 充电机器中止  错误原因    chargerStopErrorReasonDesc   : {}", GREEN + deviceId + RESET, chargerStopErrorReasonDesc);
         System.out.println();
