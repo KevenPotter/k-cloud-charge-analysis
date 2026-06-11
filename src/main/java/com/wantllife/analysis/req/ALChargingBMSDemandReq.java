@@ -1,7 +1,7 @@
 package com.wantllife.analysis.req;
 
-import com.wantllife.core.FrameHeader;
 import com.wantllife.config.holder.CloudChargeHolder;
+import com.wantllife.core.FrameHeader;
 import com.wantllife.util.StringUtil;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
