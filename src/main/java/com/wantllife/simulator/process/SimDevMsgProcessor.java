@@ -146,6 +146,7 @@ public class SimDevMsgProcessor {
                     break;
                 // 模拟器运营平台确认启动充电
                 case SIM_UP_REQUEST_CHARGING:
+                    SANRequestChargingReq requestChargingReq = new SANRequestChargingReq(data, rawHexMsg);
                     break;
                 // 模拟器运营平台远程控制启机
                 case SIM_UP_START_CHARGE:
