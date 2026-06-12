@@ -96,7 +96,7 @@ public class AQTradeRecordReq extends FrameHeader {
     private String vinCode;
     /*交易标识*/
     private Integer tradeIdentifier;
-    /*交易表示描述*/
+    /*交易标识描述*/
     private String tradeIdentifierDesc;
     /*交易日期、时间*/
     private String tradeTime;
