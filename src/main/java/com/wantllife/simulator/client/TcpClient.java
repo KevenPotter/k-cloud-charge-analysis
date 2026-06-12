@@ -34,13 +34,14 @@ public class TcpClient {
     /** 设备对象 */
     @Getter
     private final StandardDevice device;
+    /** 消息处理器 */
+    @Getter
+    private final SimDevMsgProcessor simDevMsgProcessor;
 
     /** TCP服务器IP地址 */
     private final String serverIP;
     /** TCP服务器端口号 */
     private final int serverPort;
-    /** 消息处理器 */
-    private final SimDevMsgProcessor simDevMsgProcessor;
     /** TCP套接字 */
     private Socket socket;
     /** 输出流 */
