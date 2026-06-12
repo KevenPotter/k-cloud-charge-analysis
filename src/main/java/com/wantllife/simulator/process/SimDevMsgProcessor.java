@@ -164,6 +164,7 @@ public class SimDevMsgProcessor {
                     break;
                 // 模拟器交易记录确认
                 case SIM_UP_TRADE_RECORD:
+                    SAQTradeRecordReq tradeRecordReq = new SAQTradeRecordReq(data, rawHexMsg, this.deviceId);
                     break;
                 // 模拟器远程账户余额更新
                 case SIM_UP_BALANCE_UPDATE:
