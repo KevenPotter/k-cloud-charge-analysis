@@ -1,9 +1,14 @@
 package com.wantllife.util;
 
+import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.HexUtil;
+import cn.hutool.core.util.StrUtil;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
+
+import static cn.hutool.core.date.DatePattern.NORM_DATETIME_MS_PATTERN;
 
 /**
  * 时间工具类
@@ -73,4 +78,23 @@ public class TimeUtil {
         // 转成大写16进制字符串（和你原来格式一致）
         return HexUtil.encodeHexStr(cp56Bytes).toUpperCase();
     }
+
+    /**
+     * Date对象转换为7字节CP56Time2a原始字节数组
+     *
+     * @param date 待转换日期对象
+     * @return 7字节CP56Time2a字节数组
+     * @author KevenPotter
+     * @date 2026-06-12 15:48:37
+     */
+    public static byte[] dateToCp56Bytes(Date date) {
+        if (date == null) {
+            return new byte[7];
+        }
+        String dateStr = DateUtil.format(date, NORM_DATETIME_MS_PATTERN);
+        if (StrUtil.isBlank(dateStr)) return new byte[7];
+        String cp56Hex = transformCP56Time(dateStr);
+        return HexUtil.decodeHex(cp56Hex);
+    }
+
 }
