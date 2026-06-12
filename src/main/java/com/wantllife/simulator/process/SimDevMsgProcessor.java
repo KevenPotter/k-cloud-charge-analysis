@@ -6,6 +6,7 @@ import com.wantllife.domain.vo.StandardRealTimeMonitor;
 import com.wantllife.simulator.client.TcpClient;
 import com.wantllife.simulator.req.*;
 import com.wantllife.simulator.res.*;
+import com.wantllife.simulator.state.DeviceState;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.OutputStream;

@@ -1,4 +1,4 @@
-package com.wantllife.simulator.process;
+package com.wantllife.simulator.state;
 
 /**
  * 设备状态机
