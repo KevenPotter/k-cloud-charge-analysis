@@ -75,7 +75,7 @@ public class TimeUtil {
         cp56Bytes[4] = (byte) day;                          // 日期
         cp56Bytes[5] = (byte) month;                        // 月
         cp56Bytes[6] = (byte) year;                         // 年（+2000）
-        // 转成大写16进制字符串（和你原来格式一致）
+        // 转成大写16进制字符串
         return HexUtil.encodeHexStr(cp56Bytes).toUpperCase();
     }
 
