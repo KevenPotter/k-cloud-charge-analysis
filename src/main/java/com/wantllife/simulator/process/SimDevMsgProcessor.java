@@ -226,6 +226,10 @@ public class SimDevMsgProcessor {
                     break;
                 // 模拟器运营平台远程控制并充启机
                 case SIM_UP_PARALLEL_START_CHARGE:
+                    SBDParallelStartChargeReq parallelStartChargeReq = new SBDParallelStartChargeReq(data, rawHexMsg);
+                    sendMessage(SBDParallelStartChargeRes.buildCommand(parallelStartChargeReq));
+                    // 开始充电 → 启动实时数据上传
+                    startCharging(parallelStartChargeReq.getTradeNo());
                     break;
 
             }

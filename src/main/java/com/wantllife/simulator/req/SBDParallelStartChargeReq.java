@@ -10,22 +10,22 @@ import lombok.experimental.Accessors;
 import lombok.extern.slf4j.Slf4j;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 import static com.wantllife.constant.ColorConstants.PURPLE;
 import static com.wantllife.constant.ColorConstants.RESET;
 
 /**
- * 运营平台远程控制启机 [0X34]
+ * 运营平台远程控制并充启机 [0XA4]
  *
  * @author KevenPotter
- * @date 2026-06-02 10:40:18
+ * @date 2026-06-16 10:37:41
  */
 @Slf4j
 @Data
 @Accessors(chain = true)
 @EqualsAndHashCode(callSuper = true)
-public class SAOStartChargeReq extends FrameHeader {
-
+public class SBDParallelStartChargeReq extends FrameHeader {
 
     /*设备编号*/
     private String deviceId;
@@ -39,9 +39,11 @@ public class SAOStartChargeReq extends FrameHeader {
     private String physicalCardNo;
     /*账户余额*/
     private BigDecimal balance;
+    /*并充序号*/
+    private String parallelNo;
 
     /* 有参构造 */
-    public SAOStartChargeReq(byte[] data, String rawHexMsg) {
+    public SBDParallelStartChargeReq(byte[] data, String rawHexMsg) {
         // 1.自助解析帧头
         parseFrameHeader(data, rawHexMsg);
         // 2.自助解析消息体
@@ -55,18 +57,20 @@ public class SAOStartChargeReq extends FrameHeader {
      *
      * @param data 消息体
      * @author KevenPotter
-     * @date 2026-06-02 10:41:35
+     * @date 2026-06-16 10:38:06
      */
     private void parseBody(byte[] data) {
         int index = 6;
         // 交易流水号 [16字节] [BCD]
-        this.setTradeNo(StringUtil.bcd2String(data, index, 16));
+        String tradeRaw = StringUtil.bcd2String(data, index, 16);
+        this.setTradeNo(tradeRaw.replaceFirst("^0+(?!$)", ""));
         index += 16;
-        // 桩编号 [7字节] [BCD]
+        // 设备编号 [7字节] [BCD]
         this.setDeviceId(StringUtil.bcd2String(data, index, 7));
         index += 7;
         // 枪号 [1字节] [BCD]
-        this.setGunNo(Integer.parseInt(StringUtil.bcd2String(data, index, 1)));
+        String gunStr = StringUtil.bcd2String(data, index, 1);
+        this.setGunNo(Integer.parseInt(gunStr));
         index += 1;
         // 逻辑卡号 [8字节] [BCD]
         String logicRaw = StringUtil.bcd2String(data, index, 8);
@@ -80,13 +84,17 @@ public class SAOStartChargeReq extends FrameHeader {
         phyHex = phyHex.replaceFirst("^0+(?!$)", "");
         this.setPhysicalCardNo(phyHex);
         index += 8;
-        // 账户余额 [4字节] [BIN] 小端模式，保留两位小数
+        // 账户余额 [4字节] [BIN]
         long balanceValue = ((long) data[index] & 0xFF)
                 | ((long) data[index + 1] & 0xFF) << 8
                 | ((long) data[index + 2] & 0xFF) << 16
                 | ((long) data[index + 3] & 0xFF) << 24;
-        this.setBalance(BigDecimal.valueOf(balanceValue, 2));
+        this.setBalance(BigDecimal.valueOf(balanceValue, 2).setScale(2, RoundingMode.HALF_UP));
         index += 4;
+        // 并充序号 [6字节] [BCD]
+        String parallelRaw = StringUtil.bcd2String(data, index, 6);
+        this.setParallelNo(parallelRaw.replaceFirst("^0+(?!$)", ""));
+        index += 6;
     }
 
     /**
@@ -94,17 +102,18 @@ public class SAOStartChargeReq extends FrameHeader {
      *
      * @param rawHexMsg 原始报文数据
      * @author KevenPotter
-     * @date 2026-06-02 10:43:00
+     * @date 2026-06-16 10:39:38
      */
     private void log(String rawHexMsg) {
         log.info("-------------------------------------------------------------------------------------------");
-        log.info("👨‍🚀 【0x34】 {} 远程控制启机  原始报文    rawMsg                       : {}", PURPLE + deviceId + RESET, rawHexMsg);
-        log.info("👨‍🚀 【0x34】 {} 远程控制启机  设备编号    deviceId                     : {}", PURPLE + deviceId + RESET, deviceId);
-        log.info("👨‍🚀 【0x34】 {} 远程控制启机  枪口编号    gunNo                        : {}", PURPLE + deviceId + RESET, gunNo);
-        log.info("👨‍🚀 【0x34】 {} 远程控制启机  交易编号    tradeNo                      : {}", PURPLE + deviceId + RESET, tradeNo);
-        log.info("👨‍🚀 【0x34】 {} 远程控制启机  逻辑卡号    logicalCardNo                : {}", PURPLE + deviceId + RESET, logicalCardNo);
-        log.info("👨‍🚀 【0x34】 {} 远程控制启机  物理卡号    physicalCardNo               : {}", PURPLE + deviceId + RESET, physicalCardNo);
-        log.info("👨‍🚀 【0x34】 {} 远程控制启机  账户余额    balance                      : {}", PURPLE + deviceId + RESET, balance);
+        log.info("👨‍🚀 【0xA4】 {} 远程并充启机  原始报文    rawMsg                       : {}", PURPLE + deviceId + RESET, rawHexMsg);
+        log.info("👨‍🚀 【0xA4】 {} 远程并充启机  设备编号    deviceId                     : {}", PURPLE + deviceId + RESET, deviceId);
+        log.info("👨‍🚀 【0xA4】 {} 远程并充启机  枪口编号    gunNo                        : {}", PURPLE + deviceId + RESET, gunNo);
+        log.info("👨‍🚀 【0xA4】 {} 远程并充启机  交易编号    tradeNo                      : {}", PURPLE + deviceId + RESET, tradeNo);
+        log.info("👨‍🚀 【0xA4】 {} 远程并充启机  逻辑卡号    logicalCardNo                : {}", PURPLE + deviceId + RESET, logicalCardNo);
+        log.info("👨‍🚀 【0xA4】 {} 远程并充启机  物理卡号    physicalCardNo               : {}", PURPLE + deviceId + RESET, physicalCardNo);
+        log.info("👨‍🚀 【0xA4】 {} 远程并充启机  账户余额    balance                      : {}", PURPLE + deviceId + RESET, balance);
+        log.info("👨‍🚀 【0xA4】 {} 远程并充启机  并充序号    parallelNo                   : {}", PURPLE + deviceId + RESET, parallelNo);
         System.out.println();
     }
 }
