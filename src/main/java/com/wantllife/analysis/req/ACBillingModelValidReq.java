@@ -61,6 +61,7 @@ public class ACBillingModelValidReq extends FrameHeader {
      * @author KevenPotter
      * @date 2026-05-19 14:13:09
      */
+    @SuppressWarnings("StringBufferReplaceableByString")
     private void log(String rawHexMsg) {
         log.info("-------------------------------------------------------------------------------------------");
         log.info("🟢 【0x05】 {} 计费模型验证  原始报文    rawMsg                       : {}", GREEN + deviceId + RESET, rawHexMsg);

@@ -68,6 +68,7 @@ public class SAQTradeRecordReq extends FrameHeader {
      * @author KevenPotter
      * @date 2026-06-12 16:14:00
      */
+    @SuppressWarnings("StringBufferReplaceableByString")
     private void log(String rawHexMsg) {
         log.info("-------------------------------------------------------------------------------------------");
         log.info("👨‍🚀 【0x40】 {} 交易记录确认  原始报文    rawMsg                       : {}", PURPLE + deviceId + RESET, rawHexMsg);

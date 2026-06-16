@@ -108,6 +108,7 @@ public class SAKChargingChargerStopRes extends FrameHeader {
      * @author KevenPotter
      * @date 2026-06-11 09:55:27
      */
+    @SuppressWarnings("StringBufferReplaceableByString")
     private void log(String rawHexMsg) {
         log.info("-------------------------------------------------------------------------------------------");
         log.info("🚀 【0x21】 {} 充电机器中止  原始报文    rawMsg                       : {}", PURPLE + deviceId + RESET, rawHexMsg);

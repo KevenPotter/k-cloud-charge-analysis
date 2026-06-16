@@ -297,6 +297,7 @@ public class SAXBillingModeSetReq extends FrameHeader {
      * @author KevenPotter
      * @date 2026-06-05 09:58:11
      */
+    @SuppressWarnings("StringBufferReplaceableByString")
     private void log(String rawHexMsg) {
         log.info("-------------------------------------------------------------------------------------------");
         log.info("👨‍🚀 【0x58】 {} 计费模型设置  原始报文    rawMsg                       : {}", PURPLE + deviceId + RESET, rawHexMsg);

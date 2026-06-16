@@ -85,6 +85,7 @@ public class AWTimeSyncRes extends FrameHeader {
      * @author KevenPotter
      * @date 2026-05-19 14:28:54
      */
+    @SuppressWarnings("StringBufferReplaceableByString")
     private void log(String rawHexMsg) {
         log.info("-------------------------------------------------------------------------------------------");
         log.info("🔶 【0x56】 {} 设备对时设置  原始报文    rawMsg                       : {}", GREEN + deviceId + RESET, rawHexMsg);

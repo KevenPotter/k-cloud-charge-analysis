@@ -85,6 +85,7 @@ public class SATOfflineCardClearReq extends FrameHeader {
      * @author KevenPotter
      * @date 2026-06-04 10:39:43
      */
+    @SuppressWarnings("StringBufferReplaceableByString")
     private void log(String rawHexMsg) {
         log.info("-------------------------------------------------------------------------------------------");
         log.info("👨‍🚀 【0x46】 {} 电卡数据清除  原始报文    rawMsg                       : {}", PURPLE + deviceId + RESET, rawHexMsg);

@@ -91,6 +91,7 @@ public class SASOfflineCardSyncReq extends FrameHeader {
      * @author KevenPotter
      * @date 2026-06-04 10:15:02
      */
+    @SuppressWarnings("StringBufferReplaceableByString")
     private void log(String rawHexMsg) {
         log.info("-------------------------------------------------------------------------------------------");
         log.info("👨‍🚀 【0x44】 {} 电卡数据同步  原始报文    rawMsg                       : {}", PURPLE + deviceId + RESET, rawHexMsg);

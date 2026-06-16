@@ -99,6 +99,7 @@ public class SAOStartChargeRes extends FrameHeader {
      * @author KevenPotter
      * @date 2026-06-02 11:45:10
      */
+    @SuppressWarnings("StringBufferReplaceableByString")
     private void log(String rawHexMsg) {
         log.info("-------------------------------------------------------------------------------------------");
         log.info("🚀 【0x33】 {} 远程开电回复  原始报文    rawMsg                       : {}", PURPLE + deviceId + RESET, rawHexMsg);

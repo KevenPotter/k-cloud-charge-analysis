@@ -110,6 +110,7 @@ public class AHChargeFinishedReq extends FrameHeader {
      * @author KevenPotter
      * @date 2026-05-19 14:15:09
      */
+    @SuppressWarnings("StringBufferReplaceableByString")
     private void log(String rawHexMsg) {
         log.info("-------------------------------------------------------------------------------------------");
         log.info("🟢 【0x19】 {} 充电结束上传  原始报文    rawMsg                       : {}", GREEN + deviceId + RESET, rawHexMsg);

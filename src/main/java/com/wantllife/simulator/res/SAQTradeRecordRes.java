@@ -498,6 +498,7 @@ public class SAQTradeRecordRes extends FrameHeader {
      * @author KevenPotter
      * @date 2026-06-12 11:49:06
      */
+    @SuppressWarnings("StringBufferReplaceableByString")
     private void log(String rawHexMsg) {
         log.info("-------------------------------------------------------------------------------------------");
         log.info("🚀 【0x3B】 {} 交易记录上报  原始报文    rawMsg                       : {}", PURPLE + deviceId + RESET, rawHexMsg);

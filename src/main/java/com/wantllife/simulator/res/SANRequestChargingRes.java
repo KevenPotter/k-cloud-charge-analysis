@@ -119,6 +119,7 @@ public class SANRequestChargingRes extends FrameHeader {
      * @author KevenPotter
      * @date 2026-06-11 15:42:07
      */
+    @SuppressWarnings("StringBufferReplaceableByString")
     private void log(String rawHexMsg) {
         log.info("-------------------------------------------------------------------------------------------");
         log.info("🚀 【0x31】 {} 主动申请充电  原始报文    rawMsg                       : {}", PURPLE + deviceId + RESET, rawHexMsg);

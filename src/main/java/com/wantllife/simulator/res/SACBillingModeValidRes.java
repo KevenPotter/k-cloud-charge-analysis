@@ -85,6 +85,7 @@ public class SACBillingModeValidRes extends FrameHeader {
      * @author KevenPotter
      * @date 2026-05-28 15:40:50
      */
+    @SuppressWarnings("StringBufferReplaceableByString")
     private void log(String rawHexMsg) {
         log.info("-------------------------------------------------------------------------------------------");
         log.info("🚀 【0x05】 {} 计费模型验证  原始报文    rawMsg                       : {}", PURPLE + deviceId + RESET, rawHexMsg);

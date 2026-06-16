@@ -139,6 +139,7 @@ public class AJChargingBMSStopReq extends FrameHeader {
      * @author KevenPotter
      * @date 2026-05-19 14:15:29
      */
+    @SuppressWarnings("StringBufferReplaceableByString")
     private void log(String rawHexMsg) {
         log.info("-------------------------------------------------------------------------------------------");
         log.info("🟢 【0x1D】 {} 电池管理中止  原始报文    rawMsg                       : {}", GREEN + deviceId + RESET, rawHexMsg);

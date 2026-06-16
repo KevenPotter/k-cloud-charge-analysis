@@ -257,6 +257,7 @@ public class AMChargingBMSInfoReq extends FrameHeader {
      * @author KevenPotter
      * @date 2026-05-19 14:16:23
      */
+    @SuppressWarnings("StringBufferReplaceableByString")
     private void log(String rawHexMsg) {
         log.info("-------------------------------------------------------------------------------------------");
         log.info("🟢 【0x25】 {} 电池管理信息  原始报文    rawMsg                       : {}", GREEN + deviceId + RESET, rawHexMsg);

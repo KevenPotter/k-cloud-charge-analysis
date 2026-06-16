@@ -100,6 +100,7 @@ public class AUOfflineCardQueryRes extends FrameHeader {
      * @author KevenPotter
      * @date 2026-05-19 14:28:09
      */
+    @SuppressWarnings("StringBufferReplaceableByString")
     private void log(String rawHexMsg, List<StandardCard> cardList) {
         log.info("-------------------------------------------------------------------------------------------");
         log.info("🔶 【0x48】 {} 电卡数据查询  原始报文    rawMsg                       : {}", GREEN + deviceId + RESET, rawHexMsg);

@@ -115,6 +115,7 @@ public class ANRequestChargingReq extends FrameHeader {
      * @author KevenPotter
      * @date 2026-05-19 14:16:37
      */
+    @SuppressWarnings("StringBufferReplaceableByString")
     private void log(String rawHexMsg) {
         log.info("-------------------------------------------------------------------------------------------");
         log.info("🟢 【0x31】 {} 主动申请充电  原始报文    rawMsg                       : {}", GREEN + deviceId + RESET, rawHexMsg);

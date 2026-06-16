@@ -86,6 +86,7 @@ public class BBUpgradeReq extends FrameHeader {
      * @author KevenPotter
      * @date 2026-05-19 14:20:32
      */
+    @SuppressWarnings("StringBufferReplaceableByString")
     private void log(String rawHexMsg) {
         log.info("-------------------------------------------------------------------------------------------");
         log.info("🟢 【0x93】 {} 远程更新应答  原始报文    rawMsg                       : {}", GREEN + deviceId + RESET, rawHexMsg);

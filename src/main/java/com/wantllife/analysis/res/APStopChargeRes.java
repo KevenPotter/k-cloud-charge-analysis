@@ -82,6 +82,7 @@ public class APStopChargeRes extends FrameHeader {
      * @author KevenPotter
      * @date 2026-05-19 14:26:44
      */
+    @SuppressWarnings("StringBufferReplaceableByString")
     private void log(String rawHexMsg) {
         log.info("-------------------------------------------------------------------------------------------");
         log.info("🔶 【0x36】 {} 远程控制停机  原始报文    rawMsg                       : {}", GREEN + deviceId + RESET, rawHexMsg);

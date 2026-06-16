@@ -117,6 +117,7 @@ public class AOStartChargeRes extends FrameHeader {
      * @author KevenPotter
      * @date 2026-05-19 14:25:51
      */
+    @SuppressWarnings("StringBufferReplaceableByString")
     private void log(String rawHexMsg) {
         log.info("-------------------------------------------------------------------------------------------");
         log.info("🔶 【0x34】 {} 远程控制启机  原始报文    rawMsg                       : {}", GREEN + deviceId + RESET, rawHexMsg);

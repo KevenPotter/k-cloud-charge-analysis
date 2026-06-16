@@ -190,6 +190,7 @@ public class SAERealTimeMonitorRes extends FrameHeader {
      * @author KevenPotter
      * @date 2026-06-02 09:36:54
      */
+    @SuppressWarnings("StringBufferReplaceableByString")
     private void log(String rawHexMsg) {
         log.info("-------------------------------------------------------------------------------------------");
         log.info("🚀 【0x13】 {} 实时监测数据  原始报文    rawMsg                       : {}", PURPLE + deviceId + RESET, rawHexMsg);

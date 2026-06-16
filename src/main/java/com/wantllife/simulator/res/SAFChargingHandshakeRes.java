@@ -184,6 +184,7 @@ public class SAFChargingHandshakeRes extends FrameHeader {
      * @author KevenPotter
      * @date 2026-06-09 09:52:14
      */
+    @SuppressWarnings("StringBufferReplaceableByString")
     private void log(String rawHexMsg) {
         log.info("-------------------------------------------------------------------------------------------");
         log.info("🚀 【0x15】 {} 充电握手上传  原始报文    rawMsg                       : {}", PURPLE + deviceId + RESET, rawHexMsg);

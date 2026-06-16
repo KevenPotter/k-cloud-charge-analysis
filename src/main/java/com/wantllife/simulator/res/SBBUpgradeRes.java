@@ -82,6 +82,7 @@ public class SBBUpgradeRes extends FrameHeader {
      * @author KevenPotter
      * @date 2026-06-05 14:21:54
      */
+    @SuppressWarnings("StringBufferReplaceableByString")
     private void log(String rawHexMsg) {
         log.info("-------------------------------------------------------------------------------------------");
         log.info("🚀 【0x93】 {} 远程更新应答  原始报文    rawMsg                       : {}", PURPLE + deviceId + RESET, rawHexMsg);

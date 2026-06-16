@@ -168,6 +168,7 @@ public class SAGParamConfigRes extends FrameHeader {
      * @author KevenPotter
      * @date 2026-06-10 09:52:49
      */
+    @SuppressWarnings("StringBufferReplaceableByString")
     private void log(String rawHexMsg) {
         log.info("-------------------------------------------------------------------------------------------");
         log.info("🚀 【0x17】 {} 参数配置上传  原始报文    rawMsg                       : {}", PURPLE + deviceId + RESET, rawHexMsg);

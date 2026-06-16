@@ -86,6 +86,7 @@ public class SAUOfflineCardQueryReq extends FrameHeader {
      * @author KevenPotter
      * @date 2026-06-04 13:30:49
      */
+    @SuppressWarnings("StringBufferReplaceableByString")
     private void log(String rawHexMsg) {
         log.info("-------------------------------------------------------------------------------------------");
         log.info("👨‍🚀 【0x48】 {} 电卡数据查询  原始报文    rawMsg                       : {}", PURPLE + deviceId + RESET, rawHexMsg);

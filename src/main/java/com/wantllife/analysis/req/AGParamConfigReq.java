@@ -132,6 +132,7 @@ public class AGParamConfigReq extends FrameHeader {
      * @author KevenPotter
      * @date 2026-05-19 14:14:56
      */
+    @SuppressWarnings("StringBufferReplaceableByString")
     private void log(String rawHexMsg) {
         log.info("-------------------------------------------------------------------------------------------");
         log.info("🟢 【0x17】 {} 参数配置上传  原始报文    rawMsg                       : {}", GREEN + deviceId + RESET, rawHexMsg);

@@ -454,6 +454,7 @@ public class AQTradeRecordReq extends FrameHeader {
      * @author KevenPotter
      * @date 2026-05-19 14:17:44
      */
+    @SuppressWarnings("StringBufferReplaceableByString")
     private void log(String rawHexMsg) {
         log.info("-------------------------------------------------------------------------------------------");
         log.info("🟢 【0x3B】 {} 交易记录上报  原始报文    rawMsg                       : {}", GREEN + deviceId + RESET, rawHexMsg);

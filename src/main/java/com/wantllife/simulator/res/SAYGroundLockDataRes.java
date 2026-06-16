@@ -173,6 +173,7 @@ public class SAYGroundLockDataRes extends FrameHeader {
      * @author KevenPotter
      * @date 2026-06-12 16:33:59
      */
+    @SuppressWarnings("StringBufferReplaceableByString")
     private void log(String rawHexMsg) {
         log.info("-------------------------------------------------------------------------------------------");
         log.info("🚀 【0x61】 {} 地锁数据上送  原始报文    rawMsg                       : {}", PURPLE + deviceId + RESET, rawHexMsg);

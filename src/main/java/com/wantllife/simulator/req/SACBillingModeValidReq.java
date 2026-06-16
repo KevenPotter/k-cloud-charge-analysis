@@ -66,6 +66,7 @@ public class SACBillingModeValidReq extends FrameHeader {
      * @author KevenPotter
      * @date 2026-05-28 16:56:07
      */
+    @SuppressWarnings("StringBufferReplaceableByString")
     private void log(String rawHexMsg) {
         log.info("-------------------------------------------------------------------------------------------");
         log.info("👨‍🚀 【0x06】 {} 计费验证应答  原始报文    rawMsg                       : {}", PURPLE + deviceId + RESET, rawHexMsg);

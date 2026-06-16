@@ -156,18 +156,21 @@ public class AALoginReq extends FrameHeader {
      * @author KevenPotter
      * @date 2026-05-19 14:12:32
      */
+    @SuppressWarnings("StringBufferReplaceableByString")
     private void log(String rawHexMsg) {
-        log.info("-------------------------------------------------------------------------------------------");
-        log.info("🟢 【0x01】 {} 设备登录认证  原始报文    rawMsg                       : {}", GREEN + deviceId + RESET, rawHexMsg);
-        log.info("🟢 【0x01】 {} 设备登录认证  设备编号    deviceId                     : {}", GREEN + deviceId + RESET, deviceId);
-        log.info("🟢 【0x01】 {} 设备登录认证  设备类型    deviceTypeDesc               : {}", GREEN + deviceId + RESET, deviceTypeDesc);
-        log.info("🟢 【0x01】 {} 设备登录认证  充电枪数    gunNum                       : {}", GREEN + deviceId + RESET, gunNum);
-        log.info("🟢 【0x01】 {} 设备登录认证  协议版本    protocolVersion              : {}", GREEN + deviceId + RESET, protocolVersion);
-        log.info("🟢 【0x01】 {} 设备登录认证  程序版本    programVersion               : {}", GREEN + deviceId + RESET, programVersion);
-        log.info("🟢 【0x01】 {} 设备登录认证  网络类型    networkLinkTypeDesc          : {}", GREEN + deviceId + RESET, networkLinkTypeDesc);
-        log.info("🟢 【0x01】 {} 设备登录认证  芯片卡号    simNo                        : {}", GREEN + deviceId + RESET, simNo);
-        log.info("🟢 【0x01】 {} 设备登录认证  运营商家    carrierDesc                  : {}", GREEN + deviceId + RESET, carrierDesc);
-        System.out.println();
+        StringBuilder sb = new StringBuilder(4096);
+        String devLabel = GREEN + deviceId + RESET;
+        sb.append("\n-------------------------------------------------------------------------------------------\n");
+        sb.append(String.format("🟢 【0x01】 %s 设备登录认证  原始报文    rawMsg                       : %s\n", devLabel, rawHexMsg));
+        sb.append(String.format("🟢 【0x01】 %s 设备登录认证  设备编号    deviceId                     : %s\n", devLabel, deviceId));
+        sb.append(String.format("🟢 【0x01】 %s 设备登录认证  设备类型    deviceTypeDesc               : %s\n", devLabel, deviceTypeDesc));
+        sb.append(String.format("🟢 【0x01】 %s 设备登录认证  充电枪数    gunNum                       : %s\n", devLabel, gunNum));
+        sb.append(String.format("🟢 【0x01】 %s 设备登录认证  协议版本    protocolVersion              : %s\n", devLabel, protocolVersion));
+        sb.append(String.format("🟢 【0x01】 %s 设备登录认证  程序版本    programVersion               : %s\n", devLabel, programVersion));
+        sb.append(String.format("🟢 【0x01】 %s 设备登录认证  网络类型    networkLinkTypeDesc          : %s\n", devLabel, networkLinkTypeDesc));
+        sb.append(String.format("🟢 【0x01】 %s 设备登录认证  芯片卡号    simNo                        : %s\n", devLabel, simNo));
+        sb.append(String.format("🟢 【0x01】 %s 设备登录认证  运营商家    carrierDesc                  : %s\n", devLabel, carrierDesc));
+        log.info(sb.toString());
     }
 
 }

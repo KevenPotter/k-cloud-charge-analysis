@@ -95,6 +95,7 @@ public class AZLockUpDownRes extends FrameHeader {
      * @author KevenPotter
      * @date 2026-05-19 14:30:39
      */
+    @SuppressWarnings("StringBufferReplaceableByString")
     private void log(String rawHexMsg) {
         log.info("-------------------------------------------------------------------------------------------");
         log.info("🔶 【0x62】 {} 遥控地锁升降  原始报文    rawMsg                       : {}", GREEN + deviceId + RESET, rawHexMsg);

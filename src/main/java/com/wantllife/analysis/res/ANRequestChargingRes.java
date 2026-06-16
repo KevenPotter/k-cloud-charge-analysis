@@ -157,6 +157,7 @@ public class ANRequestChargingRes extends FrameHeader {
      * @author KevenPotter
      * @date 2026-05-19 14:25:40
      */
+    @SuppressWarnings("StringBufferReplaceableByString")
     private void log(String rawHexMsg) {
         log.info("-------------------------------------------------------------------------------------------");
         log.info("🔶 【0x32】 {} 确认启动充电  原始报文    rawMsg                       : {}", GREEN + deviceId + RESET, rawHexMsg);

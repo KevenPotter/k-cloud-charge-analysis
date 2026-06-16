@@ -142,6 +142,7 @@ public class SBDParallelStartChargeRes extends FrameHeader {
      * @author KevenPotter
      * @date 2026-06-16 11:14:39
      */
+    @SuppressWarnings("StringBufferReplaceableByString")
     private void log(String rawHexMsg) {
         log.info("-------------------------------------------------------------------------------------------");
         log.info("🚀 【0xA3】 {} 并充开电回复  原始报文    rawMsg                       : {}", PURPLE + deviceId + RESET, rawHexMsg);

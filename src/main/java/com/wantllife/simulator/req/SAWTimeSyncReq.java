@@ -65,6 +65,7 @@ public class SAWTimeSyncReq extends FrameHeader {
      * @author KevenPotter
      * @date 2026-06-05 09:26:17
      */
+    @SuppressWarnings("StringBufferReplaceableByString")
     private void log(String rawHexMsg) {
         log.info("-------------------------------------------------------------------------------------------");
         log.info("👨‍🚀 【0x56】 {} 设备对时设置  原始报文    rawMsg                       : {}", PURPLE + deviceId + RESET, rawHexMsg);

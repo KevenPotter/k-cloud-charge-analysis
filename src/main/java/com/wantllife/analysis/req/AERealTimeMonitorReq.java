@@ -223,6 +223,7 @@ public class AERealTimeMonitorReq extends FrameHeader {
      * @author KevenPotter
      * @date 2026-05-19 14:13:29
      */
+    @SuppressWarnings("StringBufferReplaceableByString")
     private void log(String rawHexMsg) {
         log.info("-------------------------------------------------------------------------------------------");
         log.info("🟢 【0x13】 {} 实时监测数据  原始报文    rawMsg                       : {}", GREEN + deviceId + RESET, rawHexMsg);

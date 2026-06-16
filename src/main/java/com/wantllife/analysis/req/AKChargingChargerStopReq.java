@@ -137,6 +137,7 @@ public class AKChargingChargerStopReq extends FrameHeader {
      * @author KevenPotter
      * @date 2026-05-19 14:15:40
      */
+    @SuppressWarnings("StringBufferReplaceableByString")
     private void log(String rawHexMsg) {
         log.info("-------------------------------------------------------------------------------------------");
         log.info("🟢 【0x21】 {} 充电机器中止  原始报文    rawMsg                       : {}", GREEN + deviceId + RESET, rawHexMsg);

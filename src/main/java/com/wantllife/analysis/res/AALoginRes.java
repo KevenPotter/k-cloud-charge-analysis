@@ -80,11 +80,14 @@ public class AALoginRes extends FrameHeader {
      * @author KevenPotter
      * @date 2026-05-19 14:21:39
      */
+    @SuppressWarnings("StringBufferReplaceableByString")
     private void log(String rawHexMsg) {
-        log.info("-------------------------------------------------------------------------------------------");
-        log.info("🔶 【0x02】 {} 登录认证应答  原始报文    rawMsg                       : {}", GREEN + deviceId + RESET, rawHexMsg);
-        log.info("🔶 【0x02】 {} 登录认证应答  设备编号    deviceId                     : {}", GREEN + deviceId + RESET, deviceId);
-        log.info("🔶 【0x02】 {} 登录认证应答  登录结果    loginResult                  : {}", GREEN + deviceId + RESET, "00".equals(loginResult) ? "成功" : "失败");
-        System.out.println();
+        StringBuilder sb = new StringBuilder(4096);
+        String devLabel = GREEN + deviceId + RESET;
+        sb.append("\n-------------------------------------------------------------------------------------------\n");
+        sb.append(String.format("🔶 【0x02】 %s 登录认证应答  原始报文    rawMsg                       : %s\n", devLabel, rawHexMsg));
+        sb.append(String.format("🔶 【0x02】 %s 登录认证应答  设备编号    deviceId                     : %s\n", devLabel, deviceId));
+        sb.append(String.format("🔶 【0x02】 %s 登录认证应答  登录结果    loginResult                  : %s\n", devLabel, "00".equals(loginResult) ? "成功" : "失败"));
+        log.info(sb.toString());
     }
 }

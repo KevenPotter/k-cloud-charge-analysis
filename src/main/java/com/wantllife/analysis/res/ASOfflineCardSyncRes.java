@@ -105,6 +105,7 @@ public class ASOfflineCardSyncRes extends FrameHeader {
      * @author KevenPotter
      * @date 2026-05-19 14:27:49
      */
+    @SuppressWarnings("StringBufferReplaceableByString")
     private void log(String rawHexMsg, List<StandardCard> cardList) {
         log.info("-------------------------------------------------------------------------------------------");
         log.info("🔶 【0x44】 {} 电卡数据同步  原始报文    rawMsg                       : {}", GREEN + deviceId + RESET, rawHexMsg);

@@ -86,6 +86,7 @@ public class ABHeartbeatRes extends FrameHeader {
      * @author KevenPotter
      * @date 2026-05-19 14:22:00
      */
+    @SuppressWarnings("StringBufferReplaceableByString")
     private void log(String rawHexMsg) {
         log.info("-------------------------------------------------------------------------------------------");
         log.info("🔶 【0x04】 {} 心跳检测应答  原始报文    rawMsg                       : {}", GREEN + deviceId + RESET, rawHexMsg);

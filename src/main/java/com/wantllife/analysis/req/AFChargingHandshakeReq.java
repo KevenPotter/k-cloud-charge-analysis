@@ -208,6 +208,7 @@ public class AFChargingHandshakeReq extends FrameHeader {
      * @author KevenPotter
      * @date 2026-05-19 14:14:38
      */
+    @SuppressWarnings("StringBufferReplaceableByString")
     private void log(String rawHexMsg) {
         log.info("-------------------------------------------------------------------------------------------");
         log.info("🟢 【0x15】 {} 充电握手上传  原始报文    rawMsg                       : {}", GREEN + deviceId + RESET, rawHexMsg);

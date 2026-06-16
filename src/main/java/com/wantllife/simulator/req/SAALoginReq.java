@@ -61,6 +61,7 @@ public class SAALoginReq extends FrameHeader {
      * @author KevenPotter
      * @date 2026-05-19 14:21:39
      */
+    @SuppressWarnings("StringBufferReplaceableByString")
     private void log(String rawHexMsg) {
         log.info("-------------------------------------------------------------------------------------------");
         log.info("👨‍🚀 【0x02】 {} 登录认证应答  原始报文    rawMsg                       : {}", PURPLE + deviceId + RESET, rawHexMsg);

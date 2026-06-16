@@ -81,6 +81,7 @@ public class BARebootRes extends FrameHeader {
      * @author KevenPotter
      * @date 2026-05-19 14:30:55
      */
+    @SuppressWarnings("StringBufferReplaceableByString")
     private void log(String rawHexMsg) {
         log.info("-------------------------------------------------------------------------------------------");
         log.info("🔶 【0x92】 {} 远程重启操作  原始报文    rawMsg                       : {}", GREEN + deviceId + RESET, rawHexMsg);

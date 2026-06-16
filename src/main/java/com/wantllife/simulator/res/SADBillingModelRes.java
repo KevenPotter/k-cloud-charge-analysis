@@ -76,6 +76,7 @@ public class SADBillingModelRes extends FrameHeader {
      * @author KevenPotter
      * @date 2026-05-29 10:00:20
      */
+    @SuppressWarnings("StringBufferReplaceableByString")
     private void log(String rawHexMsg) {
         log.info("-------------------------------------------------------------------------------------------");
         log.info("🚀 【0x09】 {} 计费模型请求  原始报文    rawMsg                       : {}", PURPLE + deviceId + RESET, rawHexMsg);

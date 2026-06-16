@@ -94,6 +94,7 @@ public class SAZLockUpDownRes extends FrameHeader {
      * @author KevenPotter
      * @date 2026-06-05 10:27:09
      */
+    @SuppressWarnings("StringBufferReplaceableByString")
     private void log(String rawHexMsg) {
         log.info("-------------------------------------------------------------------------------------------");
         log.info("🚀 【0x63】 {} 设备返回数据  原始报文    rawMsg                       : {}", PURPLE + deviceId + RESET, rawHexMsg);

@@ -104,6 +104,7 @@ public class SBDParallelStartChargeReq extends FrameHeader {
      * @author KevenPotter
      * @date 2026-06-16 10:39:38
      */
+    @SuppressWarnings("StringBufferReplaceableByString")
     private void log(String rawHexMsg) {
         log.info("-------------------------------------------------------------------------------------------");
         log.info("👨‍🚀 【0xA4】 {} 远程并充启机  原始报文    rawMsg                       : {}", PURPLE + deviceId + RESET, rawHexMsg);

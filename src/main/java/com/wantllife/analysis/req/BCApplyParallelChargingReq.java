@@ -126,6 +126,7 @@ public class BCApplyParallelChargingReq extends FrameHeader {
      * @author KevenPotter
      * @date 2026-05-19 14:21:18
      */
+    @SuppressWarnings("StringBufferReplaceableByString")
     private void log(String rawHexMsg) {
         log.info("-------------------------------------------------------------------------------------------");
         log.info("🟢 【0xA1】 {} 主动申请并充  原始报文    rawMsg                       : {}", GREEN + deviceId + RESET, rawHexMsg);

@@ -62,6 +62,7 @@ public class SBARebootReq extends FrameHeader {
      * @author KevenPotter
      * @date 2026-06-05 14:00:33
      */
+    @SuppressWarnings("StringBufferReplaceableByString")
     private void log(String rawHexMsg) {
         log.info("-------------------------------------------------------------------------------------------");
         log.info("👨‍🚀 【0x92】 {} 远程重启操作  原始报文    rawMsg                       : {}", PURPLE + deviceId + RESET, rawHexMsg);

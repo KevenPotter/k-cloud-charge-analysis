@@ -116,6 +116,7 @@ public class BDParallelStartChargeReq extends FrameHeader {
      * @author KevenPotter
      * @date 2026-05-19 14:21:27
      */
+    @SuppressWarnings("StringBufferReplaceableByString")
     private void log(String rawHexMsg) {
         log.info("-------------------------------------------------------------------------------------------");
         log.info("🟢 【0xA3】 {} 并充开电回复  原始报文    rawMsg                       : {}", GREEN + deviceId + RESET, rawHexMsg);

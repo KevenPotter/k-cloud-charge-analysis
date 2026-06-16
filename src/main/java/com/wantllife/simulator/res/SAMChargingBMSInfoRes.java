@@ -163,6 +163,7 @@ public class SAMChargingBMSInfoRes extends FrameHeader {
      * @author KevenPotter
      * @date 2026-06-11 11:35:01
      */
+    @SuppressWarnings("StringBufferReplaceableByString")
     private void log(String rawHexMsg) {
         log.info("-------------------------------------------------------------------------------------------");
         log.info("🚀 【0x25】 {} 电池管理信息  原始报文    rawMsg                       : {}", PURPLE + deviceId + RESET, rawHexMsg);

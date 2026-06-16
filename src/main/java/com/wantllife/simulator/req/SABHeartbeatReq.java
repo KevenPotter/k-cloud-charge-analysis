@@ -65,6 +65,7 @@ public class SABHeartbeatReq extends FrameHeader {
      * @author KevenPotter
      * @date 2026-05-28 14:46:08
      */
+    @SuppressWarnings("StringBufferReplaceableByString")
     private void log(String rawHexMsg) {
         log.info("-------------------------------------------------------------------------------------------");
         log.info("👨‍🚀 【0X04】 {} 心跳检测应答  原始报文    rawMsg                       : {}", PURPLE + deviceId + RESET, rawHexMsg);

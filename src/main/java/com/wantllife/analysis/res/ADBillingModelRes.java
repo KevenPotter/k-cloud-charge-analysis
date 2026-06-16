@@ -271,6 +271,7 @@ public class ADBillingModelRes extends FrameHeader {
      * @author KevenPotter
      * @date 2026-05-19 14:22:50
      */
+    @SuppressWarnings("StringBufferReplaceableByString")
     private void log(String rawHexMsg, List<StandardBillingModel> billingModelList) {
         log.info("-------------------------------------------------------------------------------------------");
         log.info("🔶 【0x0A】 {} 计费模型应答  原始报文    rawMsg                       : {}", GREEN + deviceId + RESET, rawHexMsg);

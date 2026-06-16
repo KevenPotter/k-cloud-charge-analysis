@@ -170,6 +170,7 @@ public class SALChargingBMSDemandRes extends FrameHeader {
      * @author KevenPotter
      * @date 2026-06-11 10:44:20
      */
+    @SuppressWarnings("StringBufferReplaceableByString")
     private void log(String rawHexMsg) {
         log.info("-------------------------------------------------------------------------------------------");
         log.info("🚀 【0x23】 {} 电池需求输出  原始报文    rawMsg                       : {}", PURPLE + deviceId + RESET, rawHexMsg);

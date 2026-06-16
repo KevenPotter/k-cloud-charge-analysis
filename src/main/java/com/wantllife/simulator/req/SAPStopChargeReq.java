@@ -62,6 +62,7 @@ public class SAPStopChargeReq extends FrameHeader {
      * @author KevenPotter
      * @date 2026-06-03 09:40:33
      */
+    @SuppressWarnings("StringBufferReplaceableByString")
     private void log(String rawHexMsg) {
         log.info("-------------------------------------------------------------------------------------------");
         log.info("👨‍🚀 【0x36】 {} 远程控制停机  原始报文    rawMsg                       : {}", PURPLE + deviceId + RESET, rawHexMsg);

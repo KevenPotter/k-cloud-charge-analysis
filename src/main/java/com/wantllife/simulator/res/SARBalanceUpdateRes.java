@@ -89,6 +89,7 @@ public class SARBalanceUpdateRes extends FrameHeader {
      * @author KevenPotter
      * @date 2026-06-03 16:40:00
      */
+    @SuppressWarnings("StringBufferReplaceableByString")
     private void log(String rawHexMsg) {
         log.info("-------------------------------------------------------------------------------------------");
         log.info("🚀 【0x41】 {} 余额更新应答  原始报文    rawMsg                       : {}", PURPLE + deviceId + RESET, rawHexMsg);

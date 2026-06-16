@@ -145,6 +145,7 @@ public class SBCApplyParallelChargingReq extends FrameHeader {
      * @author KevenPotter
      * @date 2026-06-16 10:20:35
      */
+    @SuppressWarnings("StringBufferReplaceableByString")
     private void log(String rawHexMsg) {
         log.info("-------------------------------------------------------------------------------------------");
         log.info("👨‍🚀 【0xA2】 {} 确认并充开电  原始报文    rawMsg                       : {}", PURPLE + deviceId + RESET, rawHexMsg);

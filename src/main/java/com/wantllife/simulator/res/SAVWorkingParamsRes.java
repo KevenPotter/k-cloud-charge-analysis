@@ -83,6 +83,7 @@ public class SAVWorkingParamsRes extends FrameHeader {
      * @author KevenPotter
      * @date 2026-06-04 14:36:30
      */
+    @SuppressWarnings("StringBufferReplaceableByString")
     private void log(String rawHexMsg) {
         log.info("-------------------------------------------------------------------------------------------");
         log.info("🚀 【0x51】 {} 工作参数设置  原始报文    rawMsg                       : {}", PURPLE + deviceId + RESET, rawHexMsg);
