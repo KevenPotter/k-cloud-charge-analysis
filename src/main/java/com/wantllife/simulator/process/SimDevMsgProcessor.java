@@ -222,6 +222,7 @@ public class SimDevMsgProcessor {
                     break;
                 // 模拟器运营平台确认并充启动充电
                 case SIM_UP_APPLY_PARALLEL_CHARGING:
+                    SBCApplyParallelChargingReq applyParallelChargingReq = new SBCApplyParallelChargingReq(data, rawHexMsg);
                     break;
                 // 模拟器运营平台远程控制并充启机
                 case SIM_UP_PARALLEL_START_CHARGE:

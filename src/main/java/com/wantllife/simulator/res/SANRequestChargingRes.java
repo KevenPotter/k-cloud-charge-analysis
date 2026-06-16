@@ -104,10 +104,9 @@ public class SANRequestChargingRes extends FrameHeader {
         byte[] pwdRaw = HexUtil.decodeHex(md5Hex);
         System.arraycopy(pwdRaw, 0, body, 18, 16);
         // 车辆识别码 [17字节] [ASCII]
-        String reverseVin = StrUtil.reverse(vin);
-        byte[] vinBuf = new byte[17];
-        byte[] vinBytes = reverseVin.getBytes();
-        System.arraycopy(vinBytes, 0, vinBuf, 0, Math.min(vinBytes.length, 17));
+        String fullVin = StrUtil.padAfter(vin, 17, '0');
+        String reverseVin = StrUtil.reverse(fullVin);
+        byte[] vinBuf = reverseVin.getBytes();
         System.arraycopy(vinBuf, 0, body, 34, 17);
 
         return body;
