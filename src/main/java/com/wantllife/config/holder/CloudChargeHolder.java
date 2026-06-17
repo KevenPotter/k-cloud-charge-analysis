@@ -13,7 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class CloudChargeHolder {
 
-    /* 全局默认配置实例 */
+    /** 全局默认配置实例 */
     private static CloudChargeConfig GLOBAL_CONFIG = new CloudChargeConfig();
 
     /**

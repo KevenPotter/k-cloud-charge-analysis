@@ -22,10 +22,10 @@ import java.util.List;
 @AllArgsConstructor
 public class SimulatorConfig {
 
-    /*TCP服务器IP地址*/
+    /** TCP服务器IP地址 */
     private String serverIP;
-    /*TCP服务器端口号*/
+    /** TCP服务器端口号 */
     private int serverPort;
-    /*模拟设备编号列表*/
+    /** 模拟设备编号列表 */
     private List<StandardDevice> simulatorDeviceList;
 }

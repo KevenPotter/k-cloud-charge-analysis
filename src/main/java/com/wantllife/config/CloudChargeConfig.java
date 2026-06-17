@@ -13,13 +13,13 @@ import static com.wantllife.constant.CloudFastChargingConstants.*;
 @Slf4j
 public class CloudChargeConfig {
 
-    /*解析器-日志开关,默认true(打印日志)*/
+    /** 解析器-日志开关,默认true(打印日志) */
     private boolean analysisLogOutput = true;
-    /*解析器-心跳日志开关,默认true(打印日志)*/
+    /** 解析器-心跳日志开关,默认true(打印日志) */
     private boolean analysisHeartbeatLogOutput = true;
-    /*模拟器-日志开关,默认true(打印日志)*/
+    /** 模拟器-日志开关,默认true(打印日志) */
     private boolean simulatorLogOutput = true;
-    /*模拟器-心跳日志开关,默认true(打印日志)*/
+    /** 模拟器-心跳日志开关,默认true(打印日志) */
     private boolean simulatorHeartbeatLogOutput = true;
 
     /**
