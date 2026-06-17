@@ -1,7 +1,7 @@
 package com.wantllife.analysis.req;
 
-import com.wantllife.core.FrameHeader;
 import com.wantllife.config.holder.CloudChargeHolder;
+import com.wantllife.core.FrameHeader;
 import com.wantllife.util.StringUtil;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -96,13 +96,15 @@ public class APStopChargeReq extends FrameHeader {
      */
     @SuppressWarnings("StringBufferReplaceableByString")
     private void log(String rawHexMsg) {
-        log.info("-------------------------------------------------------------------------------------------");
-        log.info("🟢 【0x35】 {} 远程关电回复  原始报文    rawMsg                       : {}", GREEN + deviceId + RESET, rawHexMsg);
-        log.info("🟢 【0x35】 {} 远程关电回复  设备编号    deviceId                     : {}", GREEN + deviceId + RESET, deviceId);
-        log.info("🟢 【0x35】 {} 远程关电回复  枪口编号    gunNo                        : {}", GREEN + deviceId + RESET, gunNo);
-        log.info("🟢 【0x35】 {} 远程关电回复  停止结果    stopResult                   : {}", GREEN + deviceId + RESET, stopResult == 0 ? "停止失败" : "停止成功");
-        log.info("🟢 【0x35】 {} 远程关电回复  失败原因    failureReasonDesc            : {}", GREEN + deviceId + RESET, failureReasonDesc);
-        System.out.println();
+        StringBuilder sb = new StringBuilder(4096);
+        String devLabel = GREEN + "⇑ 【0x35】 " + deviceId + RESET;
+        sb.append("\n\n");
+        sb.append(String.format("🟢%s 远程关电回复  原始报文    rawMsg                       : %s\n", devLabel, rawHexMsg));
+        sb.append(String.format("🟢%s 远程关电回复  设备编号    deviceId                     : %s\n", devLabel, deviceId));
+        sb.append(String.format("🟢%s 远程关电回复  枪口编号    gunNo                        : %s\n", devLabel, gunNo));
+        sb.append(String.format("🟢%s 远程关电回复  停止结果    stopResult                   : %s\n", devLabel, stopResult == 0 ? "停止失败" : "停止成功"));
+        sb.append(String.format("🟢%s 远程关电回复  失败原因    failureReasonDesc            : %s\n", devLabel, failureReasonDesc));
+        log.info(sb.toString());
     }
 
 }

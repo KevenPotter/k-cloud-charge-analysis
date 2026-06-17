@@ -1,9 +1,9 @@
 package com.wantllife.analysis.res;
 
 import cn.hutool.core.util.HexUtil;
-import com.wantllife.core.FrameHeader;
 import com.wantllife.analysis.req.AALoginReq;
 import com.wantllife.config.holder.CloudChargeHolder;
+import com.wantllife.core.FrameHeader;
 import com.wantllife.util.StringUtil;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -83,11 +83,11 @@ public class AALoginRes extends FrameHeader {
     @SuppressWarnings("StringBufferReplaceableByString")
     private void log(String rawHexMsg) {
         StringBuilder sb = new StringBuilder(4096);
-        String devLabel = GREEN + deviceId + RESET;
-        sb.append("\n-------------------------------------------------------------------------------------------\n");
-        sb.append(String.format("🔶 【0x02】 %s 登录认证应答  原始报文    rawMsg                       : %s\n", devLabel, rawHexMsg));
-        sb.append(String.format("🔶 【0x02】 %s 登录认证应答  设备编号    deviceId                     : %s\n", devLabel, deviceId));
-        sb.append(String.format("🔶 【0x02】 %s 登录认证应答  登录结果    loginResult                  : %s\n", devLabel, "00".equals(loginResult) ? "成功" : "失败"));
+        String devLabel = GREEN + "⇓ 【0x02】 " + deviceId + RESET;
+        sb.append("\n\n");
+        sb.append(String.format("🟠%s 登录认证应答  原始报文    rawMsg                       : %s\n", devLabel, rawHexMsg));
+        sb.append(String.format("🟠%s 登录认证应答  设备编号    deviceId                     : %s\n", devLabel, deviceId));
+        sb.append(String.format("🟠%s 登录认证应答  登录结果    loginResult                  : %s\n", devLabel, "00".equals(loginResult) ? "成功" : "失败"));
         log.info(sb.toString());
     }
 }

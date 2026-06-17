@@ -91,11 +91,13 @@ public class SARBalanceUpdateRes extends FrameHeader {
      */
     @SuppressWarnings("StringBufferReplaceableByString")
     private void log(String rawHexMsg) {
-        log.info("-------------------------------------------------------------------------------------------");
-        log.info("🚀 【0x41】 {} 余额更新应答  原始报文    rawMsg                       : {}", PURPLE + deviceId + RESET, rawHexMsg);
-        log.info("🚀 【0x41】 {} 余额更新应答  设备编号    deviceId                     : {}", PURPLE + deviceId + RESET, deviceId);
-        log.info("🚀 【0x41】 {} 余额更新应答  物理卡号    physicalCardNo               : {}", PURPLE + deviceId + RESET, physicalCardNo);
-        log.info("🚀 【0x41】 {} 余额更新应答  修改结果    updateResult                 : {}", PURPLE + deviceId + RESET, updateResult);
-        System.out.println();
+        StringBuilder sb = new StringBuilder(4096);
+        String devLabel = PURPLE + "⇓ 【0x41】 " + deviceId + RESET;
+        sb.append("\n\n");
+        sb.append(String.format("👩‍🚀%s 余额更新应答  原始报文    rawMsg                       : %s\n", devLabel, rawHexMsg));
+        sb.append(String.format("👩‍🚀%s 余额更新应答  设备编号    deviceId                     : %s\n", devLabel, deviceId));
+        sb.append(String.format("👩‍🚀%s 余额更新应答  物理卡号    physicalCardNo               : %s\n", devLabel, physicalCardNo));
+        sb.append(String.format("👩‍🚀%s 余额更新应答  修改结果    updateResult                 : %s\n", devLabel, updateResult));
+        log.info(sb.toString());
     }
 }

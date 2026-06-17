@@ -456,39 +456,41 @@ public class AQTradeRecordReq extends FrameHeader {
      */
     @SuppressWarnings("StringBufferReplaceableByString")
     private void log(String rawHexMsg) {
-        log.info("-------------------------------------------------------------------------------------------");
-        log.info("🟢 【0x3B】 {} 交易记录上报  原始报文    rawMsg                       : {}", GREEN + deviceId + RESET, rawHexMsg);
-        log.info("🟢 【0x3B】 {} 交易记录上报  设备编号    deviceId                     : {}", GREEN + deviceId + RESET, deviceId);
-        log.info("🟢 【0x3B】 {} 交易记录上报  枪口编号    gunNo                        : {}", GREEN + deviceId + RESET, gunNo);
-        log.info("🟢 【0x3B】 {} 交易记录上报  交易编号    tradeNo                      : {}", GREEN + deviceId + RESET, tradeNo);
-        log.info("🟢 【0x3B】 {} 交易记录上报  时间范围    timeRange                    : {}-{}", GREEN + deviceId + RESET, startTime, endTime);
-        log.info("🟢 【0x3B】 {} 交易记录上报  尖时单价    sharpUnitPrice               : {}", GREEN + deviceId + RESET, sharpUnitPrice);
-        log.info("🟢 【0x3B】 {} 交易记录上报  尖时电量    sharpElectricity             : {}", GREEN + deviceId + RESET, sharpElectricity);
-        log.info("🟢 【0x3B】 {} 交易记录上报  尖时计损    sharpLossElectricity         : {}", GREEN + deviceId + RESET, sharpLossElectricity);
-        log.info("🟢 【0x3B】 {} 交易记录上报  尖时金额    sharpAmount                  : {}", GREEN + deviceId + RESET, sharpAmount);
-        log.info("🟢 【0x3B】 {} 交易记录上报  峰时单价    peakUnitPrice                : {}", GREEN + deviceId + RESET, peakUnitPrice);
-        log.info("🟢 【0x3B】 {} 交易记录上报  峰时电量    peakElectricity              : {}", GREEN + deviceId + RESET, peakElectricity);
-        log.info("🟢 【0x3B】 {} 交易记录上报  峰时计损    peakLossElectricity          : {}", GREEN + deviceId + RESET, peakLossElectricity);
-        log.info("🟢 【0x3B】 {} 交易记录上报  峰时金额    peakAmount                   : {}", GREEN + deviceId + RESET, peakAmount);
-        log.info("🟢 【0x3B】 {} 交易记录上报  平时单价    flatUnitPrice                : {}", GREEN + deviceId + RESET, flatUnitPrice);
-        log.info("🟢 【0x3B】 {} 交易记录上报  平时电量    flatElectricity              : {}", GREEN + deviceId + RESET, flatElectricity);
-        log.info("🟢 【0x3B】 {} 交易记录上报  平时计损    flatLossElectricity          : {}", GREEN + deviceId + RESET, flatLossElectricity);
-        log.info("🟢 【0x3B】 {} 交易记录上报  平时金额    flatAmount                   : {}", GREEN + deviceId + RESET, flatAmount);
-        log.info("🟢 【0x3B】 {} 交易记录上报  谷时单价    valleyUnitPrice              : {}", GREEN + deviceId + RESET, valleyUnitPrice);
-        log.info("🟢 【0x3B】 {} 交易记录上报  谷时电量    valleyElectricity            : {}", GREEN + deviceId + RESET, valleyElectricity);
-        log.info("🟢 【0x3B】 {} 交易记录上报  谷时计损    valleyLossElectricity        : {}", GREEN + deviceId + RESET, valleyLossElectricity);
-        log.info("🟢 【0x3B】 {} 交易记录上报  谷时金额    valleyAmount                 : {}", GREEN + deviceId + RESET, valleyAmount);
-        log.info("🟢 【0x3B】 {} 交易记录上报  电表起值    electricityStart             : {}", GREEN + deviceId + RESET, electricityStart);
-        log.info("🟢 【0x3B】 {} 交易记录上报  电表止值    electricityEnd               : {}", GREEN + deviceId + RESET, electricityEnd);
-        log.info("🟢 【0x3B】 {} 交易记录上报  总用电量    totalElectricity             : {}", GREEN + deviceId + RESET, totalElectricity);
-        log.info("🟢 【0x3B】 {} 交易记录上报  计损电量    totalLossElectricity         : {}", GREEN + deviceId + RESET, totalLossElectricity);
-        log.info("🟢 【0x3B】 {} 交易记录上报  消费金额    totalAmount                  : {}", GREEN + deviceId + RESET, totalAmount);
-        log.info("🟢 【0x3B】 {} 交易记录上报  车识别码    VIN                          : {}", GREEN + deviceId + RESET, vinCode);
-        log.info("🟢 【0x3B】 {} 交易记录上报  交易标识    tradeIdentifierDesc          : {}", GREEN + deviceId + RESET, tradeIdentifierDesc);
-        log.info("🟢 【0x3B】 {} 交易记录上报  交易日期    tradeTime                    : {}", GREEN + deviceId + RESET, tradeTime);
-        log.info("🟢 【0x3B】 {} 交易记录上报  停止原因    stopReasonDesc               : {}", GREEN + deviceId + RESET, stopReasonDesc);
-        log.info("🟢 【0x3B】 {} 交易记录上报  物理卡号    physicalCardNo               : {}", GREEN + deviceId + RESET, physicalCardNo);
-        System.out.println();
+        StringBuilder sb = new StringBuilder(4096);
+        String devLabel = GREEN + "⇑ 【0x3B】 " + deviceId + RESET;
+        sb.append("\n\n");
+        sb.append(String.format("🟢%s 交易记录上报  原始报文    rawMsg                       : %s\n", devLabel, rawHexMsg));
+        sb.append(String.format("🟢%s 交易记录上报  设备编号    deviceId                     : %s\n", devLabel, deviceId));
+        sb.append(String.format("🟢%s 交易记录上报  枪口编号    gunNo                        : %s\n", devLabel, gunNo));
+        sb.append(String.format("🟢%s 交易记录上报  交易编号    tradeNo                      : %s\n", devLabel, tradeNo));
+        sb.append(String.format("🟢%s 交易记录上报  时间范围    timeRange                    : %s-%s\n", devLabel, startTime, endTime));
+        sb.append(String.format("🟢%s 交易记录上报  尖时单价    sharpUnitPrice               : %s\n", devLabel, sharpUnitPrice));
+        sb.append(String.format("🟢%s 交易记录上报  尖时电量    sharpElectricity             : %s\n", devLabel, sharpElectricity));
+        sb.append(String.format("🟢%s 交易记录上报  尖时计损    sharpLossElectricity         : %s\n", devLabel, sharpLossElectricity));
+        sb.append(String.format("🟢%s 交易记录上报  尖时金额    sharpAmount                  : %s\n", devLabel, sharpAmount));
+        sb.append(String.format("🟢%s 交易记录上报  峰时单价    peakUnitPrice                : %s\n", devLabel, peakUnitPrice));
+        sb.append(String.format("🟢%s 交易记录上报  峰时电量    peakElectricity              : %s\n", devLabel, peakElectricity));
+        sb.append(String.format("🟢%s 交易记录上报  峰时计损    peakLossElectricity          : %s\n", devLabel, peakLossElectricity));
+        sb.append(String.format("🟢%s 交易记录上报  峰时金额    peakAmount                   : %s\n", devLabel, peakAmount));
+        sb.append(String.format("🟢%s 交易记录上报  平时单价    flatUnitPrice                : %s\n", devLabel, flatUnitPrice));
+        sb.append(String.format("🟢%s 交易记录上报  平时电量    flatElectricity              : %s\n", devLabel, flatElectricity));
+        sb.append(String.format("🟢%s 交易记录上报  平时计损    flatLossElectricity          : %s\n", devLabel, flatLossElectricity));
+        sb.append(String.format("🟢%s 交易记录上报  平时金额    flatAmount                   : %s\n", devLabel, flatAmount));
+        sb.append(String.format("🟢%s 交易记录上报  谷时单价    valleyUnitPrice              : %s\n", devLabel, valleyUnitPrice));
+        sb.append(String.format("🟢%s 交易记录上报  谷时电量    valleyElectricity            : %s\n", devLabel, valleyElectricity));
+        sb.append(String.format("🟢%s 交易记录上报  谷时计损    valleyLossElectricity        : %s\n", devLabel, valleyLossElectricity));
+        sb.append(String.format("🟢%s 交易记录上报  谷时金额    valleyAmount                 : %s\n", devLabel, valleyAmount));
+        sb.append(String.format("🟢%s 交易记录上报  电表起值    electricityStart             : %s\n", devLabel, electricityStart));
+        sb.append(String.format("🟢%s 交易记录上报  电表止值    electricityEnd               : %s\n", devLabel, electricityEnd));
+        sb.append(String.format("🟢%s 交易记录上报  总用电量    totalElectricity             : %s\n", devLabel, totalElectricity));
+        sb.append(String.format("🟢%s 交易记录上报  计损电量    totalLossElectricity         : %s\n", devLabel, totalLossElectricity));
+        sb.append(String.format("🟢%s 交易记录上报  消费金额    totalAmount                  : %s\n", devLabel, totalAmount));
+        sb.append(String.format("🟢%s 交易记录上报  车识别码    VIN                          : %s\n", devLabel, vinCode));
+        sb.append(String.format("🟢%s 交易记录上报  交易标识    tradeIdentifierDesc          : %s\n", devLabel, tradeIdentifierDesc));
+        sb.append(String.format("🟢%s 交易记录上报  交易日期    tradeTime                    : %s\n", devLabel, tradeTime));
+        sb.append(String.format("🟢%s 交易记录上报  停止原因    stopReasonDesc               : %s\n", devLabel, stopReasonDesc));
+        sb.append(String.format("🟢%s 交易记录上报  物理卡号    physicalCardNo               : %s\n", devLabel, physicalCardNo));
+        log.info(sb.toString());
     }
 
 }

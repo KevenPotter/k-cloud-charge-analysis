@@ -70,11 +70,13 @@ public class SAVWorkingParamsReq extends FrameHeader {
      */
     @SuppressWarnings("StringBufferReplaceableByString")
     private void log(String rawHexMsg) {
-        log.info("-------------------------------------------------------------------------------------------");
-        log.info("👨‍🚀 【0x52】 {} 工作参数设置  原始报文    rawMsg                       : {}", PURPLE + deviceId + RESET, rawHexMsg);
-        log.info("👨‍🚀 【0x52】 {} 工作参数设置  设备编号    deviceId                     : {}", PURPLE + deviceId + RESET, deviceId);
-        log.info("👨‍🚀 【0x52】 {} 工作参数设置  允许工作    allowWork                    : {}", PURPLE + deviceId + RESET, allowWork ? "允许工作" : "停止使用");
-        log.info("👨‍🚀 【0x52】 {} 工作参数设置  最大输出    maxOutputPower               : {}", PURPLE + deviceId + RESET, maxOutputPower);
-        System.out.println();
+        StringBuilder sb = new StringBuilder(4096);
+        String devLabel = PURPLE + "⇑ 【0x52】 " + deviceId + RESET;
+        sb.append("\n\n");
+        sb.append(String.format("👩‍🚀%s 工作参数设置  原始报文    rawMsg                       : %s\n", devLabel, rawHexMsg));
+        sb.append(String.format("👩‍🚀%s 工作参数设置  设备编号    deviceId                     : %s\n", devLabel, deviceId));
+        sb.append(String.format("👩‍🚀%s 工作参数设置  允许工作    allowWork                    : %s\n", devLabel, allowWork ? "允许工作" : "停止使用"));
+        sb.append(String.format("👩‍🚀%s 工作参数设置  最大输出    maxOutputPower               : %s\n", devLabel, maxOutputPower));
+        log.info(sb.toString());
     }
 }

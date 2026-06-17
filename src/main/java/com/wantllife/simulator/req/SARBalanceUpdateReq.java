@@ -84,12 +84,14 @@ public class SARBalanceUpdateReq extends FrameHeader {
      */
     @SuppressWarnings("StringBufferReplaceableByString")
     private void log(String rawHexMsg) {
-        log.info("-------------------------------------------------------------------------------------------");
-        log.info("👨‍🚀 【0x42】 {} 远程余额更新  原始报文    rawMsg                       : {}", PURPLE + deviceId + RESET, rawHexMsg);
-        log.info("👨‍🚀 【0x42】 {} 远程余额更新  设备编号    deviceId                     : {}", PURPLE + deviceId + RESET, deviceId);
-        log.info("👨‍🚀 【0x42】 {} 远程余额更新  枪口编号    gunNo                        : {}", PURPLE + deviceId + RESET, gunNo);
-        log.info("👨‍🚀 【0x42】 {} 远程余额更新  物理卡号    physicalCardNo               : {}", PURPLE + deviceId + RESET, physicalCardNo);
-        log.info("👨‍🚀 【0x42】 {} 远程余额更新  改后金额    balance                      : {}", PURPLE + deviceId + RESET, balance);
-        System.out.println();
+        StringBuilder sb = new StringBuilder(4096);
+        String devLabel = PURPLE + "⇑ 【0x42】 " + deviceId + RESET;
+        sb.append("\n\n");
+        sb.append(String.format("👩‍🚀%s 远程余额更新  原始报文    rawMsg                       : %s\n", devLabel, rawHexMsg));
+        sb.append(String.format("👩‍🚀%s 远程余额更新  设备编号    deviceId                     : %s\n", devLabel, deviceId));
+        sb.append(String.format("👩‍🚀%s 远程余额更新  枪口编号    gunNo                        : %s\n", devLabel, gunNo));
+        sb.append(String.format("👩‍🚀%s 远程余额更新  物理卡号    physicalCardNo               : %s\n", devLabel, physicalCardNo));
+        sb.append(String.format("👩‍🚀%s 远程余额更新  改后金额    balance                      : %s\n", devLabel, balance));
+        log.info(sb.toString());
     }
 }

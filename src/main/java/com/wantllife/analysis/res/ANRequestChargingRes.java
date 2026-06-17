@@ -1,9 +1,9 @@
 package com.wantllife.analysis.res;
 
 import cn.hutool.core.util.HexUtil;
-import com.wantllife.core.FrameHeader;
 import com.wantllife.analysis.req.ANRequestChargingReq;
 import com.wantllife.config.holder.CloudChargeHolder;
+import com.wantllife.core.FrameHeader;
 import com.wantllife.domain.vo.StandardChargeOrder;
 import com.wantllife.util.StringUtil;
 import lombok.Data;
@@ -159,16 +159,18 @@ public class ANRequestChargingRes extends FrameHeader {
      */
     @SuppressWarnings("StringBufferReplaceableByString")
     private void log(String rawHexMsg) {
-        log.info("-------------------------------------------------------------------------------------------");
-        log.info("🔶 【0x32】 {} 确认启动充电  原始报文    rawMsg                       : {}", GREEN + deviceId + RESET, rawHexMsg);
-        log.info("🔶 【0x32】 {} 确认启动充电  设备编号    deviceId                     : {}", GREEN + deviceId + RESET, deviceId);
-        log.info("🔶 【0x32】 {} 确认启动充电  枪口编号    gunNo                        : {}", GREEN + deviceId + RESET, gunNo);
-        log.info("🔶 【0x32】 {} 确认启动充电  交易编号    tradeNo                      : {}", GREEN + deviceId + RESET, tradeNo);
-        log.info("🔶 【0x32】 {} 确认启动充电  逻辑卡号    logicalCardNo                : {}", GREEN + deviceId + RESET, logicalCardNo);
-        log.info("🔶 【0x32】 {} 确认启动充电  账户余额    balance                      : {}", GREEN + deviceId + RESET, balance);
-        log.info("🔶 【0x32】 {} 确认启动充电  鉴权标志    authResult                   : {}", GREEN + deviceId + RESET, "00".equals(authResult) ? "失败" : "成功");
-        log.info("🔶 【0x32】 {} 确认启动充电  失败原因    failureReasonDesc            : {}", GREEN + deviceId + RESET, failureReasonDesc);
-        System.out.println();
+        StringBuilder sb = new StringBuilder(4096);
+        String devLabel = GREEN + "⇓ 【0x32】 " + deviceId + RESET;
+        sb.append("\n\n");
+        sb.append(String.format("🟠%s 确认启动充电  原始报文    rawMsg                       : %s\n", devLabel, rawHexMsg));
+        sb.append(String.format("🟠%s 确认启动充电  设备编号    deviceId                     : %s\n", devLabel, deviceId));
+        sb.append(String.format("🟠%s 确认启动充电  枪口编号    gunNo                        : %s\n", devLabel, gunNo));
+        sb.append(String.format("🟠%s 确认启动充电  交易编号    tradeNo                      : %s\n", devLabel, tradeNo));
+        sb.append(String.format("🟠%s 确认启动充电  逻辑卡号    logicalCardNo                : %s\n", devLabel, logicalCardNo));
+        sb.append(String.format("🟠%s 确认启动充电  账户余额    balance                      : %s\n", devLabel, balance));
+        sb.append(String.format("🟠%s 确认启动充电  鉴权标志    authResult                   : %s\n", devLabel, "00".equals(authResult) ? "失败" : "成功"));
+        sb.append(String.format("🟠%s 确认启动充电  失败原因    failureReasonDesc            : %s\n", devLabel, failureReasonDesc));
+        log.info(sb.toString());
     }
 
 }

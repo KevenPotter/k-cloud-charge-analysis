@@ -132,17 +132,19 @@ public class SBCApplyParallelChargingRes extends FrameHeader {
      */
     @SuppressWarnings("StringBufferReplaceableByString")
     private void log(String rawHexMsg) {
-        log.info("-------------------------------------------------------------------------------------------");
-        log.info("🚀 【0xA1】 {} 主动申请并充  原始报文    rawMsg                       : {}", PURPLE + deviceId + RESET, rawHexMsg);
-        log.info("🚀 【0xA1】 {} 主动申请并充  设备编号    deviceId                     : {}", PURPLE + deviceId + RESET, deviceId);
-        log.info("🚀 【0xA1】 {} 主动申请并充  枪口编号    gunNo                        : {}", PURPLE + deviceId + RESET, gunNo);
-        log.info("🚀 【0xA1】 {} 主动申请并充  启动方式    startupMode                  : {}", PURPLE + deviceId + RESET, startupMode);
-        log.info("🚀 【0xA1】 {} 主动申请并充  需要密码    needPassword                 : {}", PURPLE + deviceId + RESET, needPassword == 0 ? "不需要密码" : "需要密码");
-        log.info("🚀 【0xA1】 {} 主动申请并充  卡号信息    accountOrCardNo              : {}", PURPLE + deviceId + RESET, accountOrCardNo);
-        log.info("🚀 【0xA1】 {} 主动申请并充  输入密码    password                     : {}", PURPLE + deviceId + RESET, password);
-        log.info("🚀 【0xA1】 {} 主动申请并充  车识别码    VIN                          : {}", PURPLE + deviceId + RESET, vin);
-        log.info("🚀 【0xA1】 {} 主动申请并充  主辅标记    priAndSecFlag                : {}", PURPLE + deviceId + RESET, priAndSecFlag);
-        log.info("🚀 【0xA1】 {} 主动申请并充  并充序号    parallelNo                   : {}", PURPLE + deviceId + RESET, parallelNo);
-        System.out.println();
+        StringBuilder sb = new StringBuilder(4096);
+        String devLabel = PURPLE + "⇓ 【0xA1】 " + deviceId + RESET;
+        sb.append("\n\n");
+        sb.append(String.format("👩‍🚀%s 主动申请并充  原始报文    rawMsg                       : %s\n", devLabel, rawHexMsg));
+        sb.append(String.format("👩‍🚀%s 主动申请并充  设备编号    deviceId                     : %s\n", devLabel, deviceId));
+        sb.append(String.format("👩‍🚀%s 主动申请并充  枪口编号    gunNo                        : %s\n", devLabel, gunNo));
+        sb.append(String.format("👩‍🚀%s 主动申请并充  启动方式    startupMode                  : %s\n", devLabel, startupMode));
+        sb.append(String.format("👩‍🚀%s 主动申请并充  需要密码    needPassword                 : %s\n", devLabel, needPassword == 0 ? "不需要密码" : "需要密码"));
+        sb.append(String.format("👩‍🚀%s 主动申请并充  卡号信息    accountOrCardNo              : %s\n", devLabel, accountOrCardNo));
+        sb.append(String.format("👩‍🚀%s 主动申请并充  输入密码    password                     : %s\n", devLabel, password));
+        sb.append(String.format("👩‍🚀%s 主动申请并充  车识别码    VIN                          : %s\n", devLabel, vin));
+        sb.append(String.format("👩‍🚀%s 主动申请并充  主辅标记    priAndSecFlag                : %s\n", devLabel, priAndSecFlag));
+        sb.append(String.format("👩‍🚀%s 主动申请并充  并充序号    parallelNo                   : %s\n", devLabel, parallelNo));
+        log.info(sb.toString());
     }
 }

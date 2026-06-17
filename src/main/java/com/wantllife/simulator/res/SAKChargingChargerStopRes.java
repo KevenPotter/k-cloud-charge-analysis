@@ -110,14 +110,16 @@ public class SAKChargingChargerStopRes extends FrameHeader {
      */
     @SuppressWarnings("StringBufferReplaceableByString")
     private void log(String rawHexMsg) {
-        log.info("-------------------------------------------------------------------------------------------");
-        log.info("🚀 【0x21】 {} 充电机器中止  原始报文    rawMsg                       : {}", PURPLE + deviceId + RESET, rawHexMsg);
-        log.info("🚀 【0x21】 {} 充电机器中止  设备编号    deviceId                     : {}", PURPLE + deviceId + RESET, deviceId);
-        log.info("🚀 【0x21】 {} 充电机器中止  枪口编号    gunNo                        : {}", PURPLE + deviceId + RESET, gunNo);
-        log.info("🚀 【0x21】 {} 充电机器中止  交易编号    tradeNo                      : {}", PURPLE + deviceId + RESET, tradeNo);
-        log.info("🚀 【0x21】 {} 充电机器中止  中止原因    chargerStopReason            : {}", PURPLE + deviceId + RESET, chargerStopReason);
-        log.info("🚀 【0x21】 {} 充电机器中止  故障原因    chargerStopFailure           : {}", PURPLE + deviceId + RESET, chargerStopFailure);
-        log.info("🚀 【0x21】 {} 充电机器中止  错误原因    chargerStopErrorReason       : {}", PURPLE + deviceId + RESET, chargerStopErrorReason);
-        System.out.println();
+        StringBuilder sb = new StringBuilder(4096);
+        String devLabel = PURPLE + "⇓ 【0x21】 " + deviceId + RESET;
+        sb.append("\n\n");
+        sb.append(String.format("👩‍🚀%s 充电机器中止  原始报文    rawMsg                       : %s\n", devLabel, rawHexMsg));
+        sb.append(String.format("👩‍🚀%s 充电机器中止  设备编号    deviceId                     : %s\n", devLabel, deviceId));
+        sb.append(String.format("👩‍🚀%s 充电机器中止  枪口编号    gunNo                        : %s\n", devLabel, gunNo));
+        sb.append(String.format("👩‍🚀%s 充电机器中止  交易编号    tradeNo                      : %s\n", devLabel, tradeNo));
+        sb.append(String.format("👩‍🚀%s 充电机器中止  中止原因    chargerStopReason            : %s\n", devLabel, chargerStopReason));
+        sb.append(String.format("👩‍🚀%s 充电机器中止  故障原因    chargerStopFailure           : %s\n", devLabel, chargerStopFailure));
+        sb.append(String.format("👩‍🚀%s 充电机器中止  错误原因    chargerStopErrorReason       : %s\n", devLabel, chargerStopErrorReason));
+        log.info(sb.toString());
     }
 }

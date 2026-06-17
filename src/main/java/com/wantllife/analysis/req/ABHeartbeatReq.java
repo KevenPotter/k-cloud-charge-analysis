@@ -88,12 +88,14 @@ public class ABHeartbeatReq extends FrameHeader {
      */
     @SuppressWarnings("StringBufferReplaceableByString")
     private void log(String rawHexMsg) {
-        log.info("-------------------------------------------------------------------------------------------");
-        log.info("🟢 【0x03】 {} 设备心跳检测  原始报文    rawMsg                       : {}", GREEN + deviceId + RESET, rawHexMsg);
-        log.info("🟢 【0x03】 {} 设备心跳检测  设备编号    deviceId                     : {}", GREEN + deviceId + RESET, deviceId);
-        log.info("🟢 【0x03】 {} 设备心跳检测  枪口编号    gunNo                        : {}", GREEN + deviceId + RESET, gunNo);
-        log.info("🟢 【0x03】 {} 设备心跳检测  枪口状态    gunStatusDesc                : {}", GREEN + deviceId + RESET, gunStatusDesc);
-        System.out.println();
+        StringBuilder sb = new StringBuilder(4096);
+        String devLabel = GREEN + "⇑ 【0x03】 " + deviceId + RESET;
+        sb.append("\n\n");
+        sb.append(String.format("❤️%s 设备心跳检测  原始报文    rawMsg                       : %s\n", devLabel, rawHexMsg));
+        sb.append(String.format("❤️%s 设备心跳检测  设备编号    deviceId                     : %s\n", devLabel, deviceId));
+        sb.append(String.format("❤️%s 设备心跳检测  枪口编号    gunNo                        : %s\n", devLabel, gunNo));
+        sb.append(String.format("❤️%s 设备心跳检测  枪口状态    gunStatusDesc                : %s\n", devLabel, gunStatusDesc));
+        log.info(sb.toString());
     }
 
 }

@@ -107,14 +107,16 @@ public class AOStartChargeReq extends FrameHeader {
      */
     @SuppressWarnings("StringBufferReplaceableByString")
     private void log(String rawHexMsg) {
-        log.info("-------------------------------------------------------------------------------------------");
-        log.info("🟢 【0x33】 {} 远程开电回复  原始报文    rawMsg                       : {}", GREEN + deviceId + RESET, rawHexMsg);
-        log.info("🟢 【0x33】 {} 远程开电回复  设备编号    deviceId                     : {}", GREEN + deviceId + RESET, deviceId);
-        log.info("🟢 【0x33】 {} 远程开电回复  枪口编号    gunNo                        : {}", GREEN + deviceId + RESET, gunNo);
-        log.info("🟢 【0x33】 {} 远程开电回复  交易编号    tradeNo                      : {}", GREEN + deviceId + RESET, tradeNo);
-        log.info("🟢 【0x33】 {} 远程开电回复  启动结果    startupResult                : {}", GREEN + deviceId + RESET, startupResult == 0 ? "启动失败" : "启动成功");
-        log.info("🟢 【0x33】 {} 远程开电回复  失败原因    failureReasonDesc            : {}", GREEN + deviceId + RESET, failureReasonDesc);
-        System.out.println();
+        StringBuilder sb = new StringBuilder(4096);
+        String devLabel = GREEN + "⇑ 【0x33】 " + deviceId + RESET;
+        sb.append("\n\n");
+        sb.append(String.format("🟢%s 远程开电回复  原始报文    rawMsg                       : %s\n", devLabel, rawHexMsg));
+        sb.append(String.format("🟢%s 远程开电回复  设备编号    deviceId                     : %s\n", devLabel, deviceId));
+        sb.append(String.format("🟢%s 远程开电回复  枪口编号    gunNo                        : %s\n", devLabel, gunNo));
+        sb.append(String.format("🟢%s 远程开电回复  交易编号    tradeNo                      : %s\n", devLabel, tradeNo));
+        sb.append(String.format("🟢%s 远程开电回复  启动结果    startupResult                : %s\n", devLabel, startupResult == 0 ? "启动失败" : "启动成功"));
+        sb.append(String.format("🟢%s 远程开电回复  失败原因    failureReasonDesc            : %s\n", devLabel, failureReasonDesc));
+        log.info(sb.toString());
     }
 
 }

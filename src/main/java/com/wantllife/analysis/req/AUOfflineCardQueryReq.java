@@ -119,17 +119,21 @@ public class AUOfflineCardQueryReq extends FrameHeader {
      */
     @SuppressWarnings("StringBufferReplaceableByString")
     private void log(String rawHexMsg) {
-        log.info("-------------------------------------------------------------------------------------------");
-        log.info("🟢 【0x47】 {} 电卡查询应答  原始报文    rawMsg                       : {}", GREEN + deviceId + RESET, rawHexMsg);
-        log.info("🟢 【0x47】 {} 电卡查询应答  设备编号    deviceId                     : {}", GREEN + deviceId + RESET, deviceId);
+        StringBuilder sb = new StringBuilder(4096);
+        String devLabel = GREEN + "⇑ 【0x47】 " + deviceId + RESET;
+        sb.append("\n\n");
+        sb.append(String.format("🟢%s 电卡查询应答  原始报文    rawMsg                       : %s\n", devLabel, rawHexMsg));
+        sb.append(String.format("🟢%s 电卡查询应答  设备编号    deviceId                     : %s\n", devLabel, deviceId));
 
         for (int i = 0; i < queryResultList.size(); i++) {
-            System.out.println();
             QueryResult queryResult = queryResultList.get(i);
-            log.info("🟢 【0x47】 {} 电卡查询应答  第{}物号    physicalCardNo               : {}", GREEN + deviceId + RESET, NumberChineseFormatter.format(i, false, false), queryResult.getPhysicalCardNo());
-            log.info("🟢 【0x47】 {} 电卡查询应答  查询结果    queryResult                  : {}", GREEN + deviceId + RESET, queryResult.getQueryResult() == 0 ? "卡不存在" : "卡存在");
+            String idxStr = NumberChineseFormatter.format(i, false, false);
+            sb.append("\n");
+            sb.append(String.format("🟢%s 电卡查询应答  第%s物号    physicalCardNo               : %s\n", devLabel, idxStr, queryResult.getPhysicalCardNo()));
+            sb.append(String.format("🟢%s 电卡查询应答  查询结果    queryResult                  : %s\n", devLabel, queryResult.getQueryResult() == 0 ? "卡不存在" : "卡存在"));
         }
-        System.out.println();
+
+        log.info(sb.toString());
     }
 
 }

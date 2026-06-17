@@ -1,7 +1,7 @@
 package com.wantllife.analysis.req;
 
-import com.wantllife.core.FrameHeader;
 import com.wantllife.config.holder.CloudChargeHolder;
+import com.wantllife.core.FrameHeader;
 import com.wantllife.util.StringUtil;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -64,11 +64,13 @@ public class BARebootReq extends FrameHeader {
      */
     @SuppressWarnings("StringBufferReplaceableByString")
     private void log(String rawHexMsg) {
-        log.info("-------------------------------------------------------------------------------------------");
-        log.info("🟢 【0x91】 {} 远程重启应答  原始报文    rawMsg                       : {}", GREEN + deviceId + RESET, rawHexMsg);
-        log.info("🟢 【0x91】 {} 远程重启应答  设备编号    deviceId                     : {}", GREEN + deviceId + RESET, deviceId);
-        log.info("🟢 【0x91】 {} 远程重启应答  设置结果    setResult                    : {}", GREEN + deviceId + RESET, setResult == 0 ? "重启失败" : "重启成功");
-        System.out.println();
+        StringBuilder sb = new StringBuilder(4096);
+        String devLabel = GREEN + "⇑ 【0x91】 " + deviceId + RESET;
+        sb.append("\n\n");
+        sb.append(String.format("🟢%s 远程重启应答  原始报文    rawMsg                       : %s\n", devLabel, rawHexMsg));
+        sb.append(String.format("🟢%s 远程重启应答  设备编号    deviceId                     : %s\n", devLabel, deviceId));
+        sb.append(String.format("🟢%s 远程重启应答  设置结果    setResult                    : %s\n", devLabel, setResult == 0 ? "重启失败" : "重启成功"));
+        log.info(sb.toString());
     }
 
 }

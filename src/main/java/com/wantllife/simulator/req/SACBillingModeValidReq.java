@@ -68,11 +68,13 @@ public class SACBillingModeValidReq extends FrameHeader {
      */
     @SuppressWarnings("StringBufferReplaceableByString")
     private void log(String rawHexMsg) {
-        log.info("-------------------------------------------------------------------------------------------");
-        log.info("👨‍🚀 【0x06】 {} 计费验证应答  原始报文    rawMsg                       : {}", PURPLE + deviceId + RESET, rawHexMsg);
-        log.info("👨‍🚀 【0x06】 {} 计费验证应答  设备编号    deviceId                     : {}", PURPLE + deviceId + RESET, deviceId);
-        log.info("👨‍🚀 【0x06】 {} 计费验证应答  计费编码    billingModeId                : {}", PURPLE + deviceId + RESET, billingModeId);
-        log.info("👨‍🚀 【0x06】 {} 计费验证应答  验证结果    billingModeValidResult       : {}", PURPLE + deviceId + RESET, billingModeValidResult == 0 ? "一致" : "不一致");
-        System.out.println();
+        StringBuilder sb = new StringBuilder(4096);
+        String devLabel = PURPLE + "⇑ 【0x06】 " + deviceId + RESET;
+        sb.append("\n\n");
+        sb.append(String.format("👩‍🚀%s 计费验证应答  原始报文    rawMsg                       : %s\n", devLabel, rawHexMsg));
+        sb.append(String.format("👩‍🚀%s 计费验证应答  设备编号    deviceId                     : %s\n", devLabel, deviceId));
+        sb.append(String.format("👩‍🚀%s 计费验证应答  计费编码    billingModeId                : %s\n", devLabel, billingModeId));
+        sb.append(String.format("👩‍🚀%s 计费验证应答  验证结果    billingModeValidResult       : %s\n", devLabel, billingModeValidResult == 0 ? "一致" : "不一致"));
+        log.info(sb.toString());
     }
 }

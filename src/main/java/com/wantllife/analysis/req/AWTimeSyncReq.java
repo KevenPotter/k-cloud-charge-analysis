@@ -1,7 +1,7 @@
 package com.wantllife.analysis.req;
 
-import com.wantllife.core.FrameHeader;
 import com.wantllife.config.holder.CloudChargeHolder;
+import com.wantllife.core.FrameHeader;
 import com.wantllife.util.StringUtil;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -67,11 +67,13 @@ public class AWTimeSyncReq extends FrameHeader {
      */
     @SuppressWarnings("StringBufferReplaceableByString")
     private void log(String rawHexMsg) {
-        log.info("-------------------------------------------------------------------------------------------");
-        log.info("🟢 【0x55】 {} 对时设置应答  原始报文    rawMsg                       : {}", GREEN + deviceId + RESET, rawHexMsg);
-        log.info("🟢 【0x55】 {} 对时设置应答  设备编号    deviceId                     : {}", GREEN + deviceId + RESET, deviceId);
-        log.info("🟢 【0x55】 {} 对时设置应答  当前时间    currentTime                  : {}", GREEN + deviceId + RESET, currentTime);
-        System.out.println();
+        StringBuilder sb = new StringBuilder(4096);
+        String devLabel = GREEN + "⇑ 【0x55】 " + deviceId + RESET;
+        sb.append("\n\n");
+        sb.append(String.format("🟢%s 对时设置应答  原始报文    rawMsg                       : %s\n", devLabel, rawHexMsg));
+        sb.append(String.format("🟢%s 对时设置应答  设备编号    deviceId                     : %s\n", devLabel, deviceId));
+        sb.append(String.format("🟢%s 对时设置应答  当前时间    currentTime                  : %s\n", devLabel, currentTime));
+        log.info(sb.toString());
     }
 
 }

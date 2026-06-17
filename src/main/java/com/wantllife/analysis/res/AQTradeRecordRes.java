@@ -87,11 +87,13 @@ public class AQTradeRecordRes extends FrameHeader {
      */
     @SuppressWarnings("StringBufferReplaceableByString")
     private void log(String rawHexMsg) {
-        log.info("-------------------------------------------------------------------------------------------");
-        log.info("🔶 【0x40】 {} 交易记录确认  原始报文    rawMsg                       : {}", GREEN + deviceId + RESET, rawHexMsg);
-        log.info("🔶 【0x40】 {} 交易记录确认  交易编号    tradeNo                      : {}", GREEN + deviceId + RESET, tradeNo);
-        log.info("🔶 【0x40】 {} 交易记录确认  确认结果    confirmResult                : {}", GREEN + deviceId + RESET, "00".equals(confirmResult) ? "上传成功" : "非法账单");
-        System.out.println();
+        StringBuilder sb = new StringBuilder(4096);
+        String devLabel = GREEN + "⇓ 【0x40】 " + deviceId + RESET;
+        sb.append("\n\n");
+        sb.append(String.format("🟠%s 交易记录确认  原始报文    rawMsg                       : %s\n", devLabel, rawHexMsg));
+        sb.append(String.format("🟠%s 交易记录确认  交易编号    tradeNo                      : %s\n", devLabel, tradeNo));
+        sb.append(String.format("🟠%s 交易记录确认  确认结果    confirmResult                : %s\n", devLabel, "00".equals(confirmResult) ? "上传成功" : "非法账单"));
+        log.info(sb.toString());
     }
 
 }

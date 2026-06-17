@@ -2,8 +2,8 @@ package com.wantllife.analysis.res;
 
 import cn.hutool.core.util.HexUtil;
 import cn.hutool.core.util.RandomUtil;
-import com.wantllife.core.FrameHeader;
 import com.wantllife.config.holder.CloudChargeHolder;
+import com.wantllife.core.FrameHeader;
 import com.wantllife.util.StringUtil;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -130,19 +130,21 @@ public class BBUpgradeRes extends FrameHeader {
      */
     @SuppressWarnings("StringBufferReplaceableByString")
     private void log(String rawHexMsg) {
-        log.info("-------------------------------------------------------------------------------------------");
-        log.info("🔶 【0x94】 {} 远程更新操作  原始报文    rawMsg                       : {}", GREEN + deviceId + RESET, rawHexMsg);
-        log.info("🔶 【0x94】 {} 远程更新操作  设备编号    deviceId                     : {}", GREEN + deviceId + RESET, deviceId);
-        log.info("🔶 【0x94】 {} 远程更新操作  设备类型    deviceType                   : {}", GREEN + deviceId + RESET, deviceType == 1 ? "直流" : "交流");
-        log.info("🔶 【0x94】 {} 远程更新操作  设备功率    devicePower                  : {}", GREEN + deviceId + RESET, devicePower);
-        log.info("🔶 【0x94】 {} 远程更新操作  升级地址    address                      : {}", GREEN + deviceId + RESET, address);
-        log.info("🔶 【0x94】 {} 远程更新操作  升级端口    port                         : {}", GREEN + deviceId + RESET, port);
-        log.info("🔶 【0x94】 {} 远程更新操作  用户名称    username                     : {}", GREEN + deviceId + RESET, username);
-        log.info("🔶 【0x94】 {} 远程更新操作  输入密码    password                     : {}", GREEN + deviceId + RESET, password);
-        log.info("🔶 【0x94】 {} 远程更新操作  文件路径    filePath                     : {}", GREEN + deviceId + RESET, filePath);
-        log.info("🔶 【0x94】 {} 远程更新操作  执行控制    execMethod                   : {}", GREEN + deviceId + RESET, execMethod == 1 ? "立即执行" : "空闲执行");
-        log.info("🔶 【0x94】 {} 远程更新操作  超时时间    timeout                      : {}", GREEN + deviceId + RESET, timeout);
-        System.out.println();
+        StringBuilder sb = new StringBuilder(4096);
+        String devLabel = GREEN + "⇓ 【0x94】 " + deviceId + RESET;
+        sb.append("\n\n");
+        sb.append(String.format("🟠%s 远程更新操作  原始报文    rawMsg                       : %s\n", devLabel, rawHexMsg));
+        sb.append(String.format("🟠%s 远程更新操作  设备编号    deviceId                     : %s\n", devLabel, deviceId));
+        sb.append(String.format("🟠%s 远程更新操作  设备类型    deviceType                   : %s\n", devLabel, deviceType == 1 ? "直流" : "交流"));
+        sb.append(String.format("🟠%s 远程更新操作  设备功率    devicePower                  : %s\n", devLabel, devicePower));
+        sb.append(String.format("🟠%s 远程更新操作  升级地址    address                      : %s\n", devLabel, address));
+        sb.append(String.format("🟠%s 远程更新操作  升级端口    port                         : %s\n", devLabel, port));
+        sb.append(String.format("🟠%s 远程更新操作  用户名称    username                     : %s\n", devLabel, username));
+        sb.append(String.format("🟠%s 远程更新操作  输入密码    password                     : %s\n", devLabel, password));
+        sb.append(String.format("🟠%s 远程更新操作  文件路径    filePath                     : %s\n", devLabel, filePath));
+        sb.append(String.format("🟠%s 远程更新操作  执行控制    execMethod                   : %s\n", devLabel, execMethod == 1 ? "立即执行" : "空闲执行"));
+        sb.append(String.format("🟠%s 远程更新操作  超时时间    timeout                      : %s\n", devLabel, timeout));
+        log.info(sb.toString());
     }
 
 }

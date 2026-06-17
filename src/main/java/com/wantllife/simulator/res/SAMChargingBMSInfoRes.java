@@ -165,25 +165,27 @@ public class SAMChargingBMSInfoRes extends FrameHeader {
      */
     @SuppressWarnings("StringBufferReplaceableByString")
     private void log(String rawHexMsg) {
-        log.info("-------------------------------------------------------------------------------------------");
-        log.info("🚀 【0x25】 {} 电池管理信息  原始报文    rawMsg                       : {}", PURPLE + deviceId + RESET, rawHexMsg);
-        log.info("🚀 【0x25】 {} 电池管理信息  设备编号    deviceId                     : {}", PURPLE + deviceId + RESET, deviceId);
-        log.info("🚀 【0x25】 {} 电池管理信息  枪口编号    gunNo                        : {}", PURPLE + deviceId + RESET, gunNo);
-        log.info("🚀 【0x25】 {} 电池管理信息  交易编号    tradeNo                      : {}", PURPLE + deviceId + RESET, tradeNo);
-        log.info("🚀 【0x25】 {} 电池管理信息  单压编号    maxVoltageNo                 : {}", PURPLE + deviceId + RESET, maxVoltageNo);
-        log.info("🚀 【0x25】 {} 电池管理信息  最高温度    maxBatteryTemperature        : {}", PURPLE + deviceId + RESET, maxBatteryTemperature);
-        log.info("🚀 【0x25】 {} 电池管理信息  检测高温    maxTemperatureCheckNo        : {}", PURPLE + deviceId + RESET, maxTemperatureCheckNo);
-        log.info("🚀 【0x25】 {} 电池管理信息  最低温度    minBatteryTemperature        : {}", PURPLE + deviceId + RESET, minBatteryTemperature);
-        log.info("🚀 【0x25】 {} 电池管理信息  检测低温    minTemperatureCheckNo        : {}", PURPLE + deviceId + RESET, minTemperatureCheckNo);
-        log.info("🚀 【0x25】 {} 电池管理信息  状态原值    statusBits                   : {}", PURPLE + deviceId + RESET, statusBits);
-        log.info("🚀 【0x25】 {} 电池管理信息  电压高低    voltageStatusDesc            : {}", PURPLE + deviceId + RESET, voltageStatusDesc);
-        log.info("🚀 【0x25】 {} 电池管理信息  率值高低    socStatusDesc                : {}", PURPLE + deviceId + RESET, socStatusDesc);
-        log.info("🚀 【0x25】 {} 电池管理信息  充电过流    chargeOverCurrentDesc        : {}", PURPLE + deviceId + RESET, chargeOverCurrentDesc);
-        log.info("🚀 【0x25】 {} 电池管理信息  温度过高    batteryTemperatureOverDesc   : {}", PURPLE + deviceId + RESET, batteryTemperatureOverDesc);
-        log.info("🚀 【0x25】 {} 电池管理信息  绝缘状态    insulationStatusDesc         : {}", PURPLE + deviceId + RESET, insulationStatusDesc);
-        log.info("🚀 【0x25】 {} 电池管理信息  连接状态    connectorStatusDesc          : {}", PURPLE + deviceId + RESET, connectorStatusDesc);
-        log.info("🚀 【0x25】 {} 电池管理信息  充电禁止    chargeForbidDesc             : {}", PURPLE + deviceId + RESET, chargeForbidDesc);
-        log.info("🚀 【0x25】 {} 电池管理信息  预留位值    reservedDesc                 : {}", PURPLE + deviceId + RESET, reservedDesc);
-        System.out.println();
+        StringBuilder sb = new StringBuilder(4096);
+        String devLabel = PURPLE + "⇓ 【0x25】 " + deviceId + RESET;
+        sb.append("\n\n");
+        sb.append(String.format("👩‍🚀%s 电池管理信息  原始报文    rawMsg                       : %s\n", devLabel, rawHexMsg));
+        sb.append(String.format("👩‍🚀%s 电池管理信息  设备编号    deviceId                     : %s\n", devLabel, deviceId));
+        sb.append(String.format("👩‍🚀%s 电池管理信息  枪口编号    gunNo                        : %s\n", devLabel, gunNo));
+        sb.append(String.format("👩‍🚀%s 电池管理信息  交易编号    tradeNo                      : %s\n", devLabel, tradeNo));
+        sb.append(String.format("👩‍🚀%s 电池管理信息  单压编号    maxVoltageNo                 : %s\n", devLabel, maxVoltageNo));
+        sb.append(String.format("👩‍🚀%s 电池管理信息  最高温度    maxBatteryTemperature        : %s\n", devLabel, maxBatteryTemperature));
+        sb.append(String.format("👩‍🚀%s 电池管理信息  检测高温    maxTemperatureCheckNo        : %s\n", devLabel, maxTemperatureCheckNo));
+        sb.append(String.format("👩‍🚀%s 电池管理信息  最低温度    minBatteryTemperature        : %s\n", devLabel, minBatteryTemperature));
+        sb.append(String.format("👩‍🚀%s 电池管理信息  检测低温    minTemperatureCheckNo        : %s\n", devLabel, minTemperatureCheckNo));
+        sb.append(String.format("👩‍🚀%s 电池管理信息  状态原值    statusBits                   : %s\n", devLabel, statusBits));
+        sb.append(String.format("👩‍🚀%s 电池管理信息  电压高低    voltageStatusDesc            : %s\n", devLabel, voltageStatusDesc));
+        sb.append(String.format("👩‍🚀%s 电池管理信息  率值高低    socStatusDesc                : %s\n", devLabel, socStatusDesc));
+        sb.append(String.format("👩‍🚀%s 电池管理信息  充电过流    chargeOverCurrentDesc        : %s\n", devLabel, chargeOverCurrentDesc));
+        sb.append(String.format("👩‍🚀%s 电池管理信息  温度过高    batteryTemperatureOverDesc   : %s\n", devLabel, batteryTemperatureOverDesc));
+        sb.append(String.format("👩‍🚀%s 电池管理信息  绝缘状态    insulationStatusDesc         : %s\n", devLabel, insulationStatusDesc));
+        sb.append(String.format("👩‍🚀%s 电池管理信息  连接状态    connectorStatusDesc          : %s\n", devLabel, connectorStatusDesc));
+        sb.append(String.format("👩‍🚀%s 电池管理信息  充电禁止    chargeForbidDesc             : %s\n", devLabel, chargeForbidDesc));
+        sb.append(String.format("👩‍🚀%s 电池管理信息  预留位值    reservedDesc                 : %s\n", devLabel, reservedDesc));
+        log.info(sb.toString());
     }
 }

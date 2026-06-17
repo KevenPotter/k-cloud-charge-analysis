@@ -77,12 +77,14 @@ public class SAZLockUpDownReq extends FrameHeader {
      */
     @SuppressWarnings("StringBufferReplaceableByString")
     private void log(String rawHexMsg) {
-        log.info("-------------------------------------------------------------------------------------------");
-        log.info("👨‍🚀 【0x62】 {} 遥控地锁升降  原始报文    rawMsg                       : {}", PURPLE + deviceId + RESET, rawHexMsg);
-        log.info("👨‍🚀 【0x62】 {} 遥控地锁升降  设备编号    deviceId                     : {}", PURPLE + deviceId + RESET, deviceId);
-        log.info("👨‍🚀 【0x62】 {} 遥控地锁升降  枪口编号    gunNo                        : {}", PURPLE + deviceId + RESET, gunNo);
-        log.info("👨‍🚀 【0x62】 {} 遥控地锁升降  升降地锁    upOrDown                     : {}", PURPLE + deviceId + RESET, upOrDown == 0 ? "降锁" : "升锁");
-        log.info("👨‍🚀 【0x62】 {} 遥控地锁升降  预留位值    reserved                     : {}", PURPLE + deviceId + RESET, reserved);
-        System.out.println();
+        StringBuilder sb = new StringBuilder(4096);
+        String devLabel = PURPLE + "⇑ 【0x62】 " + deviceId + RESET;
+        sb.append("\n\n");
+        sb.append(String.format("👩‍🚀%s 遥控地锁升降  原始报文    rawMsg                       : %s\n", devLabel, rawHexMsg));
+        sb.append(String.format("👩‍🚀%s 遥控地锁升降  设备编号    deviceId                     : %s\n", devLabel, deviceId));
+        sb.append(String.format("👩‍🚀%s 遥控地锁升降  枪口编号    gunNo                        : %s\n", devLabel, gunNo));
+        sb.append(String.format("👩‍🚀%s 遥控地锁升降  升降地锁    upOrDown                     : %s\n", devLabel, upOrDown == 0 ? "降锁" : "升锁"));
+        sb.append(String.format("👩‍🚀%s 遥控地锁升降  预留位值    reserved                     : %s\n", devLabel, reserved));
+        log.info(sb.toString());
     }
 }

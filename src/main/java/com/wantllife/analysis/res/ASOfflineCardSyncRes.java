@@ -3,8 +3,8 @@ package com.wantllife.analysis.res;
 import cn.hutool.core.convert.NumberChineseFormatter;
 import cn.hutool.core.util.HexUtil;
 import cn.hutool.core.util.RandomUtil;
-import com.wantllife.core.FrameHeader;
 import com.wantllife.config.holder.CloudChargeHolder;
+import com.wantllife.core.FrameHeader;
 import com.wantllife.domain.vo.StandardCard;
 import com.wantllife.util.StringUtil;
 import lombok.Data;
@@ -107,17 +107,20 @@ public class ASOfflineCardSyncRes extends FrameHeader {
      */
     @SuppressWarnings("StringBufferReplaceableByString")
     private void log(String rawHexMsg, List<StandardCard> cardList) {
-        log.info("-------------------------------------------------------------------------------------------");
-        log.info("🔶 【0x44】 {} 电卡数据同步  原始报文    rawMsg                       : {}", GREEN + deviceId + RESET, rawHexMsg);
-        log.info("🔶 【0x44】 {} 电卡数据同步  设备编号    deviceId                     : {}", GREEN + deviceId + RESET, deviceId);
-        log.info("🔶 【0x44】 {} 电卡数据同步  下发个数    cardCounts                   : {}", GREEN + deviceId + RESET, cardCounts);
+        StringBuilder sb = new StringBuilder(4096);
+        String devLabel = GREEN + "⇓ 【0x44】 " + deviceId + RESET;
+        sb.append("\n\n");
+        sb.append(String.format("🟠%s 电卡数据同步  原始报文    rawMsg                       : %s\n", devLabel, rawHexMsg));
+        sb.append(String.format("🟠%s 电卡数据同步  设备编号    deviceId                     : %s\n", devLabel, deviceId));
+        sb.append(String.format("🟠%s 电卡数据同步  下发个数    cardCounts                   : %s\n", devLabel, cardCounts));
 
         for (int i = 0; i < cardCounts; i++) {
             StandardCard card = cardList.get(i);
-            log.info("🔶 【0x44】 {} 电卡数据同步  第{}逻号    logicalCardNo                : {}", GREEN + deviceId + RESET, NumberChineseFormatter.format(i, false, false), card.getLogicalCardNo());
-            log.info("🔶 【0x44】 {} 电卡数据同步  第{}物号    physicalCardNo               : {}", GREEN + deviceId + RESET, NumberChineseFormatter.format(i, false, false), card.getPhysicalCardNo());
+            String idxStr = NumberChineseFormatter.format(i, false, false);
+            sb.append(String.format("🟠%s 电卡数据同步  第%s逻号    logicalCardNo                : %s\n", devLabel, idxStr, card.getLogicalCardNo()));
+            sb.append(String.format("🟠%s 电卡数据同步  第%s物号    physicalCardNo               : %s\n", devLabel, idxStr, card.getPhysicalCardNo()));
         }
-        System.out.println();
+        log.info(sb.toString());
     }
 
 }

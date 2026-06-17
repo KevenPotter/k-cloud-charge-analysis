@@ -1,7 +1,7 @@
 package com.wantllife.analysis.req;
 
-import com.wantllife.core.FrameHeader;
 import com.wantllife.config.holder.CloudChargeHolder;
+import com.wantllife.core.FrameHeader;
 import com.wantllife.util.StringUtil;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -141,15 +141,17 @@ public class AJChargingBMSStopReq extends FrameHeader {
      */
     @SuppressWarnings("StringBufferReplaceableByString")
     private void log(String rawHexMsg) {
-        log.info("-------------------------------------------------------------------------------------------");
-        log.info("🟢 【0x1D】 {} 电池管理中止  原始报文    rawMsg                       : {}", GREEN + deviceId + RESET, rawHexMsg);
-        log.info("🟢 【0x1D】 {} 电池管理中止  设备编号    deviceId                     : {}", GREEN + deviceId + RESET, deviceId);
-        log.info("🟢 【0x1D】 {} 电池管理中止  枪口编号    gunNo                        : {}", GREEN + deviceId + RESET, gunNo);
-        log.info("🟢 【0x1D】 {} 电池管理中止  交易编号    tradeNo                      : {}", GREEN + deviceId + RESET, tradeNo);
-        log.info("🟢 【0x1D】 {} 电池管理中止  中止原因    bmsStopReasonDesc            : {}", GREEN + deviceId + RESET, bmsStopReasonDesc);
-        log.info("🟢 【0x1D】 {} 电池管理中止  故障原因    bmsStopFailureDesc           : {}", GREEN + deviceId + RESET, bmsStopFailureDesc);
-        log.info("🟢 【0x1D】 {} 电池管理中止  错误原因    bmsStopErrorReasonDesc       : {}", GREEN + deviceId + RESET, bmsStopErrorReasonDesc);
-        System.out.println();
+        StringBuilder sb = new StringBuilder(4096);
+        String devLabel = GREEN + "⇑ 【0x1D】 " + deviceId + RESET;
+        sb.append("\n\n");
+        sb.append(String.format("🟢%s 电池管理中止  原始报文    rawMsg                       : %s\n", devLabel, rawHexMsg));
+        sb.append(String.format("🟢%s 电池管理中止  设备编号    deviceId                     : %s\n", devLabel, deviceId));
+        sb.append(String.format("🟢%s 电池管理中止  枪口编号    gunNo                        : %s\n", devLabel, gunNo));
+        sb.append(String.format("🟢%s 电池管理中止  交易编号    tradeNo                      : %s\n", devLabel, tradeNo));
+        sb.append(String.format("🟢%s 电池管理中止  中止原因    bmsStopReasonDesc            : %s\n", devLabel, bmsStopReasonDesc));
+        sb.append(String.format("🟢%s 电池管理中止  故障原因    bmsStopFailureDesc           : %s\n", devLabel, bmsStopFailureDesc));
+        sb.append(String.format("🟢%s 电池管理中止  错误原因    bmsStopErrorReasonDesc       : %s\n", devLabel, bmsStopErrorReasonDesc));
+        log.info(sb.toString());
     }
 
 }

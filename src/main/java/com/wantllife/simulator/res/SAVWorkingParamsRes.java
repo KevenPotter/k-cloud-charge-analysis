@@ -85,10 +85,12 @@ public class SAVWorkingParamsRes extends FrameHeader {
      */
     @SuppressWarnings("StringBufferReplaceableByString")
     private void log(String rawHexMsg) {
-        log.info("-------------------------------------------------------------------------------------------");
-        log.info("🚀 【0x51】 {} 工作参数设置  原始报文    rawMsg                       : {}", PURPLE + deviceId + RESET, rawHexMsg);
-        log.info("🚀 【0x51】 {} 工作参数设置  设备编号    deviceId                     : {}", PURPLE + deviceId + RESET, deviceId);
-        log.info("🚀 【0x51】 {} 工作参数设置  设置结果    setResult                    : {}", PURPLE + deviceId + RESET, setResult == 0 ? "设置失败" : "设置成功");
-        System.out.println();
+        StringBuilder sb = new StringBuilder(4096);
+        String devLabel = PURPLE + "⇓ 【0x51】 " + deviceId + RESET;
+        sb.append("\n\n");
+        sb.append(String.format("👩‍🚀%s 工作参数设置  原始报文    rawMsg                       : %s\n", devLabel, rawHexMsg));
+        sb.append(String.format("👩‍🚀%s 工作参数设置  设备编号    deviceId                     : %s\n", devLabel, deviceId));
+        sb.append(String.format("👩‍🚀%s 工作参数设置  设置结果    setResult                    : %s\n", devLabel, setResult == 0 ? "设置失败" : "设置成功"));
+        log.info(sb.toString());
     }
 }

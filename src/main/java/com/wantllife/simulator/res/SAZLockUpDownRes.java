@@ -96,12 +96,14 @@ public class SAZLockUpDownRes extends FrameHeader {
      */
     @SuppressWarnings("StringBufferReplaceableByString")
     private void log(String rawHexMsg) {
-        log.info("-------------------------------------------------------------------------------------------");
-        log.info("🚀 【0x63】 {} 设备返回数据  原始报文    rawMsg                       : {}", PURPLE + deviceId + RESET, rawHexMsg);
-        log.info("🚀 【0x63】 {} 设备返回数据  设备编号    deviceId                     : {}", PURPLE + deviceId + RESET, deviceId);
-        log.info("🚀 【0x63】 {} 设备返回数据  枪口编号    gunNo                        : {}", PURPLE + deviceId + RESET, gunNo);
-        log.info("🚀 【0x63】 {} 设备返回数据  控制标志    upDownStatus                 : {}", PURPLE + deviceId + RESET, upDownStatus == 1 ? "鉴权成功" : "鉴权失败");
-        log.info("🚀 【0x63】 {} 设备返回数据  预留位值    reserved                     : {}", PURPLE + deviceId + RESET, reserved);
-        System.out.println();
+        StringBuilder sb = new StringBuilder(4096);
+        String devLabel = PURPLE + "⇓ 【0x63】 " + deviceId + RESET;
+        sb.append("\n\n");
+        sb.append(String.format("👩‍🚀%s 设备返回数据  原始报文    rawMsg                       : %s\n", devLabel, rawHexMsg));
+        sb.append(String.format("👩‍🚀%s 设备返回数据  设备编号    deviceId                     : %s\n", devLabel, deviceId));
+        sb.append(String.format("👩‍🚀%s 设备返回数据  枪口编号    gunNo                        : %s\n", devLabel, gunNo));
+        sb.append(String.format("👩‍🚀%s 设备返回数据  控制标志    upDownStatus                 : %s\n", devLabel, upDownStatus == 1 ? "鉴权成功" : "鉴权失败"));
+        sb.append(String.format("👩‍🚀%s 设备返回数据  预留位值    reserved                     : %s\n", devLabel, reserved));
+        log.info(sb.toString());
     }
 }

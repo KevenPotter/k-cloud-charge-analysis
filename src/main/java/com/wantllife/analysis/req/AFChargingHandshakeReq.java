@@ -210,24 +210,26 @@ public class AFChargingHandshakeReq extends FrameHeader {
      */
     @SuppressWarnings("StringBufferReplaceableByString")
     private void log(String rawHexMsg) {
-        log.info("-------------------------------------------------------------------------------------------");
-        log.info("🟢 【0x15】 {} 充电握手上传  原始报文    rawMsg                       : {}", GREEN + deviceId + RESET, rawHexMsg);
-        log.info("🟢 【0x15】 {} 充电握手上传  设备编号    deviceId                     : {}", GREEN + deviceId + RESET, deviceId);
-        log.info("🟢 【0x15】 {} 充电握手上传  枪口编号    gunNo                        : {}", GREEN + deviceId + RESET, gunNo);
-        log.info("🟢 【0x15】 {} 充电握手上传  交易编号    tradeNo                      : {}", GREEN + deviceId + RESET, tradeNo);
-        log.info("🟢 【0x15】 {} 充电握手上传  通信版本    communicationProtocolVersion : {}", GREEN + deviceId + RESET, communicationProtocolVersion);
-        log.info("🟢 【0x15】 {} 充电握手上传  电池类型    batteryDesc                  : {}", GREEN + deviceId + RESET, batteryDesc);
-        log.info("🟢 【0x15】 {} 充电握手上传  额定容量    batteryRated                 : {}", GREEN + deviceId + RESET, batteryRated);
-        log.info("🟢 【0x15】 {} 充电握手上传  额定电压    batteryTotalVoltage          : {}", GREEN + deviceId + RESET, batteryTotalVoltage);
-        log.info("🟢 【0x15】 {} 充电握手上传  厂商名称    batteryManufacturer          : {}", GREEN + deviceId + RESET, batteryManufacturer);
-        log.info("🟢 【0x15】 {} 充电握手上传  电池序号    batterySerialNo              : {}", GREEN + deviceId + RESET, batterySerialNo);
-        log.info("🟢 【0x15】 {} 充电握手上传  生产日期    ProductionDate               : {}-{}-{}", GREEN + deviceId + RESET, batteryProductionYear, batteryProductionMonth, batteryProductionDay);
-        log.info("🟢 【0x15】 {} 充电握手上传  充电次数    batteryChargeCounts          : {}", GREEN + deviceId + RESET, batteryChargeCounts);
-        log.info("🟢 【0x15】 {} 充电握手上传  产权标识    propertyIdentificationDesc   : {}", GREEN + deviceId + RESET, batteryPropertyIdentificationDesc);
-        log.info("🟢 【0x15】 {} 充电握手上传  预留位值    reserved                     : {}", GREEN + deviceId + RESET, reserved);
-        log.info("🟢 【0x15】 {} 充电握手上传  车识别码    VIN                          : {}", GREEN + deviceId + RESET, vin);
-        log.info("🟢 【0x15】 {} 充电握手上传  软件版本    softwareVersionDesc          : {}", GREEN + deviceId + RESET, softwareVersionDesc);
-        System.out.println();
+        StringBuilder sb = new StringBuilder(4096);
+        String devLabel = GREEN + "⇑ 【0x15】 " + deviceId + RESET;
+        sb.append("\n\n");
+        sb.append(String.format("🟢%s 充电握手上传  原始报文    rawMsg                       : %s\n", devLabel, rawHexMsg));
+        sb.append(String.format("🟢%s 充电握手上传  设备编号    deviceId                     : %s\n", devLabel, deviceId));
+        sb.append(String.format("🟢%s 充电握手上传  枪口编号    gunNo                        : %s\n", devLabel, gunNo));
+        sb.append(String.format("🟢%s 充电握手上传  交易编号    tradeNo                      : %s\n", devLabel, tradeNo));
+        sb.append(String.format("🟢%s 充电握手上传  通信版本    communicationProtocolVersion : %s\n", devLabel, communicationProtocolVersion));
+        sb.append(String.format("🟢%s 充电握手上传  电池类型    batteryDesc                  : %s\n", devLabel, batteryDesc));
+        sb.append(String.format("🟢%s 充电握手上传  额定容量    batteryRated                 : %s\n", devLabel, batteryRated));
+        sb.append(String.format("🟢%s 充电握手上传  额定电压    batteryTotalVoltage          : %s\n", devLabel, batteryTotalVoltage));
+        sb.append(String.format("🟢%s 充电握手上传  厂商名称    batteryManufacturer          : %s\n", devLabel, batteryManufacturer));
+        sb.append(String.format("🟢%s 充电握手上传  电池序号    batterySerialNo              : %s\n", devLabel, batterySerialNo));
+        sb.append(String.format("🟢%s 充电握手上传  生产日期    ProductionDate               : %s-%s-%s\n", devLabel, batteryProductionYear, batteryProductionMonth, batteryProductionDay));
+        sb.append(String.format("🟢%s 充电握手上传  充电次数    batteryChargeCounts          : %s\n", devLabel, batteryChargeCounts));
+        sb.append(String.format("🟢%s 充电握手上传  产权标识    propertyIdentificationDesc   : %s\n", devLabel, batteryPropertyIdentificationDesc));
+        sb.append(String.format("🟢%s 充电握手上传  预留位值    reserved                     : %s\n", devLabel, reserved));
+        sb.append(String.format("🟢%s 充电握手上传  车识别码    VIN                          : %s\n", devLabel, vin));
+        sb.append(String.format("🟢%s 充电握手上传  软件版本    softwareVersionDesc          : %s\n", devLabel, softwareVersionDesc));
+        log.info(sb.toString());
     }
 
 }

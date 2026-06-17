@@ -63,10 +63,12 @@ public class SAALoginReq extends FrameHeader {
      */
     @SuppressWarnings("StringBufferReplaceableByString")
     private void log(String rawHexMsg) {
-        log.info("-------------------------------------------------------------------------------------------");
-        log.info("👨‍🚀 【0x02】 {} 登录认证应答  原始报文    rawMsg                       : {}", PURPLE + deviceId + RESET, rawHexMsg);
-        log.info("👨‍🚀 【0x02】 {} 登录认证应答  设备编号    deviceId                     : {}", PURPLE + deviceId + RESET, deviceId);
-        log.info("👨‍🚀 【0x02】 {} 登录认证应答  登录结果    loginResult                  : {}", PURPLE + deviceId + RESET, loginResult == 0 ? "成功" : "失败");
-        System.out.println();
+        StringBuilder sb = new StringBuilder(4096);
+        String devLabel = PURPLE + "⇑ 【0x02】 " + deviceId + RESET;
+        sb.append("\n\n");
+        sb.append(String.format("👩‍🚀%s 登录认证应答  原始报文    rawMsg                       : %s\n", devLabel, rawHexMsg));
+        sb.append(String.format("👩‍🚀%s 登录认证应答  设备编号    deviceId                     : %s\n", devLabel, deviceId));
+        sb.append(String.format("👩‍🚀%s 登录认证应答  登录结果    loginResult                  : %s\n", devLabel, loginResult == 0 ? "成功" : "失败"));
+        log.info(sb.toString());
     }
 }

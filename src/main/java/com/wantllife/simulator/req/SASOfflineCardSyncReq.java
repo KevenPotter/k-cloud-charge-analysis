@@ -93,16 +93,19 @@ public class SASOfflineCardSyncReq extends FrameHeader {
      */
     @SuppressWarnings("StringBufferReplaceableByString")
     private void log(String rawHexMsg) {
-        log.info("-------------------------------------------------------------------------------------------");
-        log.info("👨‍🚀 【0x44】 {} 电卡数据同步  原始报文    rawMsg                       : {}", PURPLE + deviceId + RESET, rawHexMsg);
-        log.info("👨‍🚀 【0x44】 {} 电卡数据同步  设备编号    deviceId                     : {}", PURPLE + deviceId + RESET, deviceId);
-        log.info("👨‍🚀 【0x44】 {} 电卡数据同步  下发个数    cardCounts                   : {}", PURPLE + deviceId + RESET, cardCounts);
+        StringBuilder sb = new StringBuilder(4096);
+        String devLabel = PURPLE + "⇑ 【0x44】 " + deviceId + RESET;
+        sb.append("\n\n");
+        sb.append(String.format("👩‍🚀%s 电卡数据同步  原始报文    rawMsg                       : %s\n", devLabel, rawHexMsg));
+        sb.append(String.format("👩‍🚀%s 电卡数据同步  设备编号    deviceId                     : %s\n", devLabel, deviceId));
+        sb.append(String.format("👩‍🚀%s 电卡数据同步  下发个数    cardCounts                   : %s\n", devLabel, cardCounts));
 
         for (int i = 0; i < cardCounts; i++) {
             StandardCard card = cardList.get(i);
-            log.info("👨‍🚀 【0x44】 {} 电卡数据同步  第{}逻号    logicalCardNo                : {}", PURPLE + deviceId + RESET, NumberChineseFormatter.format(i, false, false), card.getLogicalCardNo());
-            log.info("👨‍🚀 【0x44】 {} 电卡数据同步  第{}物号    physicalCardNo               : {}", PURPLE + deviceId + RESET, NumberChineseFormatter.format(i, false, false), card.getPhysicalCardNo());
+            String idxStr = NumberChineseFormatter.format(i, false, false);
+            sb.append(String.format("👩‍🚀%s 电卡数据同步  第%s逻号    logicalCardNo                : %s\n", devLabel, idxStr, card.getLogicalCardNo()));
+            sb.append(String.format("👩‍🚀%s 电卡数据同步  第%s物号    physicalCardNo               : %s\n", devLabel, idxStr, card.getPhysicalCardNo()));
         }
-        System.out.println();
+        log.info(sb.toString());
     }
 }

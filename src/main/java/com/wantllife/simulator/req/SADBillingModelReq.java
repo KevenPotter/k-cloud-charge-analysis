@@ -299,36 +299,39 @@ public class SADBillingModelReq extends FrameHeader {
      */
     @SuppressWarnings("StringBufferReplaceableByString")
     private void log(String rawHexMsg) {
-        log.info("-------------------------------------------------------------------------------------------");
-        log.info("👨‍🚀 【0x0A】 {} 计费模型应答  原始报文    rawMsg                       : {}", PURPLE + deviceId + RESET, rawHexMsg);
-        log.info("👨‍🚀 【0x0A】 {} 计费模型应答  设备编号    deviceId                     : {}", PURPLE + deviceId + RESET, deviceId);
-        log.info("👨‍🚀 【0x0A】 {} 计费模型应答  计费编码    billingModeId                : {}", PURPLE + deviceId + RESET, billingModeId);
-        log.info("👨‍🚀 【0x0A】 {} 计费模型应答  尖电费率    sharpEleFee                  : {}", PURPLE + deviceId + RESET, sharpEleFee);
-        log.info("👨‍🚀 【0x0A】 {} 计费模型应答  尖服费率    sharpServiceFee              : {}", PURPLE + deviceId + RESET, sharpServiceFee);
-        log.info("👨‍🚀 【0x0A】 {} 计费模型应答  峰电费率    peakEleFee                   : {}", PURPLE + deviceId + RESET, peakEleFee);
-        log.info("👨‍🚀 【0x0A】 {} 计费模型应答  峰服费率    peakServiceFee               : {}", PURPLE + deviceId + RESET, peakServiceFee);
-        log.info("👨‍🚀 【0x0A】 {} 计费模型应答  平电费率    flatEleFee                   : {}", PURPLE + deviceId + RESET, flatEleFee);
-        log.info("👨‍🚀 【0x0A】 {} 计费模型应答  平服费率    flatServiceFee               : {}", PURPLE + deviceId + RESET, flatServiceFee);
-        log.info("👨‍🚀 【0x0A】 {} 计费模型应答  谷电费率    valleyEleFee                 : {}", PURPLE + deviceId + RESET, valleyEleFee);
-        log.info("👨‍🚀 【0x0A】 {} 计费模型应答  谷服费率    valleyServiceFee             : {}", PURPLE + deviceId + RESET, valleyServiceFee);
-        log.info("👨‍🚀 【0x0A】 {} 计费模型应答  计损比例    lossRatio                    : {}", PURPLE + deviceId + RESET, lossRatio);
+        StringBuilder sb = new StringBuilder(4096);
+        String devLabel = PURPLE + "⇑ 【0x0A】 " + deviceId + RESET;
+        sb.append("\n\n");
+        sb.append(String.format("👩‍🚀%s 计费模型应答  原始报文    rawMsg                       : %s\n", devLabel, rawHexMsg));
+        sb.append(String.format("👩‍🚀%s 计费模型应答  设备编号    deviceId                     : %s\n", devLabel, deviceId));
+        sb.append(String.format("👩‍🚀%s 计费模型应答  计费编码    billingModeId                : %s\n", devLabel, billingModeId));
+        sb.append(String.format("👩‍🚀%s 计费模型应答  尖电费率    sharpEleFee                  : %s\n", devLabel, sharpEleFee));
+        sb.append(String.format("👩‍🚀%s 计费模型应答  尖服费率    sharpServiceFee              : %s\n", devLabel, sharpServiceFee));
+        sb.append(String.format("👩‍🚀%s 计费模型应答  峰电费率    peakEleFee                   : %s\n", devLabel, peakEleFee));
+        sb.append(String.format("👩‍🚀%s 计费模型应答  峰服费率    peakServiceFee               : %s\n", devLabel, peakServiceFee));
+        sb.append(String.format("👩‍🚀%s 计费模型应答  平电费率    flatEleFee                   : %s\n", devLabel, flatEleFee));
+        sb.append(String.format("👩‍🚀%s 计费模型应答  平服费率    flatServiceFee               : %s\n", devLabel, flatServiceFee));
+        sb.append(String.format("👩‍🚀%s 计费模型应答  谷电费率    valleyEleFee                 : %s\n", devLabel, valleyEleFee));
+        sb.append(String.format("👩‍🚀%s 计费模型应答  谷服费率    valleyServiceFee             : %s\n", devLabel, valleyServiceFee));
+        sb.append(String.format("👩‍🚀%s 计费模型应答  计损比例    lossRatio                    : %s\n", devLabel, lossRatio));
+
         for (StandardBillingModel mode : billingModelList) {
             switch (mode.getTimeSlotType()) {
                 case 1:
-                    log.info("👨‍🚀 【0x0A】 {} 计费模型应答  尖时间段    sharpTime                    : {}-{}", PURPLE + deviceId + RESET, mode.getStartTime(), mode.getEndTime());
+                    sb.append(String.format("👩‍🚀%s 计费模型应答  尖时间段    sharpTime                    : %s-%s\n", devLabel, mode.getStartTime(), mode.getEndTime()));
                     break;
                 case 2:
-                    log.info("👨‍🚀 【0x0A】 {} 计费模型应答  峰时间段    peakTime                     : {}-{}", PURPLE + deviceId + RESET, mode.getStartTime(), mode.getEndTime());
+                    sb.append(String.format("👩‍🚀%s 计费模型应答  峰时间段    peakTime                     : %s-%s\n", devLabel, mode.getStartTime(), mode.getEndTime()));
                     break;
                 case 3:
-                    log.info("👨‍🚀 【0x0A】 {} 计费模型应答  平时间段    flatTime                     : {}-{}", PURPLE + deviceId + RESET, mode.getStartTime(), mode.getEndTime());
+                    sb.append(String.format("👩‍🚀%s 计费模型应答  平时间段    flatTime                     : %s-%s\n", devLabel, mode.getStartTime(), mode.getEndTime()));
                     break;
                 case 4:
-                    log.info("👨‍🚀 【0x0A】 {} 计费模型应答  谷时间段    valleyTime                   : {}-{}", PURPLE + deviceId + RESET, mode.getStartTime(), mode.getEndTime());
+                    sb.append(String.format("👩‍🚀%s 计费模型应答  谷时间段    valleyTime                   : %s-%s\n", devLabel, mode.getStartTime(), mode.getEndTime()));
                     break;
             }
         }
-        System.out.println();
+        log.info(sb.toString());
     }
 
     /**

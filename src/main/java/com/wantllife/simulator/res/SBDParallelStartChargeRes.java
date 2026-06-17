@@ -144,15 +144,17 @@ public class SBDParallelStartChargeRes extends FrameHeader {
      */
     @SuppressWarnings("StringBufferReplaceableByString")
     private void log(String rawHexMsg) {
-        log.info("-------------------------------------------------------------------------------------------");
-        log.info("🚀 【0xA3】 {} 并充开电回复  原始报文    rawMsg                       : {}", PURPLE + deviceId + RESET, rawHexMsg);
-        log.info("🚀 【0xA3】 {} 并充开电回复  设备编号    deviceId                     : {}", PURPLE + deviceId + RESET, deviceId);
-        log.info("🚀 【0xA3】 {} 并充开电回复  枪口编号    gunNo                        : {}", PURPLE + deviceId + RESET, gunNo);
-        log.info("🚀 【0xA3】 {} 并充开电回复  交易编号    tradeNo                      : {}", PURPLE + deviceId + RESET, tradeNo);
-        log.info("🚀 【0xA3】 {} 并充开电回复  启动结果    startupResult                : {}", PURPLE + deviceId + RESET, startupResult == 0 ? "启动失败" : "启动成功");
-        log.info("🚀 【0xA3】 {} 并充开电回复  失败原因    failureReasonDesc            : {}", PURPLE + deviceId + RESET, failureReasonDesc);
-        log.info("🚀 【0xA3】 {} 并充开电回复  主辅标记    priAndSecFlagDesc            : {}", PURPLE + deviceId + RESET, priAndSecFlagDesc);
-        log.info("🚀 【0xA3】 {} 并充开电回复  并充序号    parallelNo                   : {}", PURPLE + deviceId + RESET, parallelNo);
-        System.out.println();
+        StringBuilder sb = new StringBuilder(4096);
+        String devLabel = PURPLE + "⇓ 【0xA3】 " + deviceId + RESET;
+        sb.append("\n\n");
+        sb.append(String.format("👩‍🚀%s 并充开电回复  原始报文    rawMsg                       : %s\n", devLabel, rawHexMsg));
+        sb.append(String.format("👩‍🚀%s 并充开电回复  设备编号    deviceId                     : %s\n", devLabel, deviceId));
+        sb.append(String.format("👩‍🚀%s 并充开电回复  枪口编号    gunNo                        : %s\n", devLabel, gunNo));
+        sb.append(String.format("👩‍🚀%s 并充开电回复  交易编号    tradeNo                      : %s\n", devLabel, tradeNo));
+        sb.append(String.format("👩‍🚀%s 并充开电回复  启动结果    startupResult                : %s\n", devLabel, startupResult == 0 ? "启动失败" : "启动成功"));
+        sb.append(String.format("👩‍🚀%s 并充开电回复  失败原因    failureReasonDesc            : %s\n", devLabel, failureReasonDesc));
+        sb.append(String.format("👩‍🚀%s 并充开电回复  主辅标记    priAndSecFlagDesc            : %s\n", devLabel, priAndSecFlagDesc));
+        sb.append(String.format("👩‍🚀%s 并充开电回复  并充序号    parallelNo                   : %s\n", devLabel, parallelNo));
+        log.info(sb.toString());
     }
 }

@@ -1,7 +1,7 @@
 package com.wantllife.analysis.req;
 
-import com.wantllife.core.FrameHeader;
 import com.wantllife.config.holder.CloudChargeHolder;
+import com.wantllife.core.FrameHeader;
 import com.wantllife.util.StringUtil;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -88,11 +88,13 @@ public class BBUpgradeReq extends FrameHeader {
      */
     @SuppressWarnings("StringBufferReplaceableByString")
     private void log(String rawHexMsg) {
-        log.info("-------------------------------------------------------------------------------------------");
-        log.info("🟢 【0x93】 {} 远程更新应答  原始报文    rawMsg                       : {}", GREEN + deviceId + RESET, rawHexMsg);
-        log.info("🟢 【0x93】 {} 远程更新应答  设备编号    deviceId                     : {}", GREEN + deviceId + RESET, deviceId);
-        log.info("🟢 【0x93】 {} 远程更新应答  升级状态    upgradeStatusDesc            : {}", GREEN + deviceId + RESET, upgradeStatusDesc);
-        System.out.println();
+        StringBuilder sb = new StringBuilder(4096);
+        String devLabel = GREEN + "⇑ 【0x93】 " + deviceId + RESET;
+        sb.append("\n\n");
+        sb.append(String.format("🟢%s 远程更新应答  原始报文    rawMsg                       : %s\n", devLabel, rawHexMsg));
+        sb.append(String.format("🟢%s 远程更新应答  设备编号    deviceId                     : %s\n", devLabel, deviceId));
+        sb.append(String.format("🟢%s 远程更新应答  升级状态    upgradeStatusDesc            : %s\n", devLabel, upgradeStatusDesc));
+        log.info(sb.toString());
     }
 
 }

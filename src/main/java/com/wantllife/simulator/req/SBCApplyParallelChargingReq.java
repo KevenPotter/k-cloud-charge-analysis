@@ -147,16 +147,18 @@ public class SBCApplyParallelChargingReq extends FrameHeader {
      */
     @SuppressWarnings("StringBufferReplaceableByString")
     private void log(String rawHexMsg) {
-        log.info("-------------------------------------------------------------------------------------------");
-        log.info("👨‍🚀 【0xA2】 {} 确认并充开电  原始报文    rawMsg                       : {}", PURPLE + deviceId + RESET, rawHexMsg);
-        log.info("👨‍🚀 【0xA2】 {} 确认并充开电  设备编号    deviceId                     : {}", PURPLE + deviceId + RESET, deviceId);
-        log.info("👨‍🚀 【0xA2】 {} 确认并充开电  枪口编号    gunNo                        : {}", PURPLE + deviceId + RESET, gunNo);
-        log.info("👨‍🚀 【0xA2】 {} 确认并充开电  交易编号    tradeNo                      : {}", PURPLE + deviceId + RESET, tradeNo);
-        log.info("👨‍🚀 【0xA2】 {} 确认并充开电  逻辑卡号    logicalCardNo                : {}", PURPLE + deviceId + RESET, logicalCardNo);
-        log.info("👨‍🚀 【0xA2】 {} 确认并充开电  账户余额    balance                      : {}", PURPLE + deviceId + RESET, balance);
-        log.info("👨‍🚀 【0xA2】 {} 确认并充开电  鉴权标志    authResult                   : {}", PURPLE + deviceId + RESET, "00".equals(authResult) ? "失败" : "成功");
-        log.info("👨‍🚀 【0xA2】 {} 确认并充开电  失败原因    failureReasonDesc            : {}", PURPLE + deviceId + RESET, failureReasonDesc);
-        log.info("👨‍🚀 【0xA2】 {} 确认并充开电  并充序号    parallelNo                   : {}", PURPLE + deviceId + RESET, parallelNo);
-        System.out.println();
+        StringBuilder sb = new StringBuilder(4096);
+        String devLabel = PURPLE + "⇑ 【0xA2】 " + deviceId + RESET;
+        sb.append("\n\n");
+        sb.append(String.format("👩‍🚀%s 确认并充开电  原始报文    rawMsg                       : %s\n", devLabel, rawHexMsg));
+        sb.append(String.format("👩‍🚀%s 确认并充开电  设备编号    deviceId                     : %s\n", devLabel, deviceId));
+        sb.append(String.format("👩‍🚀%s 确认并充开电  枪口编号    gunNo                        : %s\n", devLabel, gunNo));
+        sb.append(String.format("👩‍🚀%s 确认并充开电  交易编号    tradeNo                      : %s\n", devLabel, tradeNo));
+        sb.append(String.format("👩‍🚀%s 确认并充开电  逻辑卡号    logicalCardNo                : %s\n", devLabel, logicalCardNo));
+        sb.append(String.format("👩‍🚀%s 确认并充开电  账户余额    balance                      : %s\n", devLabel, balance));
+        sb.append(String.format("👩‍🚀%s 确认并充开电  鉴权标志    authResult                   : %s\n", devLabel, "00".equals(authResult) ? "失败" : "成功"));
+        sb.append(String.format("👩‍🚀%s 确认并充开电  失败原因    failureReasonDesc            : %s\n", devLabel, failureReasonDesc));
+        sb.append(String.format("👩‍🚀%s 确认并充开电  并充序号    parallelNo                   : %s\n", devLabel, parallelNo));
+        log.info(sb.toString());
     }
 }

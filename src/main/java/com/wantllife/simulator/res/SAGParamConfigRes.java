@@ -170,22 +170,24 @@ public class SAGParamConfigRes extends FrameHeader {
      */
     @SuppressWarnings("StringBufferReplaceableByString")
     private void log(String rawHexMsg) {
-        log.info("-------------------------------------------------------------------------------------------");
-        log.info("🚀 【0x17】 {} 参数配置上传  原始报文    rawMsg                       : {}", PURPLE + deviceId + RESET, rawHexMsg);
-        log.info("🚀 【0x17】 {} 参数配置上传  设备编号    deviceId                     : {}", PURPLE + deviceId + RESET, deviceId);
-        log.info("🚀 【0x17】 {} 参数配置上传  枪口编号    gunNo                        : {}", PURPLE + deviceId + RESET, gunNo);
-        log.info("🚀 【0x17】 {} 参数配置上传  交易编号    tradeNo                      : {}", PURPLE + deviceId + RESET, tradeNo);
-        log.info("🚀 【0x17】 {} 参数配置上传  允许电压    maxAllowVoltage              : {}", PURPLE + deviceId + RESET, maxAllowVoltage);
-        log.info("🚀 【0x17】 {} 参数配置上传  允许电流    maxChargeCurrent             : {}", PURPLE + deviceId + RESET, maxChargeCurrent);
-        log.info("🚀 【0x17】 {} 参数配置上传  标称能量    ratedEnergy                  : {}", PURPLE + deviceId + RESET, ratedEnergy);
-        log.info("🚀 【0x17】 {} 参数配置上传  最高电压    maxTotalVoltage              : {}", PURPLE + deviceId + RESET, maxTotalVoltage);
-        log.info("🚀 【0x17】 {} 参数配置上传  最高温度    maxTemperature               : {}", PURPLE + deviceId + RESET, maxTemperature);
-        log.info("🚀 【0x17】 {} 参数配置上传  充电率值    SOC                          : {}", PURPLE + deviceId + RESET, soc);
-        log.info("🚀 【0x17】 {} 参数配置上传  当前电压    currentTotalVoltage          : {}", PURPLE + deviceId + RESET, currentTotalVoltage);
-        log.info("🚀 【0x17】 {} 参数配置上传  最高输压    maxOutVoltage                : {}", PURPLE + deviceId + RESET, maxOutVoltage);
-        log.info("🚀 【0x17】 {} 参数配置上传  最低输压    minOutVoltage                : {}", PURPLE + deviceId + RESET, minOutVoltage);
-        log.info("🚀 【0x17】 {} 参数配置上传  最大输流    maxOutCurrent                : {}", PURPLE + deviceId + RESET, maxOutCurrent);
-        log.info("🚀 【0x17】 {} 参数配置上传  最小输流    minOutCurrent                : {}", PURPLE + deviceId + RESET, minOutCurrent);
-        System.out.println();
+        StringBuilder sb = new StringBuilder(4096);
+        String devLabel = PURPLE + "⇓ 【0x17】 " + deviceId + RESET;
+        sb.append("\n\n");
+        sb.append(String.format("👩‍🚀%s 参数配置上传  原始报文    rawMsg                       : %s\n", devLabel, rawHexMsg));
+        sb.append(String.format("👩‍🚀%s 参数配置上传  设备编号    deviceId                     : %s\n", devLabel, deviceId));
+        sb.append(String.format("👩‍🚀%s 参数配置上传  枪口编号    gunNo                        : %s\n", devLabel, gunNo));
+        sb.append(String.format("👩‍🚀%s 参数配置上传  交易编号    tradeNo                      : %s\n", devLabel, tradeNo));
+        sb.append(String.format("👩‍🚀%s 参数配置上传  允许电压    maxAllowVoltage              : %s\n", devLabel, maxAllowVoltage));
+        sb.append(String.format("👩‍🚀%s 参数配置上传  允许电流    maxChargeCurrent             : %s\n", devLabel, maxChargeCurrent));
+        sb.append(String.format("👩‍🚀%s 参数配置上传  标称能量    ratedEnergy                  : %s\n", devLabel, ratedEnergy));
+        sb.append(String.format("👩‍🚀%s 参数配置上传  最高电压    maxTotalVoltage              : %s\n", devLabel, maxTotalVoltage));
+        sb.append(String.format("👩‍🚀%s 参数配置上传  最高温度    maxTemperature               : %s\n", devLabel, maxTemperature));
+        sb.append(String.format("👩‍🚀%s 参数配置上传  充电率值    SOC                          : %s\n", devLabel, soc));
+        sb.append(String.format("👩‍🚀%s 参数配置上传  当前电压    currentTotalVoltage          : %s\n", devLabel, currentTotalVoltage));
+        sb.append(String.format("👩‍🚀%s 参数配置上传  最高输压    maxOutVoltage                : %s\n", devLabel, maxOutVoltage));
+        sb.append(String.format("👩‍🚀%s 参数配置上传  最低输压    minOutVoltage                : %s\n", devLabel, minOutVoltage));
+        sb.append(String.format("👩‍🚀%s 参数配置上传  最大输流    maxOutCurrent                : %s\n", devLabel, maxOutCurrent));
+        sb.append(String.format("👩‍🚀%s 参数配置上传  最小输流    minOutCurrent                : %s\n", devLabel, minOutCurrent));
+        log.info(sb.toString());
     }
 }

@@ -63,11 +63,13 @@ public class ACBillingModelValidReq extends FrameHeader {
      */
     @SuppressWarnings("StringBufferReplaceableByString")
     private void log(String rawHexMsg) {
-        log.info("-------------------------------------------------------------------------------------------");
-        log.info("🟢 【0x05】 {} 计费模型验证  原始报文    rawMsg                       : {}", GREEN + deviceId + RESET, rawHexMsg);
-        log.info("🟢 【0x05】 {} 计费模型验证  设备编号    deviceId                     : {}", GREEN + deviceId + RESET, deviceId);
-        log.info("🟢 【0x05】 {} 计费模型验证  计费编码    billingModeId                : {}", GREEN + deviceId + RESET, billingModeId);
-        System.out.println();
+        StringBuilder sb = new StringBuilder(4096);
+        String devLabel = GREEN + "⇑ 【0x05】 " + deviceId + RESET;
+        sb.append("\n\n");
+        sb.append(String.format("🟢%s 计费模型验证  原始报文    rawMsg                       : %s\n", devLabel, rawHexMsg));
+        sb.append(String.format("🟢%s 计费模型验证  设备编号    deviceId                     : %s\n", devLabel, deviceId));
+        sb.append(String.format("🟢%s 计费模型验证  计费编码    billingModeId                : %s\n", devLabel, billingModeId));
+        log.info(sb.toString());
     }
 
 }

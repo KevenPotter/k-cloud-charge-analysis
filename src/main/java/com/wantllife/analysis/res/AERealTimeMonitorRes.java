@@ -2,8 +2,8 @@ package com.wantllife.analysis.res;
 
 import cn.hutool.core.util.HexUtil;
 import cn.hutool.core.util.RandomUtil;
-import com.wantllife.core.FrameHeader;
 import com.wantllife.config.holder.CloudChargeHolder;
+import com.wantllife.core.FrameHeader;
 import com.wantllife.util.StringUtil;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -83,11 +83,13 @@ public class AERealTimeMonitorRes extends FrameHeader {
      */
     @SuppressWarnings("StringBufferReplaceableByString")
     private void log(String rawHexMsg) {
-        log.info("-------------------------------------------------------------------------------------------");
-        log.info("🔶 【0x12】 {} 读取监测数据  原始报文    rawMsg                       : {}", GREEN + deviceId + RESET, rawHexMsg);
-        log.info("🔶 【0x12】 {} 读取监测数据  设备编号    deviceId                     : {}", GREEN + deviceId + RESET, deviceId);
-        log.info("🔶 【0x12】 {} 读取监测数据  枪口编号    gunNo                        : {}", GREEN + deviceId + RESET, gunNo);
-        System.out.println();
+        StringBuilder sb = new StringBuilder(4096);
+        String devLabel = GREEN + "⇓ 【0x12】 " + deviceId + RESET;
+        sb.append("\n\n");
+        sb.append(String.format("🟠%s 读取监测数据  原始报文    rawMsg                       : %s\n", devLabel, rawHexMsg));
+        sb.append(String.format("🟠%s 读取监测数据  设备编号    deviceId                     : %s\n", devLabel, deviceId));
+        sb.append(String.format("🟠%s 读取监测数据  枪口编号    gunNo                        : %s\n", devLabel, gunNo));
+        log.info(sb.toString());
     }
 
 }

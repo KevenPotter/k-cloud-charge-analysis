@@ -172,23 +172,25 @@ public class SALChargingBMSDemandRes extends FrameHeader {
      */
     @SuppressWarnings("StringBufferReplaceableByString")
     private void log(String rawHexMsg) {
-        log.info("-------------------------------------------------------------------------------------------");
-        log.info("🚀 【0x23】 {} 电池需求输出  原始报文    rawMsg                       : {}", PURPLE + deviceId + RESET, rawHexMsg);
-        log.info("🚀 【0x23】 {} 电池需求输出  设备编号    deviceId                     : {}", PURPLE + deviceId + RESET, deviceId);
-        log.info("🚀 【0x23】 {} 电池需求输出  枪口编号    gunNo                        : {}", PURPLE + deviceId + RESET, gunNo);
-        log.info("🚀 【0x23】 {} 电池需求输出  交易编号    tradeNo                      : {}", PURPLE + deviceId + RESET, tradeNo);
-        log.info("🚀 【0x23】 {} 电池需求输出  电压需求    voltageDemand                : {}", PURPLE + deviceId + RESET, voltageDemand);
-        log.info("🚀 【0x23】 {} 电池需求输出  电流需求    currentDemand                : {}", PURPLE + deviceId + RESET, currentDemand);
-        log.info("🚀 【0x23】 {} 电池需求输出  充电模式    chargeMode                   : {}", PURPLE + deviceId + RESET, chargeMode);
-        log.info("🚀 【0x23】 {} 电池需求输出  电压测值    voltageMeasure               : {}", PURPLE + deviceId + RESET, voltageMeasure);
-        log.info("🚀 【0x23】 {} 电池需求输出  电流测值    currentMeasure               : {}", PURPLE + deviceId + RESET, currentMeasure);
-        log.info("🚀 【0x23】 {} 电池需求输出  电流测值    maxVoltage                   : {}", PURPLE + deviceId + RESET, maxVoltage);
-        log.info("🚀 【0x23】 {} 电池需求输出  电流测值    maxVoltageGroupNo            : {}", PURPLE + deviceId + RESET, maxVoltageGroupNo);
-        log.info("🚀 【0x23】 {} 电池需求输出  充电率值    SOC                          : {}", PURPLE + deviceId + RESET, soc);
-        log.info("🚀 【0x23】 {} 电池需求输出  剩余时间    remainingChargingTime        : {}", PURPLE + deviceId + RESET, remainingChargingTime);
-        log.info("🚀 【0x23】 {} 电池需求输出  电压输出    voltageOutput                : {}", PURPLE + deviceId + RESET, voltageOutput);
-        log.info("🚀 【0x23】 {} 电池需求输出  电流输出    currentOutput                : {}", PURPLE + deviceId + RESET, currentOutput);
-        log.info("🚀 【0x23】 {} 电池需求输出  累充时间    accumulatedChargingTime      : {}", PURPLE + deviceId + RESET, accumulatedChargingTime);
-        System.out.println();
+        StringBuilder sb = new StringBuilder(4096);
+        String devLabel = PURPLE + "⇓ 【0x23】 " + deviceId + RESET;
+        sb.append("\n\n");
+        sb.append(String.format("👩‍🚀%s 电池需求输出  原始报文    rawMsg                       : %s\n", devLabel, rawHexMsg));
+        sb.append(String.format("👩‍🚀%s 电池需求输出  设备编号    deviceId                     : %s\n", devLabel, deviceId));
+        sb.append(String.format("👩‍🚀%s 电池需求输出  枪口编号    gunNo                        : %s\n", devLabel, gunNo));
+        sb.append(String.format("👩‍🚀%s 电池需求输出  交易编号    tradeNo                      : %s\n", devLabel, tradeNo));
+        sb.append(String.format("👩‍🚀%s 电池需求输出  电压需求    voltageDemand                : %s\n", devLabel, voltageDemand));
+        sb.append(String.format("👩‍🚀%s 电池需求输出  电流需求    currentDemand                : %s\n", devLabel, currentDemand));
+        sb.append(String.format("👩‍🚀%s 电池需求输出  充电模式    chargeMode                   : %s\n", devLabel, chargeMode));
+        sb.append(String.format("👩‍🚀%s 电池需求输出  电压测值    voltageMeasure               : %s\n", devLabel, voltageMeasure));
+        sb.append(String.format("👩‍🚀%s 电池需求输出  电流测值    currentMeasure               : %s\n", devLabel, currentMeasure));
+        sb.append(String.format("👩‍🚀%s 电池需求输出  最高单体压  maxVoltage                   : %s\n", devLabel, maxVoltage));
+        sb.append(String.format("👩‍🚀%s 电池需求输出  最高压组号  maxVoltageGroupNo            : %s\n", devLabel, maxVoltageGroupNo));
+        sb.append(String.format("👩‍🚀%s 电池需求输出  充电率值    SOC                          : %s\n", devLabel, soc));
+        sb.append(String.format("👩‍🚀%s 电池需求输出  剩余时间    remainingChargingTime        : %s\n", devLabel, remainingChargingTime));
+        sb.append(String.format("👩‍🚀%s 电池需求输出  电压输出    voltageOutput                : %s\n", devLabel, voltageOutput));
+        sb.append(String.format("👩‍🚀%s 电池需求输出  电流输出    currentOutput                : %s\n", devLabel, currentOutput));
+        sb.append(String.format("👩‍🚀%s 电池需求输出  累充时间    accumulatedChargingTime      : %s\n", devLabel, accumulatedChargingTime));
+        log.info(sb.toString());
     }
 }

@@ -143,19 +143,21 @@ public class SAHChargeFinishedRes extends FrameHeader {
      */
     @SuppressWarnings("StringBufferReplaceableByString")
     private void log(String rawHexMsg) {
-        log.info("-------------------------------------------------------------------------------------------");
-        log.info("🚀 【0x19】 {} 充电结束上传  原始报文    rawMsg                       : {}", PURPLE + deviceId + RESET, rawHexMsg);
-        log.info("🚀 【0x19】 {} 充电结束上传  设备编号    deviceId                     : {}", PURPLE + deviceId + RESET, deviceId);
-        log.info("🚀 【0x19】 {} 充电结束上传  枪口编号    gunNo                        : {}", PURPLE + deviceId + RESET, gunNo);
-        log.info("🚀 【0x19】 {} 充电结束上传  交易编号    tradeNo                      : {}", PURPLE + deviceId + RESET, tradeNo);
-        log.info("🚀 【0x19】 {} 充电结束上传  荷电状态    stopSoc                      : {}", PURPLE + deviceId + RESET, stopSoc);
-        log.info("🚀 【0x19】 {} 充电结束上传  最低电压    minVoltage                   : {}", PURPLE + deviceId + RESET, minVoltage);
-        log.info("🚀 【0x19】 {} 充电结束上传  最高电压    maxVoltage                   : {}", PURPLE + deviceId + RESET, maxVoltage);
-        log.info("🚀 【0x19】 {} 充电结束上传  最低温度    minTemperature               : {}", PURPLE + deviceId + RESET, minTemperature);
-        log.info("🚀 【0x19】 {} 充电结束上传  最高温度    maxTemperature               : {}", PURPLE + deviceId + RESET, maxTemperature);
-        log.info("🚀 【0x19】 {} 充电结束上传  累充时间    chargeTime                   : {}", PURPLE + deviceId + RESET, chargeTime);
-        log.info("🚀 【0x19】 {} 充电结束上传  输出能量    outputEnergy                 : {}", PURPLE + deviceId + RESET, outputEnergy);
-        log.info("🚀 【0x19】 {} 充电结束上传  电机编号    chargeNo                     : {}", PURPLE + deviceId + RESET, chargeNo);
-        System.out.println();
+        StringBuilder sb = new StringBuilder(4096);
+        String devLabel = PURPLE + "⇓ 【0x19】 " + deviceId + RESET;
+        sb.append("\n\n");
+        sb.append(String.format("👩‍🚀%s 充电结束上传  原始报文    rawMsg                       : %s\n", devLabel, rawHexMsg));
+        sb.append(String.format("👩‍🚀%s 充电结束上传  设备编号    deviceId                     : %s\n", devLabel, deviceId));
+        sb.append(String.format("👩‍🚀%s 充电结束上传  枪口编号    gunNo                        : %s\n", devLabel, gunNo));
+        sb.append(String.format("👩‍🚀%s 充电结束上传  交易编号    tradeNo                      : %s\n", devLabel, tradeNo));
+        sb.append(String.format("👩‍🚀%s 充电结束上传  荷电状态    stopSoc                      : %s\n", devLabel, stopSoc));
+        sb.append(String.format("👩‍🚀%s 充电结束上传  最低电压    minVoltage                   : %s\n", devLabel, minVoltage));
+        sb.append(String.format("👩‍🚀%s 充电结束上传  最高电压    maxVoltage                   : %s\n", devLabel, maxVoltage));
+        sb.append(String.format("👩‍🚀%s 充电结束上传  最低温度    minTemperature               : %s\n", devLabel, minTemperature));
+        sb.append(String.format("👩‍🚀%s 充电结束上传  最高温度    maxTemperature               : %s\n", devLabel, maxTemperature));
+        sb.append(String.format("👩‍🚀%s 充电结束上传  累充时间    chargeTime                   : %s\n", devLabel, chargeTime));
+        sb.append(String.format("👩‍🚀%s 充电结束上传  输出能量    outputEnergy                 : %s\n", devLabel, outputEnergy));
+        sb.append(String.format("👩‍🚀%s 充电结束上传  电机编号    chargeNo                     : %s\n", devLabel, chargeNo));
+        log.info(sb.toString());
     }
 }

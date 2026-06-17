@@ -2,8 +2,8 @@ package com.wantllife.analysis.res;
 
 import cn.hutool.core.util.HexUtil;
 import cn.hutool.core.util.RandomUtil;
-import com.wantllife.core.FrameHeader;
 import com.wantllife.config.holder.CloudChargeHolder;
+import com.wantllife.core.FrameHeader;
 import com.wantllife.util.StringUtil;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -97,13 +97,15 @@ public class AZLockUpDownRes extends FrameHeader {
      */
     @SuppressWarnings("StringBufferReplaceableByString")
     private void log(String rawHexMsg) {
-        log.info("-------------------------------------------------------------------------------------------");
-        log.info("🔶 【0x62】 {} 遥控地锁升降  原始报文    rawMsg                       : {}", GREEN + deviceId + RESET, rawHexMsg);
-        log.info("🔶 【0x62】 {} 遥控地锁升降  设备编号    deviceId                     : {}", GREEN + deviceId + RESET, deviceId);
-        log.info("🔶 【0x62】 {} 遥控地锁升降  枪口编号    gunNo                        : {}", GREEN + deviceId + RESET, gunNo);
-        log.info("🔶 【0x62】 {} 遥控地锁升降  升降地锁    upOrDown                     : {}", GREEN + deviceId + RESET, upOrDown == 0 ? "降锁" : "升锁");
-        log.info("🔶 【0x62】 {} 遥控地锁升降  预留位值    reserved                     : {}", GREEN + deviceId + RESET, reserved);
-        System.out.println();
+        StringBuilder sb = new StringBuilder(4096);
+        String devLabel = GREEN + "⇓ 【0x62】 " + deviceId + RESET;
+        sb.append("\n\n");
+        sb.append(String.format("🟠%s 遥控地锁升降  原始报文    rawMsg                       : %s\n", devLabel, rawHexMsg));
+        sb.append(String.format("🟠%s 遥控地锁升降  设备编号    deviceId                     : %s\n", devLabel, deviceId));
+        sb.append(String.format("🟠%s 遥控地锁升降  枪口编号    gunNo                        : %s\n", devLabel, gunNo));
+        sb.append(String.format("🟠%s 遥控地锁升降  升降地锁    upOrDown                     : %s\n", devLabel, upOrDown == 0 ? "降锁" : "升锁"));
+        sb.append(String.format("🟠%s 遥控地锁升降  预留位值    reserved                     : %s\n", devLabel, reserved));
+        log.info(sb.toString());
     }
 
 }

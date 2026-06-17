@@ -123,18 +123,22 @@ public class ATOfflineCardClearReq extends FrameHeader {
      */
     @SuppressWarnings("StringBufferReplaceableByString")
     private void log(String rawHexMsg) {
-        log.info("-------------------------------------------------------------------------------------------");
-        log.info("🟢 【0x45】 {} 电卡清除应答  原始报文    rawMsg                       : {}", GREEN + deviceId + RESET, rawHexMsg);
-        log.info("🟢 【0x45】 {} 电卡清除应答  设备编号    deviceId                     : {}", GREEN + deviceId + RESET, deviceId);
+        StringBuilder sb = new StringBuilder(4096);
+        String devLabel = GREEN + "⇑ 【0x45】 " + deviceId + RESET;
+        sb.append("\n\n");
+        sb.append(String.format("🟢%s 电卡清除应答  原始报文    rawMsg                       : %s\n", devLabel, rawHexMsg));
+        sb.append(String.format("🟢%s 电卡清除应答  设备编号    deviceId                     : %s\n", devLabel, deviceId));
 
         for (int i = 0; i < clearResultList.size(); i++) {
-            System.out.println();
             ClearResult clearResult = clearResultList.get(i);
-            log.info("🟢 【0x45】 {} 电卡清除应答  第{}物号    physicalCardNo               : {}", GREEN + deviceId + RESET, NumberChineseFormatter.format(i, false, false), clearResult.getPhysicalCardNo());
-            log.info("🟢 【0x45】 {} 电卡清除应答  清除标记    clearResult                  : {}", GREEN + deviceId + RESET, clearResult.getClearResult() == 0 ? "清除失败" : "清除成功");
-            log.info("🟢 【0x45】 {} 电卡清除应答  失败原因    failReasonDesc               : {}", GREEN + deviceId + RESET, clearResult.getFailReasonDesc());
+            String idxStr = NumberChineseFormatter.format(i, false, false);
+            sb.append("\n");
+            sb.append(String.format("🟢%s 电卡清除应答  第%s物号    physicalCardNo               : %s\n", devLabel, idxStr, clearResult.getPhysicalCardNo()));
+            sb.append(String.format("🟢%s 电卡清除应答  清除标记    clearResult                  : %s\n", devLabel, clearResult.getClearResult() == 0 ? "清除失败" : "清除成功"));
+            sb.append(String.format("🟢%s 电卡清除应答  失败原因    failReasonDesc               : %s\n", devLabel, clearResult.getFailReasonDesc()));
         }
-        System.out.println();
+
+        log.info(sb.toString());
     }
 
 }

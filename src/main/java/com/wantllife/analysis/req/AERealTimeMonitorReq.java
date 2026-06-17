@@ -225,27 +225,29 @@ public class AERealTimeMonitorReq extends FrameHeader {
      */
     @SuppressWarnings("StringBufferReplaceableByString")
     private void log(String rawHexMsg) {
-        log.info("-------------------------------------------------------------------------------------------");
-        log.info("🟢 【0x13】 {} 实时监测数据  原始报文    rawMsg                       : {}", GREEN + deviceId + RESET, rawHexMsg);
-        log.info("🟢 【0x13】 {} 实时监测数据  设备编号    deviceId                     : {}", GREEN + deviceId + RESET, deviceId);
-        log.info("🟢 【0x13】 {} 实时监测数据  枪口编号    gunNo                        : {}", GREEN + deviceId + RESET, gunNo);
-        log.info("🟢 【0x13】 {} 实时监测数据  交易编号    tradeNo                      : {}", GREEN + deviceId + RESET, tradeNo);
-        log.info("🟢 【0x13】 {} 实时监测数据  设备状态    statusDesc                   : {}", GREEN + deviceId + RESET, statusDesc);
-        log.info("🟢 【0x13】 {} 实时监测数据  插枪归位    haveReturnDesc               : {}", GREEN + deviceId + RESET, haveReturnDesc);
-        log.info("🟢 【0x13】 {} 实时监测数据  是否插枪    haveInsert                   : {}", GREEN + deviceId + RESET, haveInsert == 0 ? "未插枪" : "已插枪");
-        log.info("🟢 【0x13】 {} 实时监测数据  输出电压    voltage                      : {}", GREEN + deviceId + RESET, voltage);
-        log.info("🟢 【0x13】 {} 实时监测数据  输出电流    current                      : {}", GREEN + deviceId + RESET, current);
-        log.info("🟢 【0x13】 {} 实时监测数据  枪线温度    temperature                  : {}", GREEN + deviceId + RESET, temperature);
-        log.info("🟢 【0x13】 {} 实时监测数据  枪线编码    gunCode                      : {}", GREEN + deviceId + RESET, gunCode);
-        log.info("🟢 【0x13】 {} 实时监测数据  充电率值    SOC                          : {}", GREEN + deviceId + RESET, soc);
-        log.info("🟢 【0x13】 {} 实时监测数据  最高温度    highestTemperature           : {}", GREEN + deviceId + RESET, highestTemperature);
-        log.info("🟢 【0x13】 {} 实时监测数据  累充时间    accumulatedChargingTime      : {}", GREEN + deviceId + RESET, accumulatedChargingTime);
-        log.info("🟢 【0x13】 {} 实时监测数据  剩余时间    remainingChargingTime        : {}", GREEN + deviceId + RESET, remainingChargingTime);
-        log.info("🟢 【0x13】 {} 实时监测数据  充电度数    chargingDegree               : {}", GREEN + deviceId + RESET, chargingDegree);
-        log.info("🟢 【0x13】 {} 实时监测数据  计损度数    calculatedChargingDegree     : {}", GREEN + deviceId + RESET, calculatedChargingDegree);
-        log.info("🟢 【0x13】 {} 实时监测数据  已充金额    chargedAmount                : {}", GREEN + deviceId + RESET, chargedAmount);
-        log.info("🟢 【0x13】 {} 实时监测数据  故障描述    hardwareFailureDesc          : {}", GREEN + deviceId + RESET, hardwareFailureDesc);
-        System.out.println();
+        StringBuilder sb = new StringBuilder(4096);
+        String devLabel = GREEN + "⇑ 【0x13】 " + deviceId + RESET;
+        sb.append("\n\n");
+        sb.append(String.format("🟢%s 实时监测数据  原始报文    rawMsg                       : %s\n", devLabel, rawHexMsg));
+        sb.append(String.format("🟢%s 实时监测数据  设备编号    deviceId                     : %s\n", devLabel, deviceId));
+        sb.append(String.format("🟢%s 实时监测数据  枪口编号    gunNo                        : %s\n", devLabel, gunNo));
+        sb.append(String.format("🟢%s 实时监测数据  交易编号    tradeNo                      : %s\n", devLabel, tradeNo));
+        sb.append(String.format("🟢%s 实时监测数据  设备状态    statusDesc                   : %s\n", devLabel, statusDesc));
+        sb.append(String.format("🟢%s 实时监测数据  插枪归位    haveReturnDesc               : %s\n", devLabel, haveReturnDesc));
+        sb.append(String.format("🟢%s 实时监测数据  是否插枪    haveInsert                   : %s\n", devLabel, haveInsert == 0 ? "未插枪" : "已插枪"));
+        sb.append(String.format("🟢%s 实时监测数据  输出电压    voltage                      : %s\n", devLabel, voltage));
+        sb.append(String.format("🟢%s 实时监测数据  输出电流    current                      : %s\n", devLabel, current));
+        sb.append(String.format("🟢%s 实时监测数据  枪线温度    temperature                  : %s\n", devLabel, temperature));
+        sb.append(String.format("🟢%s 实时监测数据  枪线编码    gunCode                      : %s\n", devLabel, gunCode));
+        sb.append(String.format("🟢%s 实时监测数据  充电率值    SOC                          : %s\n", devLabel, soc));
+        sb.append(String.format("🟢%s 实时监测数据  最高温度    highestTemperature           : %s\n", devLabel, highestTemperature));
+        sb.append(String.format("🟢%s 实时监测数据  累充时间    accumulatedChargingTime      : %s\n", devLabel, accumulatedChargingTime));
+        sb.append(String.format("🟢%s 实时监测数据  剩余时间    remainingChargingTime        : %s\n", devLabel, remainingChargingTime));
+        sb.append(String.format("🟢%s 实时监测数据  充电度数    chargingDegree               : %s\n", devLabel, chargingDegree));
+        sb.append(String.format("🟢%s 实时监测数据  计损度数    calculatedChargingDegree     : %s\n", devLabel, calculatedChargingDegree));
+        sb.append(String.format("🟢%s 实时监测数据  已充金额    chargedAmount                : %s\n", devLabel, chargedAmount));
+        sb.append(String.format("🟢%s 实时监测数据  故障描述    hardwareFailureDesc          : %s\n", devLabel, hardwareFailureDesc));
+        log.info(sb.toString());
     }
 
 }

@@ -89,11 +89,13 @@ public class SASOfflineCardSyncRes extends FrameHeader {
      */
     @SuppressWarnings("StringBufferReplaceableByString")
     private void log(String rawHexMsg) {
-        log.info("-------------------------------------------------------------------------------------------");
-        log.info("🚀 【0x43】 {} 电卡同步应答  原始报文    rawMsg                       : {}", PURPLE + deviceId + RESET, rawHexMsg);
-        log.info("🚀 【0x43】 {} 电卡同步应答  设备编号    deviceId                     : {}", PURPLE + deviceId + RESET, deviceId);
-        log.info("🚀 【0x43】 {} 电卡同步应答  保存结果    saveResult                   : {}", PURPLE + deviceId + RESET, saveResult == 0 ? "保存失败" : "保存成功");
-        log.info("🚀 【0x43】 {} 电卡同步应答  失败原因    failReason                   : {}", PURPLE + deviceId + RESET, failReason);
-        System.out.println();
+        StringBuilder sb = new StringBuilder(4096);
+        String devLabel = PURPLE + "⇓ 【0x43】 " + deviceId + RESET;
+        sb.append("\n\n");
+        sb.append(String.format("👩‍🚀%s 电卡同步应答  原始报文    rawMsg                       : %s\n", devLabel, rawHexMsg));
+        sb.append(String.format("👩‍🚀%s 电卡同步应答  设备编号    deviceId                     : %s\n", devLabel, deviceId));
+        sb.append(String.format("👩‍🚀%s 电卡同步应答  保存结果    saveResult                   : %s\n", devLabel, saveResult == 0 ? "保存失败" : "保存成功"));
+        sb.append(String.format("👩‍🚀%s 电卡同步应答  失败原因    failReason                   : %s\n", devLabel, failReason));
+        log.info(sb.toString());
     }
 }

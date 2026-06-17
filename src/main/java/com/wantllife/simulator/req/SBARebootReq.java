@@ -64,10 +64,12 @@ public class SBARebootReq extends FrameHeader {
      */
     @SuppressWarnings("StringBufferReplaceableByString")
     private void log(String rawHexMsg) {
-        log.info("-------------------------------------------------------------------------------------------");
-        log.info("👨‍🚀 【0x92】 {} 远程重启操作  原始报文    rawMsg                       : {}", PURPLE + deviceId + RESET, rawHexMsg);
-        log.info("👨‍🚀 【0x92】 {} 远程重启操作  设备编号    deviceId                     : {}", PURPLE + deviceId + RESET, deviceId);
-        log.info("👨‍🚀 【0x92】 {} 远程重启操作  执行方式    execMethod                   : {}", PURPLE + deviceId + RESET, execMethod == 1 ? "立即执行" : "空闲执行");
-        System.out.println();
+        StringBuilder sb = new StringBuilder(4096);
+        String devLabel = PURPLE + "⇑ 【0x92】 " + deviceId + RESET;
+        sb.append("\n\n");
+        sb.append(String.format("👩‍🚀%s 远程重启操作  原始报文    rawMsg                       : %s\n", devLabel, rawHexMsg));
+        sb.append(String.format("👩‍🚀%s 远程重启操作  设备编号    deviceId                     : %s\n", devLabel, deviceId));
+        sb.append(String.format("👩‍🚀%s 远程重启操作  执行方式    execMethod                   : %s\n", devLabel, execMethod == 1 ? "立即执行" : "空闲执行"));
+        log.info(sb.toString());
     }
 }

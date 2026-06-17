@@ -103,16 +103,19 @@ public class ATOfflineCardClearRes extends FrameHeader {
      */
     @SuppressWarnings("StringBufferReplaceableByString")
     private void log(String rawHexMsg, List<StandardCard> cardList) {
-        log.info("-------------------------------------------------------------------------------------------");
-        log.info("🔶 【0x46】 {} 电卡数据清除  原始报文    rawMsg                       : {}", GREEN + deviceId + RESET, rawHexMsg);
-        log.info("🔶 【0x46】 {} 电卡数据清除  设备编号    deviceId                     : {}", GREEN + deviceId + RESET, deviceId);
-        log.info("🔶 【0x46】 {} 电卡数据清除  清除个数    clearCounts                  : {}", GREEN + deviceId + RESET, clearCounts);
+        StringBuilder sb = new StringBuilder(4096);
+        String devLabel = GREEN + "⇓ 【0x46】 " + deviceId + RESET;
+        sb.append("\n\n");
+        sb.append(String.format("🟠%s 电卡数据清除  原始报文    rawMsg                       : %s\n", devLabel, rawHexMsg));
+        sb.append(String.format("🟠%s 电卡数据清除  设备编号    deviceId                     : %s\n", devLabel, deviceId));
+        sb.append(String.format("🟠%s 电卡数据清除  清除个数    clearCounts                  : %s\n", devLabel, clearCounts));
 
         for (int i = 0; i < clearCounts; i++) {
             StandardCard card = cardList.get(i);
-            log.info("🔶 【0x46】 {} 电卡数据清除  第{}物号    physicalCardNo               : {}", GREEN + deviceId + RESET, NumberChineseFormatter.format(i, false, false), card.getPhysicalCardNo());
+            String idxStr = NumberChineseFormatter.format(i, false, false);
+            sb.append(String.format("🟠%s 电卡数据清除  第%s物号    physicalCardNo               : %s\n", devLabel, idxStr, card.getPhysicalCardNo()));
         }
-        System.out.println();
+        log.info(sb.toString());
     }
 
 }
