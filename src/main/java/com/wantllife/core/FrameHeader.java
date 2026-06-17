@@ -19,21 +19,21 @@ import static com.wantllife.constant.CloudFastChargingConstants.FRAME_START_FLAG
 @Accessors(chain = true)
 public class FrameHeader {
 
-    /*原始数据*/
+    /** 原始数据 */
     private String rawMsg;
-    /*起始标志*/
+    /** 起始标志 */
     private String startFlag;
-    /*数据长度*/
+    /** 数据长度 */
     private String dataLength;
-    /*序列号域*/
+    /** 序列号域 */
     private String seqNo;
-    /*加密标志*/
+    /** 加密标志 */
     private String encryptFlag;
-    /*帧类型*/
+    /** 帧类型 */
     private String frameType;
-    /*帧校验域*/
+    /** 帧校验域 */
     private String CRC;
-    /*计算帧校验域*/
+    /** 计算帧校验域 */
     private String ReCRC;
 
     /**
