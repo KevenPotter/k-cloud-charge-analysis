@@ -15,6 +15,7 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 import static com.wantllife.constant.CloudFastChargingConstants.DOWN_PARALLEL_START_CHARGE;
+import static com.wantllife.constant.CloudFastChargingConstants.LOG_CAPACITY;
 import static com.wantllife.constant.ColorConstants.GREEN;
 import static com.wantllife.constant.ColorConstants.RESET;
 
@@ -127,7 +128,7 @@ public class BDParallelStartChargeRes extends FrameHeader {
      */
     @SuppressWarnings("StringBufferReplaceableByString")
     private void log(String rawHexMsg) {
-        StringBuilder sb = new StringBuilder(4096);
+        StringBuilder sb = new StringBuilder(LOG_CAPACITY);
         String devLabel = GREEN + "⇓ 【0xA4】 " + deviceId + RESET;
         sb.append("\n\n");
         sb.append(String.format("🟠%s 远程并充启机  原始报文    rawMsg                       : %s\n", devLabel, rawHexMsg));

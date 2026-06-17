@@ -11,6 +11,7 @@ import lombok.experimental.Accessors;
 import lombok.extern.slf4j.Slf4j;
 
 import static com.wantllife.constant.CloudFastChargingConstants.DOWN_LOGIN;
+import static com.wantllife.constant.CloudFastChargingConstants.LOG_CAPACITY;
 import static com.wantllife.constant.ColorConstants.GREEN;
 import static com.wantllife.constant.ColorConstants.RESET;
 
@@ -82,7 +83,7 @@ public class AALoginRes extends FrameHeader {
      */
     @SuppressWarnings("StringBufferReplaceableByString")
     private void log(String rawHexMsg) {
-        StringBuilder sb = new StringBuilder(4096);
+        StringBuilder sb = new StringBuilder(LOG_CAPACITY);
         String devLabel = GREEN + "⇓ 【0x02】 " + deviceId + RESET;
         sb.append("\n\n");
         sb.append(String.format("🟠%s 登录认证应答  原始报文    rawMsg                       : %s\n", devLabel, rawHexMsg));

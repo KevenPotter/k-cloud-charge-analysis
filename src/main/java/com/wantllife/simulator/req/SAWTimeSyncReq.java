@@ -8,6 +8,7 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 import lombok.extern.slf4j.Slf4j;
 
+import static com.wantllife.constant.CloudFastChargingConstants.LOG_CAPACITY;
 import static com.wantllife.constant.ColorConstants.PURPLE;
 import static com.wantllife.constant.ColorConstants.RESET;
 import static com.wantllife.util.TimeUtil.parseCP56Time;
@@ -67,7 +68,7 @@ public class SAWTimeSyncReq extends FrameHeader {
      */
     @SuppressWarnings("StringBufferReplaceableByString")
     private void log(String rawHexMsg) {
-        StringBuilder sb = new StringBuilder(4096);
+        StringBuilder sb = new StringBuilder(LOG_CAPACITY);
         String devLabel = PURPLE + "⇑ 【0x56】 " + deviceId + RESET;
         sb.append("\n\n");
         sb.append(String.format("👩‍🚀%s 设备对时设置  原始报文    rawMsg                       : %s\n", devLabel, rawHexMsg));

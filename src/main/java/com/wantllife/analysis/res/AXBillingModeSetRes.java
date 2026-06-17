@@ -16,6 +16,7 @@ import java.math.RoundingMode;
 import java.util.List;
 
 import static com.wantllife.constant.CloudFastChargingConstants.DOWN_BILLING_MODE_SET;
+import static com.wantllife.constant.CloudFastChargingConstants.LOG_CAPACITY;
 import static com.wantllife.constant.ColorConstants.GREEN;
 import static com.wantllife.constant.ColorConstants.RESET;
 
@@ -273,7 +274,7 @@ public class AXBillingModeSetRes extends FrameHeader {
      */
     @SuppressWarnings("StringBufferReplaceableByString")
     private void log(String rawHexMsg, List<StandardBillingModel> billingModelList) {
-        StringBuilder sb = new StringBuilder(4096);
+        StringBuilder sb = new StringBuilder(LOG_CAPACITY);
         String devLabel = GREEN + "⇓ 【0x58】 " + deviceId + RESET;
         sb.append("\n\n");
         sb.append(String.format("🟠%s 计费模型设置  原始报文    rawMsg                       : %s\n", devLabel, rawHexMsg));

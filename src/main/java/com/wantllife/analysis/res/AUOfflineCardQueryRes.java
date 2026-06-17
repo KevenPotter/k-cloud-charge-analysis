@@ -15,6 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 import java.util.List;
 
 import static com.wantllife.constant.CloudFastChargingConstants.DOWN_OFFLINE_CARD_QUERY;
+import static com.wantllife.constant.CloudFastChargingConstants.LOG_CAPACITY;
 import static com.wantllife.constant.ColorConstants.GREEN;
 import static com.wantllife.constant.ColorConstants.RESET;
 
@@ -102,7 +103,7 @@ public class AUOfflineCardQueryRes extends FrameHeader {
      */
     @SuppressWarnings("StringBufferReplaceableByString")
     private void log(String rawHexMsg, List<StandardCard> cardList) {
-        StringBuilder sb = new StringBuilder(4096);
+        StringBuilder sb = new StringBuilder(LOG_CAPACITY);
         String devLabel = GREEN + "⇓ 【0x48】 " + deviceId + RESET;
         sb.append("\n\n");
         sb.append(String.format("🟠%s 电卡数据查询  原始报文    rawMsg                       : %s\n", devLabel, rawHexMsg));
