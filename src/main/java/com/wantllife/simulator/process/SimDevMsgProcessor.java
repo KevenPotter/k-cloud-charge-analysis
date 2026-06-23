@@ -1,8 +1,11 @@
 package com.wantllife.simulator.process;
 
 import cn.hutool.core.util.HexUtil;
+import com.wantllife.domain.vo.StandardBillingModel;
 import com.wantllife.domain.vo.StandardDevice;
 import com.wantllife.domain.vo.StandardRealTimeMonitor;
+import com.wantllife.domain.vo.StandardTradeRecord;
+import com.wantllife.enums.TimeSegment;
 import com.wantllife.simulator.client.TcpClient;
 import com.wantllife.simulator.req.*;
 import com.wantllife.simulator.res.*;
@@ -11,11 +14,11 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.io.OutputStream;
 import java.math.BigDecimal;
-import java.time.Duration;
+import java.math.RoundingMode;
 import java.time.LocalDateTime;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.ScheduledThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
+import java.time.temporal.ChronoUnit;
+import java.util.List;
+import java.util.concurrent.*;
 
 import static com.wantllife.constant.CloudFastChargingConstants.*;
 import static com.wantllife.constant.SimulatorConstants.*;
@@ -24,7 +27,7 @@ import static com.wantllife.simulator.fake.FakeData.fakeInitRealTimeMonitor;
 
 /**
  * 默认消息处理器
- * 实现：解析下行指令 → 自动构造上行应答
+ * 实现:解析下行指令 → 自动构造上行应答
  * 用户可自行继承此类扩展自定义逻辑
  *
  * @author KevenPotter
@@ -47,6 +50,8 @@ public class SimDevMsgProcessor {
     private boolean isCharging = false;
     /** 充电开始时间 */
     private LocalDateTime chargeStartTime;
+    /** 充电结束时间 */
+    private LocalDateTime chargeEndTime;
     /** 总充电时间(固定120分钟,后续可改) */
     public static final int TOTAL_CHARGE_MINUTES = 120;
     /** 累计充电分钟数 */
@@ -66,18 +71,51 @@ public class SimDevMsgProcessor {
     private Integer platformBillingModeId;
 
     /** 登录定时器 */
-    private ScheduledExecutorService loginTimer;
+    private ScheduledFuture<?> loginTimer;
     /** 计费验证定时器 */
-    private ScheduledExecutorService billingValidTimer;
+    private ScheduledFuture<?> billingValidTimer;
     /** 计费模型请求定时器 */
-    private ScheduledExecutorService billingModelTimer;
+    private ScheduledFuture<?> billingModelTimer;
     /** 心跳定时器 */
-    private ScheduledExecutorService heartbeatTimer;
+    private ScheduledFuture<?> heartbeatTimer;
     /** 实时监测数据定时器 */
-    private ScheduledExecutorService realTimeMonitorTimer;
+    private ScheduledFuture<?> realTimeMonitorTimer;
 
     /** 实时监测数据[0x13指令]是否已经发送过初始化 */
     private boolean initRealTimeSent = false;
+
+    /* 计费模型 */
+    /** 尖 */
+    private BigDecimal sharpEleFee = BigDecimal.ZERO;
+    private BigDecimal sharpServiceFee = BigDecimal.ZERO;
+    private String sharpTimeRange;
+    /** 峰 */
+    private BigDecimal peakEleFee = BigDecimal.ZERO;
+    private BigDecimal peakServiceFee = BigDecimal.ZERO;
+    private String peakTimeRange;
+    /** 平 */
+    private BigDecimal flatEleFee = BigDecimal.ZERO;
+    private BigDecimal flatServiceFee = BigDecimal.ZERO;
+    private String flatTimeRange;
+    /** 谷 */
+    private BigDecimal valleyEleFee = BigDecimal.ZERO;
+    private BigDecimal valleyServiceFee = BigDecimal.ZERO;
+    private String valleyTimeRange;
+    /** 损耗比例 */
+    private Integer lossRatio = 0;
+    private BigDecimal sharpElectric = BigDecimal.ZERO;
+    private BigDecimal peakElectric = BigDecimal.ZERO;
+    private BigDecimal flatElectric = BigDecimal.ZERO;
+    private BigDecimal valleyElectric = BigDecimal.ZERO;
+
+    /** 金额、电量计算保留小数位数：4位 */
+    private static final int SCALE_4 = 4;
+    /** 四舍五入模式 */
+    private static final RoundingMode ROUND_HALF_UP = RoundingMode.HALF_UP;
+    /** 每分钟充电度数：0.5度/分钟 */
+    private static final BigDecimal PER_MIN_ELE = new BigDecimal("0.5");
+    /** 全局共用定时线程池,统一调度所有定时任务 */
+    private final ScheduledExecutorService globalScheduler = new ScheduledThreadPoolExecutor(5, new ThreadPoolExecutor.CallerRunsPolicy());
 
     /**
      * 绑定TCP输出流与客户端实例
@@ -126,7 +164,7 @@ public class SimDevMsgProcessor {
                         initRealTimeSent = true;
                         sendMessage(SAERealTimeMonitorRes.buildCommand(fakeInitRealTimeMonitor(deviceId, gunNo)));
                     }
-                    SABHeartbeatReq heartbeatReq = new SABHeartbeatReq(data, rawHexMsg);
+                    new SABHeartbeatReq(data, rawHexMsg);
                     break;
                 // 模拟器计费模型验证请求应答
                 case SIM_UP_BILLING_MODE_VALID:
@@ -135,11 +173,11 @@ public class SimDevMsgProcessor {
                 // 模拟器计费模型请求应答
                 case SIM_UP_BILLING_MODE:
                     SADBillingModelReq billingModelReq = new SADBillingModelReq(data, rawHexMsg);
-                    handleBillingModelReply();
+                    handleBillingModelReply(billingModelReq);
                     break;
                 // 模拟器读取实时监测数据
                 case SIM_UP_REAL_TIME_MONITOR:
-                    SAERealTimeMonitorReq realTimeMonitorReq = new SAERealTimeMonitorReq(data, rawHexMsg);
+                    new SAERealTimeMonitorReq(data, rawHexMsg);
                     StandardRealTimeMonitor currentMonitor = isCharging
                             ? fakeChargingRealTimeMonitor(tradeNo, deviceId, gunNo, accumulatedMinutes, remainingMinutes, chargingDegree, chargedAmount)
                             : fakeInitRealTimeMonitor(deviceId, gunNo);
@@ -147,24 +185,51 @@ public class SimDevMsgProcessor {
                     break;
                 // 模拟器运营平台确认启动充电
                 case SIM_UP_REQUEST_CHARGING:
-                    SANRequestChargingReq requestChargingReq = new SANRequestChargingReq(data, rawHexMsg);
+                    new SANRequestChargingReq(data, rawHexMsg);
                     break;
                 // 模拟器运营平台远程控制启机
                 case SIM_UP_START_CHARGE:
                     SAOStartChargeReq startChargeReq = new SAOStartChargeReq(data, rawHexMsg);
-                    sendMessage(SAOStartChargeRes.buildCommand(startChargeReq));
-                    // 开始充电 → 启动实时数据上传
-                    startCharging(startChargeReq.getTradeNo());
+                    if (!isCharging) {
+                        sendMessage(SAOStartChargeRes.buildCommand(startChargeReq, 1, 0));
+                        // 开始充电 → 启动实时数据上传
+                        startCharging(startChargeReq.getTradeNo());
+                    } else {
+                        sendMessage(SAOStartChargeRes.buildCommand(startChargeReq, 0, 2));
+                    }
                     break;
                 // 模拟器运营平台远程停机
                 case SIM_UP_STOP_CHARGE:
                     SAPStopChargeReq stopChargeReq = new SAPStopChargeReq(data, rawHexMsg);
                     sendMessage(SAPStopChargeRes.buildCommand(stopChargeReq));
-                    stopCharging();
+                    String tmpChargeTradeNo = this.tradeNo;
+                    if (isCharging) {
+                        LocalDateTime now = LocalDateTime.now();
+                        long minutes = ChronoUnit.MINUTES.between(chargeStartTime, now);
+                        int stopCode = 0x40;
+                        // 判断是否超时停机
+                        if (minutes >= TOTAL_CHARGE_MINUTES) {
+                            minutes = TOTAL_CHARGE_MINUTES;
+                            stopCode = 0x41;
+                            log.info("充电达到最大时长{}分钟,触发停机结算", TOTAL_CHARGE_MINUTES);
+                        }
+                        // 统一一次计算电量金额
+                        chargingDegree = BigDecimal.valueOf(minutes).multiply(PER_MIN_ELE).setScale(SCALE_4, ROUND_HALF_UP);
+                        BigDecimal totalMoney = BigDecimal.ZERO;
+                        LocalDateTime loopMin = chargeStartTime;
+                        for (long i = 0; i < minutes; i++) {
+                            totalMoney = totalMoney.add(getSingleMinuteCost(loopMin));
+                            loopMin = loopMin.plusMinutes(1);
+                        }
+                        chargedAmount = totalMoney;
+                        stopCharging();
+                        StandardTradeRecord tradeRecord = buildTradeRecord(tmpChargeTradeNo, stopCode);
+                        sendMessage(SAQTradeRecordRes.buildCommand(tradeRecord));
+                    }
                     break;
                 // 模拟器交易记录确认
                 case SIM_UP_TRADE_RECORD:
-                    SAQTradeRecordReq tradeRecordReq = new SAQTradeRecordReq(data, rawHexMsg, this.deviceId);
+                    new SAQTradeRecordReq(data, rawHexMsg, this.deviceId);
                     break;
                 // 模拟器远程账户余额更新
                 case SIM_UP_BALANCE_UPDATE:
@@ -222,7 +287,7 @@ public class SimDevMsgProcessor {
                     break;
                 // 模拟器运营平台确认并充启动充电
                 case SIM_UP_APPLY_PARALLEL_CHARGING:
-                    SBCApplyParallelChargingReq applyParallelChargingReq = new SBCApplyParallelChargingReq(data, rawHexMsg);
+                    new SBCApplyParallelChargingReq(data, rawHexMsg);
                     break;
                 // 模拟器运营平台远程控制并充启机
                 case SIM_UP_PARALLEL_START_CHARGE:
@@ -233,7 +298,8 @@ public class SimDevMsgProcessor {
                     break;
 
             }
-        } catch (Exception ignored) {
+        } catch (Exception e) {
+            log.error("{} {} {} Message Process Exception", SIM_TIP_ICON, SIM_PROJECT_NAME, deviceId);
         }
     }
 
@@ -247,10 +313,17 @@ public class SimDevMsgProcessor {
         this.tradeNo = tradeNo;
         this.isCharging = true;
         this.chargeStartTime = LocalDateTime.now();
+        this.chargeEndTime = null;
         this.accumulatedMinutes = 0;
         this.remainingMinutes = TOTAL_CHARGE_MINUTES;
         this.chargingDegree = BigDecimal.ZERO;
         this.chargedAmount = BigDecimal.ZERO;
+
+        this.sharpElectric = BigDecimal.ZERO;
+        this.peakElectric = BigDecimal.ZERO;
+        this.flatElectric = BigDecimal.ZERO;
+        this.valleyElectric = BigDecimal.ZERO;
+
         startRealTimeMonitorTimer();
     }
 
@@ -263,6 +336,7 @@ public class SimDevMsgProcessor {
     private void stopCharging() {
         this.isCharging = false;
         this.tradeNo = null;
+        this.chargeEndTime = LocalDateTime.now();
         stopRealTimeMonitorTimer();
     }
 
@@ -307,26 +381,58 @@ public class SimDevMsgProcessor {
     /**
      * 处理计费模型应答
      *
+     * @param billingModelReq 计费模型请求应答
      * @author KevenPotter
      * @date 2026-05-29 11:03:43
      */
-    private void handleBillingModelReply() {
+    private void handleBillingModelReply(SADBillingModelReq billingModelReq) {
         if (currentState != DeviceState.WAIT_BILLING_MODEL) return;
 
         stopBillingModelTimer();
         currentState = DeviceState.READY;
         startHeartbeatTimer();
+
+        // 1.先拿到当前应答对象
+        List<StandardBillingModel> modelList = billingModelReq.getBillingModelList();
+
+        // 2.直接取四段电价、服务费、损耗比例
+        this.sharpEleFee = billingModelReq.getSharpEleFee();
+        this.sharpServiceFee = billingModelReq.getSharpServiceFee();
+        this.peakEleFee = billingModelReq.getPeakEleFee();
+        this.peakServiceFee = billingModelReq.getPeakServiceFee();
+        this.flatEleFee = billingModelReq.getFlatEleFee();
+        this.flatServiceFee = billingModelReq.getFlatServiceFee();
+        this.valleyEleFee = billingModelReq.getValleyEleFee();
+        this.valleyServiceFee = billingModelReq.getValleyServiceFee();
+        this.lossRatio = billingModelReq.getLossRatio();
+        // 3.遍历列表匹配类型,赋值时段字符串 "HH:mm-HH:mm"
+        for (StandardBillingModel item : modelList) {
+            String timeStr = item.getStartTime() + "-" + item.getEndTime();
+            switch (item.getTimeSlotType()) {
+                case 1:
+                    this.sharpTimeRange = timeStr;
+                    break;
+                case 2:
+                    this.peakTimeRange = timeStr;
+                    break;
+                case 3:
+                    this.flatTimeRange = timeStr;
+                    break;
+                case 4:
+                    this.valleyTimeRange = timeStr;
+                    break;
+            }
+        }
     }
 
     /**
      * TCP连接成功回调
      * 由TcpClient连接建立后调用,重置状态并开始登录
      *
-     * @param deviceId 设备编号
      * @author KevenPotter
      * @date 2026-05-27 17:02:34
      */
-    public void onConnected(String deviceId) {
+    public void onConnected() {
         // 重置所有状态
         currentState = DeviceState.WAIT_LOGIN;
         loginReq = null;
@@ -336,6 +442,26 @@ public class SimDevMsgProcessor {
         this.tradeNo = null;
         this.accumulatedMinutes = 0;
         this.remainingMinutes = TOTAL_CHARGE_MINUTES;
+
+        this.sharpEleFee = BigDecimal.ZERO;
+        this.sharpServiceFee = BigDecimal.ZERO;
+        this.peakEleFee = BigDecimal.ZERO;
+        this.peakServiceFee = BigDecimal.ZERO;
+        this.flatEleFee = BigDecimal.ZERO;
+        this.flatServiceFee = BigDecimal.ZERO;
+        this.valleyEleFee = BigDecimal.ZERO;
+        this.valleyServiceFee = BigDecimal.ZERO;
+        this.lossRatio = 0;
+        this.sharpTimeRange = null;
+        this.peakTimeRange = null;
+        this.flatTimeRange = null;
+        this.valleyTimeRange = null;
+        this.sharpElectric = BigDecimal.ZERO;
+        this.peakElectric = BigDecimal.ZERO;
+        this.flatElectric = BigDecimal.ZERO;
+        this.valleyElectric = BigDecimal.ZERO;
+        this.chargeEndTime = null;
+
         // 关闭所有旧定时器
         stopAllTimers();
         // 启动登录
@@ -351,13 +477,13 @@ public class SimDevMsgProcessor {
      */
     private void startLoginTimer() {
         stopLoginTimer();
-        loginTimer = new ScheduledThreadPoolExecutor(1);
-        loginTimer.scheduleAtFixedRate(() -> {
+        loginTimer = globalScheduler.scheduleAtFixedRate(() -> {
             try {
                 if (currentState == DeviceState.WAIT_LOGIN) {
                     sendMessage(SAALoginRes.buildCommand(tcpClient.getDevice()));
                 }
-            } catch (Exception ignored) {
+            } catch (Exception e) {
+                log.error("{} {} {} StartLoginTimer Exception", SIM_TIP_ICON, SIM_PROJECT_NAME, deviceId);
             }
         }, 0, TIMER_LOGIN_SECOND, TimeUnit.SECONDS);
     }
@@ -371,7 +497,7 @@ public class SimDevMsgProcessor {
      */
     private void stopLoginTimer() {
         if (loginTimer != null) {
-            loginTimer.shutdownNow();
+            loginTimer.cancel(false);
             loginTimer = null;
         }
     }
@@ -385,14 +511,14 @@ public class SimDevMsgProcessor {
      */
     private void startBillingValidTimer() {
         stopBillingValidTimer();
-        billingValidTimer = new ScheduledThreadPoolExecutor(1);
-        billingValidTimer.scheduleAtFixedRate(() -> {
+        billingValidTimer = globalScheduler.scheduleAtFixedRate(() -> {
             try {
                 if (currentState == DeviceState.WAIT_BILLING_VALID) {
                     long billingModeId = platformBillingModeId != null ? platformBillingModeId : 1L;
                     sendMessage(SACBillingModeValidRes.buildCommand(deviceId, billingModeId));
                 }
-            } catch (Exception ignored) {
+            } catch (Exception e) {
+                log.error("{} {} {} StartBillingValidTimer Exception", SIM_TIP_ICON, SIM_PROJECT_NAME, deviceId);
             }
         }, 0, TIMER_BILLING_MODE_VALID_SECOND, TimeUnit.SECONDS);
     }
@@ -406,7 +532,7 @@ public class SimDevMsgProcessor {
      */
     private void stopBillingValidTimer() {
         if (billingValidTimer != null) {
-            billingValidTimer.shutdownNow();
+            billingValidTimer.cancel(false);
             billingValidTimer = null;
         }
     }
@@ -420,13 +546,13 @@ public class SimDevMsgProcessor {
      */
     private void startBillingModelTimer() {
         stopBillingModelTimer();
-        billingModelTimer = new ScheduledThreadPoolExecutor(1);
-        billingModelTimer.scheduleAtFixedRate(() -> {
+        billingModelTimer = globalScheduler.scheduleAtFixedRate(() -> {
             try {
                 if (currentState == DeviceState.WAIT_BILLING_MODEL) {
                     sendMessage(SADBillingModelRes.buildCommand(deviceId));
                 }
-            } catch (Exception ignored) {
+            } catch (Exception e) {
+                log.error("{} {} {} StartBillingModelTimer Exception", SIM_TIP_ICON, SIM_PROJECT_NAME, deviceId);
             }
         }, 0, TIMER_BILLING_MODE_SECOND, TimeUnit.SECONDS);
     }
@@ -440,7 +566,7 @@ public class SimDevMsgProcessor {
      */
     private void stopBillingModelTimer() {
         if (billingModelTimer != null) {
-            billingModelTimer.shutdownNow();
+            billingModelTimer.cancel(false);
             billingModelTimer = null;
         }
     }
@@ -454,13 +580,13 @@ public class SimDevMsgProcessor {
      */
     private void startHeartbeatTimer() {
         stopHeartbeatTimer();
-        heartbeatTimer = new ScheduledThreadPoolExecutor(1);
-        heartbeatTimer.scheduleAtFixedRate(() -> {
+        heartbeatTimer = globalScheduler.scheduleAtFixedRate(() -> {
             try {
                 if (currentState == DeviceState.READY) {
                     sendMessage(SABHeartbeatRes.buildCommand(loginReq, gunNo, 0));
                 }
-            } catch (Exception ignored) {
+            } catch (Exception e) {
+                log.error("{} {} {} StartHeartbeatTimer Exception", SIM_TIP_ICON, SIM_PROJECT_NAME, deviceId);
             }
         }, TIMER_HEARTBEAT_SECOND, TIMER_HEARTBEAT_SECOND, TimeUnit.SECONDS);
     }
@@ -474,7 +600,7 @@ public class SimDevMsgProcessor {
      */
     private void stopHeartbeatTimer() {
         if (heartbeatTimer != null) {
-            heartbeatTimer.shutdownNow();
+            heartbeatTimer.cancel(false);
             heartbeatTimer = null;
         }
     }
@@ -487,26 +613,36 @@ public class SimDevMsgProcessor {
      */
     private void startRealTimeMonitorTimer() {
         stopRealTimeMonitorTimer();
-        realTimeMonitorTimer = new ScheduledThreadPoolExecutor(1);
-        realTimeMonitorTimer.scheduleAtFixedRate(() -> {
+        realTimeMonitorTimer = globalScheduler.scheduleAtFixedRate(() -> {
             try {
                 if (!isCharging) return;
 
-                // 真实时间计算
-                long minutes = Duration.between(chargeStartTime, LocalDateTime.now()).toMinutes();
+                LocalDateTime now = LocalDateTime.now();
+                // 真实已充电总分钟
+                long minutes = ChronoUnit.MINUTES.between(chargeStartTime, now);
 
-                // 越界保护
+                // 越界保护,最多充120分钟
                 if (minutes >= TOTAL_CHARGE_MINUTES) {
                     minutes = TOTAL_CHARGE_MINUTES;
                 }
 
-                // 自动计算
                 accumulatedMinutes = (int) minutes;
                 remainingMinutes = TOTAL_CHARGE_MINUTES - accumulatedMinutes;
-                chargingDegree = BigDecimal.valueOf(accumulatedMinutes * 0.5);  // 每分钟0.5度
-                chargedAmount = BigDecimal.valueOf(accumulatedMinutes * 0.8);  // 每分钟0.8元
+                // 固定每分钟用电量0.5度(30kW直流桩典型值)
+                chargingDegree = BigDecimal.valueOf(minutes).multiply(PER_MIN_ELE).setScale(SCALE_4, ROUND_HALF_UP);
 
-                // 发送
+                // 动态分时计算实时总金额
+                BigDecimal totalMoney = BigDecimal.ZERO;
+                // 逐分钟回溯计算每一分钟费用
+                LocalDateTime loopMin = chargeStartTime;
+                for (long i = 0; i < minutes; i++) {
+                    BigDecimal minuteCost = getSingleMinuteCost(loopMin);
+                    totalMoney = totalMoney.add(minuteCost);
+                    loopMin = loopMin.plusMinutes(1);
+                }
+                chargedAmount = totalMoney;
+
+                // 组装并上报实时报文
                 StandardRealTimeMonitor monitor = fakeChargingRealTimeMonitor(
                         tradeNo,
                         deviceId,
@@ -518,9 +654,44 @@ public class SimDevMsgProcessor {
                 );
                 sendMessage(SAERealTimeMonitorRes.buildCommand(monitor));
 
-            } catch (Exception ignored) {
+            } catch (Exception e) {
+                log.error("{} {} {} StartRealTimeMonitorTimer Exception", SIM_TIP_ICON, SIM_PROJECT_NAME, deviceId);
             }
         }, 0, TIMER_REAL_TIME_MONITOR_SECOND, TimeUnit.SECONDS);
+    }
+
+    /**
+     * 计算指定时刻单分钟电费
+     *
+     * @param loopMin 当前分钟时刻
+     * @return 该分钟电费金额
+     * @author KevenPotter
+     * @date 2026-06-23 10:20:30
+     */
+    private BigDecimal getSingleMinuteCost(LocalDateTime loopMin) {
+        TimeSegment seg;
+        if (sharpTimeRange != null && peakTimeRange != null && flatTimeRange != null && valleyTimeRange != null) {
+            seg = TimeSegment.getTimeSegment(loopMin, sharpTimeRange, peakTimeRange, flatTimeRange, valleyTimeRange);
+        } else {
+            seg = TimeSegment.FLAT;
+        }
+
+        BigDecimal unitTotalPrice;
+        switch (seg) {
+            case SHARP:
+                unitTotalPrice = sharpEleFee.add(sharpServiceFee);
+                break;
+            case PEAK:
+                unitTotalPrice = peakEleFee.add(peakServiceFee);
+                break;
+            case VALLEY:
+                unitTotalPrice = valleyEleFee.add(valleyServiceFee);
+                break;
+            default:
+                unitTotalPrice = flatEleFee.add(flatServiceFee);
+        }
+
+        return PER_MIN_ELE.multiply(unitTotalPrice);
     }
 
     /**
@@ -532,7 +703,7 @@ public class SimDevMsgProcessor {
      */
     private void stopRealTimeMonitorTimer() {
         if (realTimeMonitorTimer != null) {
-            realTimeMonitorTimer.shutdownNow();
+            realTimeMonitorTimer.cancel(false);
             realTimeMonitorTimer = null;
         }
     }
@@ -565,8 +736,144 @@ public class SimDevMsgProcessor {
                 outputStream.flush();
             }
         } catch (Exception e) {
+            outputStream = null;
             tcpClient.closeSocket();
         }
+    }
+
+    /**
+     * 回溯整段充电起止时间.按每分钟0.5度电,动态匹配尖峰平谷区间累加分时用电量
+     * <p>
+     * 兜底逻辑:未收到0x0A计费模型、时段字符串为空时,全部电量归入平时段
+     * 遍历充电每一分钟,逐分钟判定所属时段,累加对应时段用电量
+     *
+     * @author KevenPotter
+     * @date 2026-06-22 15:49:37
+     */
+    private void splitElectricByTimeSegment() {
+        if (chargeStartTime == null || chargeEndTime == null) {
+            return;
+        }
+        if (sharpTimeRange == null || peakTimeRange == null || flatTimeRange == null || valleyTimeRange == null) {
+            long totalMin = ChronoUnit.MINUTES.between(chargeStartTime, chargeEndTime);
+            this.flatElectric = BigDecimal.valueOf(totalMin).multiply(PER_MIN_ELE);
+            return;
+        }
+
+        long totalMin = ChronoUnit.MINUTES.between(chargeStartTime, chargeEndTime);
+        LocalDateTime currentMin = chargeStartTime;
+        for (long i = 0; i < totalMin; i++) {
+            TimeSegment seg = TimeSegment.getTimeSegment(currentMin, sharpTimeRange, peakTimeRange, flatTimeRange, valleyTimeRange);
+            switch (seg) {
+                case SHARP:
+                    sharpElectric = sharpElectric.add(PER_MIN_ELE).setScale(SCALE_4, ROUND_HALF_UP);
+                    break;
+                case PEAK:
+                    peakElectric = peakElectric.add(PER_MIN_ELE).setScale(SCALE_4, ROUND_HALF_UP);
+                    break;
+                case FLAT:
+                    flatElectric = flatElectric.add(PER_MIN_ELE).setScale(SCALE_4, ROUND_HALF_UP);
+                    break;
+                case VALLEY:
+                    valleyElectric = valleyElectric.add(PER_MIN_ELE).setScale(SCALE_4, ROUND_HALF_UP);
+                    break;
+            }
+            currentMin = currentMin.plusMinutes(1);
+        }
+    }
+
+    /**
+     * 生成结算交易记录实体,核心结算逻辑
+     * <p>
+     * 1.调用分时电量分摊,统计尖/峰/平/谷四段用电量
+     * 2.按公式计算各时段电费、线损损耗电量
+     * 单段电费 = 时段用电量 × (时段电价 + 时段服务费)
+     * 单段损耗 = 时段用电量 × (损耗百分比 / 100)
+     * 3.汇总总电量、总损耗、总费用,组装StandardTradeRecord交易对象
+     *
+     * @param stopReasonCode 停机原因编码,对应GBT-27930停机原因定义
+     * @return 完整结算交易记录, 用于0x3B交易记录上行报文
+     * @author KevenPotter
+     * @date 2026-06-22 15:51:32
+     */
+    private StandardTradeRecord buildTradeRecord(String tradeNo, Integer stopReasonCode) {
+        // 1. 先分摊分时电量
+        splitElectricByTimeSegment();
+
+        BigDecimal ratioDivisor = new BigDecimal("100");
+        BigDecimal lossRate = new BigDecimal(lossRatio).divide(ratioDivisor, 8, RoundingMode.HALF_UP);
+
+        // 2. 计算各段金额、损耗电量（统一百分比换算）
+        // 尖
+        BigDecimal sharpLossEle = sharpElectric.multiply(lossRate).setScale(SCALE_4, ROUND_HALF_UP);
+        BigDecimal sharpAmt = sharpElectric.multiply(sharpEleFee.add(sharpServiceFee)).setScale(SCALE_4, ROUND_HALF_UP);
+        // 峰
+        BigDecimal peakLossEle = peakElectric.multiply(lossRate).setScale(SCALE_4, ROUND_HALF_UP);
+        BigDecimal peakAmt = peakElectric.multiply(peakEleFee.add(peakServiceFee)).setScale(SCALE_4, ROUND_HALF_UP);
+        // 平
+        BigDecimal flatLossEle = flatElectric.multiply(lossRate).setScale(SCALE_4, ROUND_HALF_UP);
+        BigDecimal flatAmt = flatElectric.multiply(flatEleFee.add(flatServiceFee)).setScale(SCALE_4, ROUND_HALF_UP);
+        // 谷
+        BigDecimal valleyLossEle = valleyElectric.multiply(lossRate).setScale(SCALE_4, ROUND_HALF_UP);
+        BigDecimal valleyAmt = valleyElectric.multiply(valleyEleFee.add(valleyServiceFee)).setScale(SCALE_4, ROUND_HALF_UP);
+
+        // 汇总总电量、总损耗、总金额
+        BigDecimal totalElectricity = sharpElectric.add(peakElectric).add(flatElectric).add(valleyElectric);
+        BigDecimal totalLossEle = sharpLossEle.add(peakLossEle).add(flatLossEle).add(valleyLossEle);
+        BigDecimal totalAmt = sharpAmt.add(peakAmt).add(flatAmt).add(valleyAmt);
+
+        // 构造交易对象,填充固定模拟默认值
+        StandardTradeRecord record = new StandardTradeRecord();
+        record.setTradeNo(tradeNo);
+        record.setDeviceId(this.deviceId);
+        record.setGunNo(this.gunNo);
+        record.setStartTime(java.sql.Timestamp.valueOf(chargeStartTime));
+        record.setEndTime(java.sql.Timestamp.valueOf(chargeEndTime));
+
+        record.setSharpUnitPrice(sharpEleFee);
+        record.setSharpElectricity(sharpElectric);
+        record.setSharpLossElectricity(sharpLossEle);
+        record.setSharpAmount(sharpAmt);
+
+        record.setPeakUnitPrice(peakEleFee);
+        record.setPeakElectricity(peakElectric);
+        record.setPeakLossElectricity(peakLossEle);
+        record.setPeakAmount(peakAmt);
+
+        record.setFlatUnitPrice(flatEleFee);
+        record.setFlatElectricity(flatElectric);
+        record.setFlatLossElectricity(flatLossEle);
+        record.setFlatAmount(flatAmt);
+
+        record.setValleyUnitPrice(valleyEleFee);
+        record.setValleyElectricity(valleyElectric);
+        record.setValleyLossElectricity(valleyLossEle);
+        record.setValleyAmount(valleyAmt);
+
+        record.setElectricityStart(BigDecimal.ZERO);
+        record.setElectricityEnd(totalElectricity);
+        record.setTotalElectricity(totalElectricity);
+        record.setTotalLossElectricity(totalLossEle);
+        record.setTotalAmount(totalAmt);
+
+        record.setVinCode("");
+        record.setTradeIdentifier(1);
+        record.setTradeTime(java.sql.Timestamp.valueOf(chargeEndTime));
+        record.setStopReason(stopReasonCode);
+        record.setPhysicalCardNo("0000000000000000");
+
+        return record;
+    }
+
+    /**
+     * 销毁处理器,关闭定时线程池,释放资源
+     *
+     * @author KevenPotter
+     * @date 2026-06-23 14:29:30
+     */
+    public void destroy() {
+        // 先停止所有单个定时任务
+        stopAllTimers();
     }
 
 }

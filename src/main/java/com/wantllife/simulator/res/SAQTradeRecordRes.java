@@ -13,6 +13,7 @@ import lombok.experimental.Accessors;
 import lombok.extern.slf4j.Slf4j;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.util.Date;
@@ -493,6 +494,28 @@ public class SAQTradeRecordRes extends FrameHeader {
     }
 
     /**
+     * 格式化价格(SCALE_PRICE位小数)
+     *
+     * @param num 数值
+     * @author KevenPotter
+     * @date 2026-06-23 11:30:16
+     */
+    private String fmtPr(BigDecimal num) {
+        return num.setScale(SCALE_PRICE, RoundingMode.HALF_UP).toPlainString();
+    }
+
+    /**
+     * 格式化电量/金额/电表值(SCALE_ELECTRIC位小数)
+     *
+     * @param num 数值
+     * @author KevenPotter
+     * @date 2026-06-23 11:30:16
+     */
+    private String fmtEl(BigDecimal num) {
+        return num.setScale(SCALE_ELECTRIC, RoundingMode.HALF_UP).toPlainString();
+    }
+
+    /**
      * 日志记录
      *
      * @param rawHexMsg 原始报文数据
@@ -509,27 +532,27 @@ public class SAQTradeRecordRes extends FrameHeader {
         sb.append(String.format("👩‍🚀%s 交易记录上报  枪口编号    gunNo                        : %s\n", devLabel, gunNo));
         sb.append(String.format("👩‍🚀%s 交易记录上报  交易编号    tradeNo                      : %s\n", devLabel, tradeNo));
         sb.append(String.format("👩‍🚀%s 交易记录上报  时间范围    timeRange                    : %s-%s\n", devLabel, startTime, endTime));
-        sb.append(String.format("👩‍🚀%s 交易记录上报  尖时单价    sharpUnitPrice               : %s\n", devLabel, sharpUnitPrice));
-        sb.append(String.format("👩‍🚀%s 交易记录上报  尖时电量    sharpElectricity             : %s\n", devLabel, sharpElectricity));
-        sb.append(String.format("👩‍🚀%s 交易记录上报  尖时计损    sharpLossElectricity         : %s\n", devLabel, sharpLossElectricity));
-        sb.append(String.format("👩‍🚀%s 交易记录上报  尖时金额    sharpAmount                  : %s\n", devLabel, sharpAmount));
-        sb.append(String.format("👩‍🚀%s 交易记录上报  峰时单价    peakUnitPrice                : %s\n", devLabel, peakUnitPrice));
-        sb.append(String.format("👩‍🚀%s 交易记录上报  峰时电量    peakElectricity              : %s\n", devLabel, peakElectricity));
-        sb.append(String.format("👩‍🚀%s 交易记录上报  峰时计损    peakLossElectricity          : %s\n", devLabel, peakLossElectricity));
-        sb.append(String.format("👩‍🚀%s 交易记录上报  峰时金额    peakAmount                   : %s\n", devLabel, peakAmount));
-        sb.append(String.format("👩‍🚀%s 交易记录上报  平时单价    flatUnitPrice                : %s\n", devLabel, flatUnitPrice));
-        sb.append(String.format("👩‍🚀%s 交易记录上报  平时电量    flatElectricity              : %s\n", devLabel, flatElectricity));
-        sb.append(String.format("👩‍🚀%s 交易记录上报  平时计损    flatLossElectricity          : %s\n", devLabel, flatLossElectricity));
-        sb.append(String.format("👩‍🚀%s 交易记录上报  平时金额    flatAmount                   : %s\n", devLabel, flatAmount));
-        sb.append(String.format("👩‍🚀%s 交易记录上报  谷时单价    valleyUnitPrice              : %s\n", devLabel, valleyUnitPrice));
-        sb.append(String.format("👩‍🚀%s 交易记录上报  谷时电量    valleyElectricity            : %s\n", devLabel, valleyElectricity));
-        sb.append(String.format("👩‍🚀%s 交易记录上报  谷时计损    valleyLossElectricity        : %s\n", devLabel, valleyLossElectricity));
-        sb.append(String.format("👩‍🚀%s 交易记录上报  谷时金额    valleyAmount                 : %s\n", devLabel, valleyAmount));
-        sb.append(String.format("👩‍🚀%s 交易记录上报  电表起值    electricityStart             : %s\n", devLabel, electricityStart));
-        sb.append(String.format("👩‍🚀%s 交易记录上报  电表止值    electricityEnd               : %s\n", devLabel, electricityEnd));
-        sb.append(String.format("👩‍🚀%s 交易记录上报  总用电量    totalElectricity             : %s\n", devLabel, totalElectricity));
-        sb.append(String.format("👩‍🚀%s 交易记录上报  计损电量    totalLossElectricity         : %s\n", devLabel, totalLossElectricity));
-        sb.append(String.format("👩‍🚀%s 交易记录上报  消费金额    totalAmount                  : %s\n", devLabel, totalAmount));
+        sb.append(String.format("👩‍🚀%s 交易记录上报  尖时单价    sharpUnitPrice               : %s\n", devLabel, fmtPr(sharpUnitPrice)));
+        sb.append(String.format("👩‍🚀%s 交易记录上报  尖时电量    sharpElectricity             : %s\n", devLabel, fmtEl(sharpElectricity)));
+        sb.append(String.format("👩‍🚀%s 交易记录上报  尖时计损    sharpLossElectricity         : %s\n", devLabel, fmtEl(sharpLossElectricity)));
+        sb.append(String.format("👩‍🚀%s 交易记录上报  尖时金额    sharpAmount                  : %s\n", devLabel, fmtEl(sharpAmount)));
+        sb.append(String.format("👩‍🚀%s 交易记录上报  峰时单价    peakUnitPrice                : %s\n", devLabel, fmtPr(peakUnitPrice)));
+        sb.append(String.format("👩‍🚀%s 交易记录上报  峰时电量    peakElectricity              : %s\n", devLabel, fmtEl(peakElectricity)));
+        sb.append(String.format("👩‍🚀%s 交易记录上报  峰时计损    peakLossElectricity          : %s\n", devLabel, fmtEl(peakLossElectricity)));
+        sb.append(String.format("👩‍🚀%s 交易记录上报  峰时金额    peakAmount                   : %s\n", devLabel, fmtEl(peakAmount)));
+        sb.append(String.format("👩‍🚀%s 交易记录上报  平时单价    flatUnitPrice                : %s\n", devLabel, fmtPr(flatUnitPrice)));
+        sb.append(String.format("👩‍🚀%s 交易记录上报  平时电量    flatElectricity              : %s\n", devLabel, fmtEl(flatElectricity)));
+        sb.append(String.format("👩‍🚀%s 交易记录上报  平时计损    flatLossElectricity          : %s\n", devLabel, fmtEl(flatLossElectricity)));
+        sb.append(String.format("👩‍🚀%s 交易记录上报  平时金额    flatAmount                   : %s\n", devLabel, fmtEl(flatAmount)));
+        sb.append(String.format("👩‍🚀%s 交易记录上报  谷时单价    valleyUnitPrice              : %s\n", devLabel, fmtPr(valleyUnitPrice)));
+        sb.append(String.format("👩‍🚀%s 交易记录上报  谷时电量    valleyElectricity            : %s\n", devLabel, fmtEl(valleyElectricity)));
+        sb.append(String.format("👩‍🚀%s 交易记录上报  谷时计损    valleyLossElectricity        : %s\n", devLabel, fmtEl(valleyLossElectricity)));
+        sb.append(String.format("👩‍🚀%s 交易记录上报  谷时金额    valleyAmount                 : %s\n", devLabel, fmtEl(valleyAmount)));
+        sb.append(String.format("👩‍🚀%s 交易记录上报  电表起值    electricityStart             : %s\n", devLabel, fmtEl(electricityStart)));
+        sb.append(String.format("👩‍🚀%s 交易记录上报  电表止值    electricityEnd               : %s\n", devLabel, fmtEl(electricityEnd)));
+        sb.append(String.format("👩‍🚀%s 交易记录上报  总用电量    totalElectricity             : %s\n", devLabel, fmtEl(totalElectricity)));
+        sb.append(String.format("👩‍🚀%s 交易记录上报  计损电量    totalLossElectricity         : %s\n", devLabel, fmtEl(totalLossElectricity)));
+        sb.append(String.format("👩‍🚀%s 交易记录上报  消费金额    totalAmount                  : %s\n", devLabel, fmtEl(totalAmount)));
         sb.append(String.format("👩‍🚀%s 交易记录上报  车识别码    VIN                          : %s\n", devLabel, vinCode));
         sb.append(String.format("👩‍🚀%s 交易记录上报  交易标识    tradeIdentifierDesc          : %s\n", devLabel, tradeIdentifierDesc));
         sb.append(String.format("👩‍🚀%s 交易记录上报  交易日期    tradeTime                    : %s\n", devLabel, tradeTime));

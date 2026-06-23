@@ -108,7 +108,7 @@ public class TcpClient {
 
                 // 连接成功,通知处理器执行登录逻辑
                 log.info("{} {} {} TCP connection successful", SIM_TIP_ICON, SIM_PROJECT_NAME, deviceId);
-                simDevMsgProcessor.onConnected(deviceId);
+                simDevMsgProcessor.onConnected();
 
             } catch (Exception e) {
                 // 连接失败,按配置间隔重试
@@ -207,6 +207,7 @@ public class TcpClient {
      */
     public void stop() {
         running = false;
+        simDevMsgProcessor.destroy();
         closeSocket();
         TcpConnectionManager.remove(deviceId, this);
         log.info("{} {} {} stopped", SIM_TIP_ICON, SIM_PROJECT_NAME, deviceId);

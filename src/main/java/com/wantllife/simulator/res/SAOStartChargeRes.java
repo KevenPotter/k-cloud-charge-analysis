@@ -47,15 +47,15 @@ public class SAOStartChargeRes extends FrameHeader {
      * @author KevenPotter
      * @date 2026-06-02 11:39:59
      */
-    public static byte[] buildCommand(SAOStartChargeReq startChargeReq) {
+    public static byte[] buildCommand(SAOStartChargeReq startChargeReq, Integer startupResult, Integer failureReason) {
         SAOStartChargeRes res = new SAOStartChargeRes();
         res.setSeqNo(startChargeReq.getSeqNo());
         res.setFrameType(SIM_DOWN_START_CHARGE);
         res.setTradeNo(startChargeReq.getTradeNo());
         res.setDeviceId(startChargeReq.getDeviceId());
         res.setGunNo(startChargeReq.getGunNo());
-        res.setStartupResult(1);
-        res.setFailureReason(0);
+        res.setStartupResult(startupResult);
+        res.setFailureReason(failureReason);
 
         byte[] body = res.buildBody();
         byte[] downMessage = res.buildDownMessage(body, false);
