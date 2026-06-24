@@ -29,17 +29,17 @@ import static com.wantllife.constant.ColorConstants.RESET;
 @EqualsAndHashCode(callSuper = true)
 public class SAJChargingBMSStopRes extends FrameHeader {
 
-    /*交易流水号*/
+    /** 交易流水号 */
     private String tradeNo;
-    /*设备编号*/
+    /** 设备编号 */
     private String deviceId;
-    /*枪号*/
+    /** 枪号 */
     private Integer gunNo;
-    /*BMS中止充电原因*/
+    /** BMS中止充电原因 */
     private String bmsStopReason;
-    /*BMS中止充电故障原因*/
+    /** BMS中止充电故障原因 */
     private String bmsStopFailure;
-    /*BMS中止充电错误原因*/
+    /** BMS中止充电错误原因 */
     private String bmsStopErrorReason;
 
     /**

@@ -25,10 +25,9 @@ import static com.wantllife.util.TimeUtil.parseCP56Time;
 @EqualsAndHashCode(callSuper = true)
 public class SAWTimeSyncReq extends FrameHeader {
 
-
-    /*设备编号*/
+    /** 设备编号 */
     private String deviceId;
-    /*当前时间*/
+    /** 当前时间 */
     private String currentTime;
 
     /* 有参构造 */

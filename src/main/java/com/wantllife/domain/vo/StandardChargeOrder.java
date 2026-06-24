@@ -19,18 +19,18 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 public class StandardChargeOrder {
 
-    /*充电订单主键编号*/
+    /** 充电订单主键编号 */
     private Long chargeId;
-    /*设备编号*/
+    /** 设备编号 */
     private String deviceId;
-    /*枪号*/
+    /** 枪号 */
     private Integer gunNo;
-    /*交易流水号*/
+    /** 交易流水号 */
     private String tradeNo;
-    /*逻辑卡号*/
+    /** 逻辑卡号 */
     private String logicalCardNo;
-    /*账户余额*/
+    /** 账户余额 */
     private BigDecimal balance;
-    /*并充序号*/
+    /** 并充序号 */
     private String parallelNo;
 }

@@ -30,25 +30,25 @@ import static com.wantllife.constant.ColorConstants.RESET;
 @EqualsAndHashCode(callSuper = true)
 public class BBUpgradeRes extends FrameHeader {
 
-    /*设备编号*/
+    /** 设备编号 */
     private String deviceId;
-    /*设备类型(1.直流 2.交流)*/
+    /** 设备类型(1.直流 2.交流) */
     private Integer deviceType;
-    /*设备功率(1.直流:30KW、60KW、120KW、160KW、240KW、480KW 2.交流:7、14KW、21KW、42KW)*/
+    /** 设备功率(1.直流:30KW、60KW、120KW、160KW、240KW、480KW 2.交流:7、14KW、21KW、42KW) */
     private Integer devicePower;
-    /*升级服务器地址(公网IP:如:121.199.192.223)*/
+    /** 升级服务器地址(公网IP:如:121.199.192.223) */
     private String address;
-    /*升级服务器端口(如:8768)*/
+    /** 升级服务器端口(如:8768) */
     private Integer port;
-    /*用户名*/
+    /** 用户名 */
     private String username;
-    /*密码*/
+    /** 密码 */
     private String password;
-    /*文件路径(如:UPGRADE-7KW/20260429)*/
+    /** 文件路径(如:UPGRADE-7KW/20260429) */
     private String filePath;
-    /*执行控制(1.立即执行 2.空闲执行)*/
+    /** 执行控制(1.立即执行 2.空闲执行) */
     private Integer execMethod;
-    /*下载超时时间(分钟)*/
+    /** 下载超时时间(分钟) */
     private Integer timeout;
 
     /**

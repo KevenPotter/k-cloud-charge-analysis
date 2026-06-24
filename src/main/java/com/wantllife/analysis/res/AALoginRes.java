@@ -27,9 +27,9 @@ import static com.wantllife.constant.ColorConstants.RESET;
 @EqualsAndHashCode(callSuper = true)
 public class AALoginRes extends FrameHeader {
 
-    /*设备编号*/
+    /** 设备编号 */
     private String deviceId;
-    /*登录结果(00.成功 01.失败)*/
+    /** 登录结果(00.成功 01.失败) */
     private String loginResult;
 
     /**

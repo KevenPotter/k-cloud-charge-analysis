@@ -29,9 +29,9 @@ import static com.wantllife.constant.ColorConstants.RESET;
 @EqualsAndHashCode(callSuper = true)
 public class AUOfflineCardQueryReq extends FrameHeader {
 
-    /*设备编号*/
+    /** 设备编号 */
     private String deviceId;
-    /*查询结果*/
+    /** 查询结果 */
     private List<QueryResult> queryResultList;
 
 

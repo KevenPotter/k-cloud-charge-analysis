@@ -27,18 +27,17 @@ import static com.wantllife.constant.ColorConstants.RESET;
 @EqualsAndHashCode(callSuper = true)
 public class SAOStartChargeReq extends FrameHeader {
 
-
-    /*设备编号*/
+    /** 设备编号 */
     private String deviceId;
-    /*枪号*/
+    /** 枪号 */
     private Integer gunNo;
-    /*交易流水号*/
+    /** 交易流水号 */
     private String tradeNo;
-    /*逻辑卡号*/
+    /** 逻辑卡号 */
     private String logicalCardNo;
-    /*物理卡号*/
+    /** 物理卡号 */
     private String physicalCardNo;
-    /*账户余额*/
+    /** 账户余额 */
     private BigDecimal balance;
 
     /* 有参构造 */

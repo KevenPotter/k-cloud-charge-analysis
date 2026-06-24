@@ -28,9 +28,9 @@ import static com.wantllife.constant.ColorConstants.RESET;
 @EqualsAndHashCode(callSuper = true)
 public class SBBUpgradeRes extends FrameHeader {
 
-    /*设备编号*/
+    /** 设备编号 */
     private String deviceId;
-    /*升级状态*/
+    /** 升级状态 */
     private Integer upgradeStatus;
 
     /**

@@ -25,25 +25,25 @@ import static com.wantllife.constant.ColorConstants.RESET;
 @EqualsAndHashCode(callSuper = true)
 public class AYGroundLockDataReq extends FrameHeader {
 
-    /*设备编号*/
+    /** 设备编号 */
     private String deviceId;
-    /*枪号*/
+    /** 枪号 */
     private Integer gunNo;
-    /*车位锁状态*/
+    /** 车位锁状态 */
     private Integer lockStatus;
-    /*车位锁状态描述*/
+    /** 车位锁状态描述 */
     private String lockStatusDesc;
-    /*车位状态*/
+    /** 车位状态 */
     private Integer parkingStatus;
-    /*车位状态描述*/
+    /** 车位状态描述 */
     private String parkingStatusDesc;
-    /*地锁电量状态*/
+    /** 地锁电量状态 */
     private Integer batteryStatus;
-    /*报警状态*/
+    /** 报警状态 */
     private Integer alarmStatus;
-    /*报警状态描述*/
+    /** 报警状态描述 */
     private String alarmStatusDesc;
-    /*预留位*/
+    /** 预留位 */
     private String reserved;
 
 

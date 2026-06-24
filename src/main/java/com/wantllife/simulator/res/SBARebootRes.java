@@ -28,9 +28,9 @@ import static com.wantllife.constant.ColorConstants.RESET;
 @EqualsAndHashCode(callSuper = true)
 public class SBARebootRes extends FrameHeader {
 
-    /*设备编号*/
+    /** 设备编号 */
     private String deviceId;
-    /*设置结果*/
+    /** 设置结果 */
     private Integer setResult;
 
     /**

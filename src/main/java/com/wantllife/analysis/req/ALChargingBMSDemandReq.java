@@ -26,39 +26,39 @@ import static com.wantllife.constant.ColorConstants.RESET;
 @EqualsAndHashCode(callSuper = true)
 public class ALChargingBMSDemandReq extends FrameHeader {
 
-    /*交易流水号*/
+    /** 交易流水号 */
     private String tradeNo;
-    /*设备编号*/
+    /** 设备编号 */
     private String deviceId;
-    /*枪号*/
+    /** 枪号 */
     private Integer gunNo;
-    /*BMS电压需求*/
+    /** BMS电压需求 */
     private BigDecimal voltageDemand;
-    /*BMS电流需求*/
+    /** BMS电流需求 */
     private BigDecimal currentDemand;
-    /*BMS充电模式*/
+    /** BMS充电模式 */
     private Integer chargeMode;
-    /*BMS充电模式描述*/
+    /** BMS充电模式描述 */
     private String chargeModeDesc;
-    /*BMS充电电压测量值*/
+    /** BMS充电电压测量值 */
     private BigDecimal voltageMeasure;
-    /*BMS充电电流测量值*/
+    /** BMS充电电流测量值 */
     private BigDecimal currentMeasure;
-    /*BMS最高单体电压+组号*/
+    /** BMS最高单体电压+组号 */
     private String maxVoltageGroup;
-    /*最高单体电压*/
+    /** 最高单体电压 */
     private BigDecimal maxVoltage;
-    /*最高电压所在组号*/
+    /** 最高电压所在组号 */
     private Integer maxVoltageGroupNo;
-    /*BMS当前SOC*/
+    /** BMS当前SOC */
     private Integer soc;
-    /*BMS估算剩余充电时间*/
+    /** BMS估算剩余充电时间 */
     private Integer remainingChargingTime;
-    /*电桩电压输出值*/
+    /** 电桩电压输出值 */
     private BigDecimal voltageOutput;
-    /*电桩电流输出值*/
+    /** 电桩电流输出值 */
     private BigDecimal currentOutput;
-    /*累计充电时间*/
+    /** 累计充电时间 */
     private Integer accumulatedChargingTime;
 
 

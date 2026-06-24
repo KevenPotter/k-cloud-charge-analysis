@@ -24,13 +24,13 @@ import static com.wantllife.constant.ColorConstants.RESET;
 @EqualsAndHashCode(callSuper = true)
 public class ABHeartbeatReq extends FrameHeader {
 
-    /*设备编号*/
+    /** 设备编号 */
     private String deviceId;
-    /*枪号*/
+    /** 枪号 */
     private Integer gunNo;
-    /*枪口状态*/
+    /** 枪口状态 */
     private Integer gunStatus;
-    /*枪口状态描述*/
+    /** 枪口状态描述 */
     private String gunStatusDesc;
 
     /* 有参构造 */

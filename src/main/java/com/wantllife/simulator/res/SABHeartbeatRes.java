@@ -29,11 +29,11 @@ import static com.wantllife.constant.ColorConstants.RESET;
 @EqualsAndHashCode(callSuper = true)
 public class SABHeartbeatRes extends FrameHeader {
 
-    /*设备编号*/
+    /** 设备编号 */
     private String deviceId;
-    /*枪号*/
+    /** 枪号 */
     private Integer gunNo;
-    /*枪口状态(0.正常 1.故障)*/
+    /** 枪口状态(0.正常 1.故障) */
     private Integer gunStatus;
 
     /**

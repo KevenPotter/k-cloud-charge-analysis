@@ -30,12 +30,11 @@ import static com.wantllife.constant.ColorConstants.RESET;
 @EqualsAndHashCode(callSuper = true)
 public class SAUOfflineCardQueryReq extends FrameHeader {
 
-
-    /*设备编号*/
+    /** 设备编号 */
     private String deviceId;
-    /*离线卡个数*/
+    /** 离线卡个数 */
     private Integer offlineCounts;
-    /*卡号编组*/
+    /** 卡号编组 */
     private List<StandardCard> cardList = new ArrayList<>();
 
     /* 有参构造 */

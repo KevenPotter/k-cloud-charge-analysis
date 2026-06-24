@@ -24,13 +24,12 @@ import static com.wantllife.constant.ColorConstants.RESET;
 @EqualsAndHashCode(callSuper = true)
 public class SAQTradeRecordReq extends FrameHeader {
 
-
-    /*交易流水号*/
+    /** 交易流水号 */
     private String tradeNo;
-    /*确认结果*/
+    /** 确认结果 */
     private String confirmResult;
 
-    /*设备编号(不参与命令计算,仅提供日志打印)*/
+    /** 设备编号(不参与命令计算,仅提供日志打印) */
     private String deviceId;
 
     /* 有参构造 */

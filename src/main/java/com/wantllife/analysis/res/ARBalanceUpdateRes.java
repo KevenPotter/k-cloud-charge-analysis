@@ -30,13 +30,13 @@ import static com.wantllife.constant.ColorConstants.RESET;
 @EqualsAndHashCode(callSuper = true)
 public class ARBalanceUpdateRes extends FrameHeader {
 
-    /*设备编号*/
+    /** 设备编号 */
     private String deviceId;
-    /*枪号*/
+    /** 枪号 */
     private Integer gunNo;
-    /*物理卡号*/
+    /** 物理卡号 */
     private String physicalCardNo;
-    /*修改后账户金额*/
+    /** 修改后账户金额 */
     private BigDecimal balance;
 
 

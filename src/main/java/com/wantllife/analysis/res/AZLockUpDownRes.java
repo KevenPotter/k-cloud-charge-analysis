@@ -28,13 +28,13 @@ import static com.wantllife.constant.ColorConstants.RESET;
 @EqualsAndHashCode(callSuper = true)
 public class AZLockUpDownRes extends FrameHeader {
 
-    /*设备编号*/
+    /** 设备编号 */
     private String deviceId;
-    /*枪号*/
+    /** 枪号 */
     private Integer gunNo;
-    /*升/降地锁(0.降锁 1.升锁)*/
+    /** 升/降地锁(0.降锁 1.升锁) */
     private Integer upOrDown;
-    /*预留位*/
+    /** 预留位 */
     private String reserved;
 
 

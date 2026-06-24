@@ -28,11 +28,11 @@ import static com.wantllife.constant.ColorConstants.RESET;
 @EqualsAndHashCode(callSuper = true)
 public class AVWorkingParamsRes extends FrameHeader {
 
-    /*设备编号*/
+    /** 设备编号 */
     private String deviceId;
-    /*是否允许工作*/
+    /** 是否允许工作 */
     private boolean allowWork;
-    /*最大允许输出功率*/
+    /** 最大允许输出功率 */
     private Integer maxOutputPower;
 
 

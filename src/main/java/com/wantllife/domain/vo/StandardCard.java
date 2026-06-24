@@ -17,10 +17,10 @@ import lombok.experimental.Accessors;
 @AllArgsConstructor
 public class StandardCard {
 
-    /*充电卡主键编号*/
+    /** 充电卡主键编号 */
     private Long cardId;
-    /*逻辑卡号*/
+    /** 逻辑卡号 */
     private String logicalCardNo;
-    /*物理卡号*/
+    /** 物理卡号 */
     private String physicalCardNo;
 }

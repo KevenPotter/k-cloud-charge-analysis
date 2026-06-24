@@ -32,11 +32,11 @@ import static com.wantllife.constant.ColorConstants.RESET;
 @EqualsAndHashCode(callSuper = true)
 public class ASOfflineCardSyncRes extends FrameHeader {
 
-    /*设备编号*/
+    /** 设备编号 */
     private String deviceId;
-    /*下发卡个数*/
+    /** 下发卡个数 */
     private Integer cardCounts;
-    /*卡号编组*/
+    /** 卡号编组 */
     private List<StandardCard> cardList;
 
 

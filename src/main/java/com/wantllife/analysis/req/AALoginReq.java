@@ -24,27 +24,27 @@ import static com.wantllife.constant.ColorConstants.RESET;
 @EqualsAndHashCode(callSuper = true)
 public class AALoginReq extends FrameHeader {
 
-    /*设备编号*/
+    /** 设备编号 */
     private String deviceId;
-    /*设备类型*/
+    /** 设备类型 */
     private Integer deviceType;
-    /*设备类型描述*/
+    /** 设备类型描述 */
     private String deviceTypeDesc;
-    /*充电枪数量*/
+    /** 充电枪数量 */
     private Integer gunNum;
-    /*通信协议版本*/
+    /** 通信协议版本 */
     private String protocolVersion;
-    /*程序版本*/
+    /** 程序版本 */
     private String programVersion;
-    /*网络连接类型*/
+    /** 网络连接类型 */
     private Integer networkLinkType;
-    /*网络连接类型描述*/
+    /** 网络连接类型描述 */
     private String networkLinkTypeDesc;
-    /*sim卡*/
+    /** sim卡 */
     private String simNo;
-    /*运营商*/
+    /** 运营商 */
     private Integer carrier;
-    /*运营商描述*/
+    /** 运营商描述 */
     private String carrierDesc;
 
     /* 有参构造 */

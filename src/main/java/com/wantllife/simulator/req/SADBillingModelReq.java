@@ -30,40 +30,40 @@ import static com.wantllife.constant.ColorConstants.RESET;
 @EqualsAndHashCode(callSuper = true)
 public class SADBillingModelReq extends FrameHeader {
 
-    /*尖*/
+    /** 尖 */
     private static final int SHARP = 0;
-    /*峰*/
+    /** 峰 */
     private static final int PEAK = 1;
-    /*平*/
+    /** 平 */
     private static final int FLAT = 2;
-    /*谷*/
+    /** 谷 */
     private static final int VALLEY = 3;
 
-    /*设备编号*/
+    /** 设备编号 */
     private String deviceId;
-    /*计费模型编码*/
+    /** 计费模型编码 */
     private Long billingModeId;
-    /*尖电费费率*/
+    /** 尖电费费率 */
     private BigDecimal sharpEleFee;
-    /*尖服务费费率*/
+    /** 尖服务费费率 */
     private BigDecimal sharpServiceFee;
-    /*峰费电费费率*/
+    /** 峰费电费费率 */
     private BigDecimal peakEleFee;
-    /*峰服务费费率*/
+    /** 峰服务费费率 */
     private BigDecimal peakServiceFee;
-    /*平电费费率*/
+    /** 平电费费率 */
     private BigDecimal flatEleFee;
-    /*平服务费费率*/
+    /** 平服务费费率 */
     private BigDecimal flatServiceFee;
-    /*谷电费费率*/
+    /** 谷电费费率 */
     private BigDecimal valleyEleFee;
-    /*谷服务费费率*/
+    /** 谷服务费费率 */
     private BigDecimal valleyServiceFee;
-    /*计损比例*/
+    /** 计损比例 */
     private Integer lossRatio;
-    /*时段费率*/
+    /** 时段费率 */
     private byte[] timeSlotRates = new byte[48];
-    /*计费模型列表*/
+    /** 计费模型列表 */
     List<StandardBillingModel> billingModelList = new ArrayList<>();
 
     /* 有参构造 */

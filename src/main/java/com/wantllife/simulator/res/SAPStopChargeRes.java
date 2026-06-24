@@ -28,13 +28,13 @@ import static com.wantllife.constant.ColorConstants.RESET;
 @EqualsAndHashCode(callSuper = true)
 public class SAPStopChargeRes extends FrameHeader {
 
-    /*设备编号*/
+    /** 设备编号 */
     private String deviceId;
-    /*枪号*/
+    /** 枪号 */
     private Integer gunNo;
-    /*停止结果*/
+    /** 停止结果 */
     private Integer stopResult;
-    /*失败原因*/
+    /** 失败原因 */
     private Integer failureReason;
 
     /**

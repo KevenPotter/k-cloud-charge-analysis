@@ -29,21 +29,21 @@ import static com.wantllife.constant.ColorConstants.RESET;
 @EqualsAndHashCode(callSuper = true)
 public class SAALoginRes extends FrameHeader {
 
-    /*设备编号*/
+    /** 设备编号 */
     private String deviceId;
-    /*设备类型*/
+    /** 设备类型 */
     private Integer deviceType;
-    /*充电枪数量*/
+    /** 充电枪数量 */
     private Integer gunNum;
-    /*通信协议版本*/
+    /** 通信协议版本 */
     private String protocolVersion;
-    /*程序版本*/
+    /** 程序版本 */
     private String programVersion;
-    /*网络连接类型*/
+    /** 网络连接类型 */
     private Integer networkLinkType;
-    /*sim卡*/
+    /** sim卡 */
     private String simNo;
-    /*运营商*/
+    /** 运营商 */
     private Integer carrier;
 
     /**

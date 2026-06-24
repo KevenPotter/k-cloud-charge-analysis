@@ -24,9 +24,9 @@ import static com.wantllife.constant.ColorConstants.RESET;
 @EqualsAndHashCode(callSuper = true)
 public class SAALoginReq extends FrameHeader {
 
-    /*设备编号*/
+    /** 设备编号 */
     private String deviceId;
-    /*登录结果(0.成功 1.失败)*/
+    /** 登录结果(0.成功 1.失败) */
     private Integer loginResult;
 
     /* 有参构造 */

@@ -30,82 +30,82 @@ import static com.wantllife.util.TimeUtil.parseCP56Time;
 @EqualsAndHashCode(callSuper = true)
 public class AQTradeRecordReq extends FrameHeader {
 
-    /*价格保留小数位*/
+    /** 价格保留小数位 */
     private static final int SCALE_PRICE = 5;
-    /*电量保留小数位*/
+    /** 电量保留小数位 */
     private static final int SCALE_ELECTRIC = 4;
 
-    /*交易流水号*/
+    /** 交易流水号 */
     private String tradeNo;
-    /*设备编号*/
+    /** 设备编号 */
     private String deviceId;
-    /*枪号*/
+    /** 枪号 */
     private Integer gunNo;
-    /*开始时间*/
+    /** 开始时间 */
     private String startTime;
-    /*结束时间*/
+    /** 结束时间 */
     private String endTime;
 
-    /*尖单价*/
+    /** 尖单价 */
     private BigDecimal sharpUnitPrice;
-    /*尖电量*/
+    /** 尖电量 */
     private BigDecimal sharpElectricity;
-    /*计损尖电量*/
+    /** 计损尖电量 */
     private BigDecimal sharpLossElectricity;
-    /*尖金额*/
+    /** 尖金额 */
     private BigDecimal sharpAmount;
 
-    /*峰单价*/
+    /** 峰单价 */
     private BigDecimal peakUnitPrice;
-    /*峰电量*/
+    /** 峰电量 */
     private BigDecimal peakElectricity;
-    /*计损峰电量*/
+    /** 计损峰电量 */
     private BigDecimal peakLossElectricity;
-    /*峰金额*/
+    /** 峰金额 */
     private BigDecimal peakAmount;
 
-    /*平单价*/
+    /** 平单价 */
     private BigDecimal flatUnitPrice;
-    /*平电量*/
+    /** 平电量 */
     private BigDecimal flatElectricity;
-    /*计损平电量*/
+    /** 计损平电量 */
     private BigDecimal flatLossElectricity;
-    /*平金额*/
+    /** 平金额 */
     private BigDecimal flatAmount;
 
-    /*谷单价*/
+    /** 谷单价 */
     private BigDecimal valleyUnitPrice;
-    /*谷电量*/
+    /** 谷电量 */
     private BigDecimal valleyElectricity;
-    /*计损谷电量*/
+    /** 计损谷电量 */
     private BigDecimal valleyLossElectricity;
-    /*谷金额*/
+    /** 谷金额 */
     private BigDecimal valleyAmount;
 
-    /*电表总起值*/
+    /** 电表总起值 */
     private BigDecimal electricityStart;
-    /*电表总止值*/
+    /** 电表总止值 */
     private BigDecimal electricityEnd;
-    /*总电量*/
+    /** 总电量 */
     private BigDecimal totalElectricity;
-    /*计损总电量*/
+    /** 计损总电量 */
     private BigDecimal totalLossElectricity;
 
-    /*消费金额*/
+    /** 消费金额 */
     private BigDecimal totalAmount;
-    /*电动汽车唯一标识*/
+    /** 电动汽车唯一标识 */
     private String vinCode;
-    /*交易标识*/
+    /** 交易标识 */
     private Integer tradeIdentifier;
-    /*交易标识描述*/
+    /** 交易标识描述 */
     private String tradeIdentifierDesc;
-    /*交易日期、时间*/
+    /** 交易日期、时间 */
     private String tradeTime;
-    /*停止原因*/
+    /** 停止原因 */
     private Integer stopReason;
-    /*停止原因描述*/
+    /** 停止原因描述 */
     private String stopReasonDesc;
-    /*物理卡号*/
+    /** 物理卡号 */
     private String physicalCardNo;
 
 

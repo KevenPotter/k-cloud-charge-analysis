@@ -19,7 +19,7 @@ import static com.wantllife.constant.CloudFastChargingConstants.SIM_TIP_ICON;
 @Slf4j
 public class TcpConnectionManager {
 
-    /*设备连接缓存:key=设备编号,value=TcpClient实例.使用线程安全的ConcurrentHashMap保证高并发下正常运行*/
+    /** 设备连接缓存:key=设备编号,value=TcpClient实例.使用线程安全的ConcurrentHashMap保证高并发下正常运行 */
     private static final Map<String, TcpClient> CLIENT_MAP = new ConcurrentHashMap<>(16);
 
     /**

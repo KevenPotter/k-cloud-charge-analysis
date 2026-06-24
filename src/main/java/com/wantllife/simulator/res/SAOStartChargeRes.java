@@ -28,15 +28,15 @@ import static com.wantllife.constant.ColorConstants.RESET;
 @EqualsAndHashCode(callSuper = true)
 public class SAOStartChargeRes extends FrameHeader {
 
-    /*交易流水号*/
+    /** 交易流水号 */
     private String tradeNo;
-    /*设备编号*/
+    /** 设备编号 */
     private String deviceId;
-    /*枪号*/
+    /** 枪号 */
     private Integer gunNo;
-    /*启动结果*/
+    /** 启动结果 */
     private Integer startupResult;
-    /*失败原因*/
+    /** 失败原因 */
     private Integer failureReason;
 
     /**

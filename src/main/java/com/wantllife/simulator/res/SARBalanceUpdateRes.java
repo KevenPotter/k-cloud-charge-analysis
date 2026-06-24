@@ -28,11 +28,11 @@ import static com.wantllife.constant.ColorConstants.RESET;
 @EqualsAndHashCode(callSuper = true)
 public class SARBalanceUpdateRes extends FrameHeader {
 
-    /*设备编号*/
+    /** 设备编号 */
     private String deviceId;
-    /*物理卡号*/
+    /** 物理卡号 */
     private String physicalCardNo;
-    /*修改结果*/
+    /** 修改结果 */
     private Integer updateResult;
 
     /**

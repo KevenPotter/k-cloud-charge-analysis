@@ -26,21 +26,21 @@ import static com.wantllife.constant.ColorConstants.RESET;
 @EqualsAndHashCode(callSuper = true)
 public class ANRequestChargingReq extends FrameHeader {
 
-    /*设备编号*/
+    /** 设备编号 */
     private String deviceId;
-    /*枪号*/
+    /** 枪号 */
     private Integer gunNo;
-    /*启动方式*/
+    /** 启动方式 */
     private Integer startupMode;
-    /*启动方式描述*/
+    /** 启动方式描述 */
     private String startupModeDesc;
-    /*是否需要密码*/
+    /** 是否需要密码 */
     private Integer needPassword;
-    /*账号或物理卡号*/
+    /** 账号或物理卡号 */
     private String accountOrCardNo;
-    /*输入密码*/
+    /** 输入密码 */
     private String password;
-    /*车辆识别码*/
+    /** 车辆识别码 */
     private String vin;
 
 

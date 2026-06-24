@@ -24,13 +24,13 @@ import static com.wantllife.constant.ColorConstants.RESET;
 @EqualsAndHashCode(callSuper = true)
 public class ASOfflineCardSyncReq extends FrameHeader {
 
-    /*设备编号*/
+    /** 设备编号 */
     private String deviceId;
-    /*保存结果*/
+    /** 保存结果 */
     private Integer saveResult;
-    /*失败原因*/
+    /** 失败原因 */
     private Integer failReason;
-    /*失败原因描述*/
+    /** 失败原因描述 */
     private String failReasonDesc;
 
 

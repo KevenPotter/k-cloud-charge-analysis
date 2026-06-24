@@ -29,17 +29,17 @@ import static com.wantllife.constant.ColorConstants.RESET;
 @EqualsAndHashCode(callSuper = true)
 public class SAKChargingChargerStopRes extends FrameHeader {
 
-    /*交易流水号*/
+    /** 交易流水号 */
     private String tradeNo;
-    /*设备编号*/
+    /** 设备编号 */
     private String deviceId;
-    /*枪号*/
+    /** 枪号 */
     private Integer gunNo;
-    /*充电机中止充电原因*/
+    /** 充电机中止充电原因 */
     private String chargerStopReason;
-    /*充电机中止充电故障原因*/
+    /** 充电机中止充电故障原因 */
     private String chargerStopFailure;
-    /*充电机中止充电错误原因*/
+    /** 充电机中止充电错误原因 */
     private String chargerStopErrorReason;
 
     /**

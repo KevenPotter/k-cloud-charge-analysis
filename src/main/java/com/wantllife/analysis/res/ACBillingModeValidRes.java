@@ -27,11 +27,11 @@ import static com.wantllife.constant.ColorConstants.RESET;
 @EqualsAndHashCode(callSuper = true)
 public class ACBillingModeValidRes extends FrameHeader {
 
-    /*设备编号*/
+    /** 设备编号 */
     private String deviceId;
-    /*计费模型编码*/
+    /** 计费模型编码 */
     private String billingModeId;
-    /*验证结果*/
+    /** 验证结果 */
     private String billingModeValidResult;
 
     /**
