@@ -7,6 +7,7 @@ import com.wantllife.domain.vo.StandardRealTimeMonitor;
 import com.wantllife.domain.vo.StandardTradeRecord;
 import com.wantllife.enums.TimeSegment;
 import com.wantllife.simulator.client.TcpClient;
+import com.wantllife.simulator.manager.SimTimerScheduler;
 import com.wantllife.simulator.req.*;
 import com.wantllife.simulator.res.*;
 import com.wantllife.simulator.state.DeviceState;
@@ -18,7 +19,7 @@ import java.math.RoundingMode;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
-import java.util.concurrent.*;
+import java.util.concurrent.TimeUnit;
 
 import static com.wantllife.constant.CloudFastChargingConstants.*;
 import static com.wantllife.constant.SimulatorConstants.*;
@@ -70,17 +71,6 @@ public class SimDevMsgProcessor {
     /** 平台下发的计费模型编码 */
     private Integer platformBillingModeId;
 
-    /** 登录定时器 */
-    private ScheduledFuture<?> loginTimer;
-    /** 计费验证定时器 */
-    private ScheduledFuture<?> billingValidTimer;
-    /** 计费模型请求定时器 */
-    private ScheduledFuture<?> billingModelTimer;
-    /** 心跳定时器 */
-    private ScheduledFuture<?> heartbeatTimer;
-    /** 实时监测数据定时器 */
-    private ScheduledFuture<?> realTimeMonitorTimer;
-
     /** 实时监测数据[0x13指令]是否已经发送过初始化 */
     private boolean initRealTimeSent = false;
 
@@ -114,8 +104,8 @@ public class SimDevMsgProcessor {
     private static final RoundingMode ROUND_HALF_UP = RoundingMode.HALF_UP;
     /** 每分钟充电度数：0.5度/分钟 */
     private static final BigDecimal PER_MIN_ELE = new BigDecimal("0.5");
-    /** 全局共用定时线程池,统一调度所有定时任务 */
-    private final ScheduledExecutorService globalScheduler = new ScheduledThreadPoolExecutor(5, new ThreadPoolExecutor.CallerRunsPolicy());
+    /** 定时任务调度管理器，接管所有定时任务生命周期 */
+    private final SimTimerScheduler timerScheduler = new SimTimerScheduler();
 
     /**
      * 绑定TCP输出流与客户端实例
@@ -337,7 +327,7 @@ public class SimDevMsgProcessor {
         this.isCharging = false;
         this.tradeNo = null;
         this.chargeEndTime = LocalDateTime.now();
-        stopRealTimeMonitorTimer();
+        timerScheduler.stopRealTimeMonitorTimer();
     }
 
     /**
@@ -351,7 +341,7 @@ public class SimDevMsgProcessor {
         if (req.getLoginResult() != 0) return;
 
         this.loginReq = req;
-        stopLoginTimer();
+        timerScheduler.stopLoginTimer();
 
         // 进入计费验证状态
         currentState = DeviceState.WAIT_BILLING_VALID;
@@ -372,7 +362,7 @@ public class SimDevMsgProcessor {
 
         // 验证一致 → 进入下一阶段
         if (req.getBillingModeValidResult() == 0) {
-            stopBillingValidTimer();
+            timerScheduler.stopBillingValidTimer();
             currentState = DeviceState.WAIT_BILLING_MODEL;
             startBillingModelTimer();
         }
@@ -388,7 +378,7 @@ public class SimDevMsgProcessor {
     private void handleBillingModelReply(SADBillingModelReq billingModelReq) {
         if (currentState != DeviceState.WAIT_BILLING_MODEL) return;
 
-        stopBillingModelTimer();
+        timerScheduler.stopBillingModelTimer();
         currentState = DeviceState.READY;
         startHeartbeatTimer();
 
@@ -463,7 +453,7 @@ public class SimDevMsgProcessor {
         this.chargeEndTime = null;
 
         // 关闭所有旧定时器
-        stopAllTimers();
+        timerScheduler.stopAllTimers();
         // 启动登录
         startLoginTimer();
     }
@@ -476,30 +466,16 @@ public class SimDevMsgProcessor {
      * @date 2026-05-28 13:44:21
      */
     private void startLoginTimer() {
-        stopLoginTimer();
-        loginTimer = globalScheduler.scheduleAtFixedRate(() -> {
+        Runnable loginTask = () -> {
             try {
                 if (currentState == DeviceState.WAIT_LOGIN) {
                     sendMessage(SAALoginRes.buildCommand(tcpClient.getDevice()));
                 }
             } catch (Exception e) {
-                log.error("{} {} {} StartLoginTimer Exception", SIM_TIP_ICON, SIM_PROJECT_NAME, deviceId);
+                log.error("{} {} {} StartLoginTimer Exception", SIM_TIP_ICON, SIM_PROJECT_NAME, deviceId, e);
             }
-        }, 0, TIMER_LOGIN_SECOND, TimeUnit.SECONDS);
-    }
-
-    /**
-     * 停止登录重试定时器
-     * 安全关闭定时器并释放资源
-     *
-     * @author KevenPotter
-     * @date 2026-05-28 13:45:24
-     */
-    private void stopLoginTimer() {
-        if (loginTimer != null) {
-            loginTimer.cancel(false);
-            loginTimer = null;
-        }
+        };
+        timerScheduler.startLoginTimer(loginTask, 0, TIMER_LOGIN_SECOND, TimeUnit.SECONDS);
     }
 
     /**
@@ -510,31 +486,17 @@ public class SimDevMsgProcessor {
      * @date 2026-05-29 11:07:22
      */
     private void startBillingValidTimer() {
-        stopBillingValidTimer();
-        billingValidTimer = globalScheduler.scheduleAtFixedRate(() -> {
+        Runnable billingValidTask = () -> {
             try {
                 if (currentState == DeviceState.WAIT_BILLING_VALID) {
-                    long billingModeId = platformBillingModeId != null ? platformBillingModeId : 1L;
+                    Long billingModeId = platformBillingModeId != null ? platformBillingModeId : 1L;
                     sendMessage(SACBillingModeValidRes.buildCommand(deviceId, billingModeId));
                 }
             } catch (Exception e) {
-                log.error("{} {} {} StartBillingValidTimer Exception", SIM_TIP_ICON, SIM_PROJECT_NAME, deviceId);
+                log.error("{} {} {} StartBillingValidTimer Exception", SIM_TIP_ICON, SIM_PROJECT_NAME, deviceId, e);
             }
-        }, 0, TIMER_BILLING_MODE_VALID_SECOND, TimeUnit.SECONDS);
-    }
-
-    /**
-     * 停止计费验证定时器
-     * 安全关闭定时器并释放资源
-     *
-     * @author KevenPotter
-     * @date 2026-05-29 11:08:30
-     */
-    private void stopBillingValidTimer() {
-        if (billingValidTimer != null) {
-            billingValidTimer.cancel(false);
-            billingValidTimer = null;
-        }
+        };
+        timerScheduler.startBillingValidTimer(billingValidTask, 0, TIMER_BILLING_MODE_VALID_SECOND, TimeUnit.SECONDS);
     }
 
     /**
@@ -545,30 +507,16 @@ public class SimDevMsgProcessor {
      * @date 2026-05-29 11:10:07
      */
     private void startBillingModelTimer() {
-        stopBillingModelTimer();
-        billingModelTimer = globalScheduler.scheduleAtFixedRate(() -> {
+        Runnable billingModelTask = () -> {
             try {
                 if (currentState == DeviceState.WAIT_BILLING_MODEL) {
                     sendMessage(SADBillingModelRes.buildCommand(deviceId));
                 }
             } catch (Exception e) {
-                log.error("{} {} {} StartBillingModelTimer Exception", SIM_TIP_ICON, SIM_PROJECT_NAME, deviceId);
+                log.error("{} {} {} StartBillingModelTimer Exception", SIM_TIP_ICON, SIM_PROJECT_NAME, deviceId, e);
             }
-        }, 0, TIMER_BILLING_MODE_SECOND, TimeUnit.SECONDS);
-    }
-
-    /**
-     * 停止充电桩计费模型请求定时器
-     * 安全关闭定时器并释放资源
-     *
-     * @author KevenPotter
-     * @date 2026-05-29 11:10:49
-     */
-    private void stopBillingModelTimer() {
-        if (billingModelTimer != null) {
-            billingModelTimer.cancel(false);
-            billingModelTimer = null;
-        }
+        };
+        timerScheduler.startBillingModelTimer(billingModelTask, 0, TIMER_BILLING_MODE_SECOND, TimeUnit.SECONDS);
     }
 
     /**
@@ -579,30 +527,16 @@ public class SimDevMsgProcessor {
      * @date 2026-05-28 13:45:39
      */
     private void startHeartbeatTimer() {
-        stopHeartbeatTimer();
-        heartbeatTimer = globalScheduler.scheduleAtFixedRate(() -> {
+        Runnable heartbeatTask = () -> {
             try {
                 if (currentState == DeviceState.READY) {
                     sendMessage(SABHeartbeatRes.buildCommand(loginReq, gunNo, 0));
                 }
             } catch (Exception e) {
-                log.error("{} {} {} StartHeartbeatTimer Exception", SIM_TIP_ICON, SIM_PROJECT_NAME, deviceId);
+                log.error("{} {} {} StartHeartbeatTimer Exception", SIM_TIP_ICON, SIM_PROJECT_NAME, deviceId, e);
             }
-        }, TIMER_HEARTBEAT_SECOND, TIMER_HEARTBEAT_SECOND, TimeUnit.SECONDS);
-    }
-
-    /**
-     * 停止心跳定时器
-     * 安全关闭心跳任务并释放资源
-     *
-     * @author KevenPotter
-     * @date 2026-05-28 13:46:50
-     */
-    private void stopHeartbeatTimer() {
-        if (heartbeatTimer != null) {
-            heartbeatTimer.cancel(false);
-            heartbeatTimer = null;
-        }
+        };
+        timerScheduler.startHeartbeatTimer(heartbeatTask, TIMER_HEARTBEAT_SECOND, TIMER_HEARTBEAT_SECOND, TimeUnit.SECONDS);
     }
 
     /**
@@ -612,8 +546,7 @@ public class SimDevMsgProcessor {
      * @date 2026-06-03 10:37:11
      */
     private void startRealTimeMonitorTimer() {
-        stopRealTimeMonitorTimer();
-        realTimeMonitorTimer = globalScheduler.scheduleAtFixedRate(() -> {
+        Runnable monitorTask = () -> {
             try {
                 if (!isCharging) return;
 
@@ -655,9 +588,10 @@ public class SimDevMsgProcessor {
                 sendMessage(SAERealTimeMonitorRes.buildCommand(monitor));
 
             } catch (Exception e) {
-                log.error("{} {} {} StartRealTimeMonitorTimer Exception", SIM_TIP_ICON, SIM_PROJECT_NAME, deviceId);
+                log.error("{} {} {} StartRealTimeMonitorTimer Exception", SIM_TIP_ICON, SIM_PROJECT_NAME, deviceId, e);
             }
-        }, 0, TIMER_REAL_TIME_MONITOR_SECOND, TimeUnit.SECONDS);
+        };
+        timerScheduler.startRealTimeMonitorTimer(monitorTask, 0, TIMER_REAL_TIME_MONITOR_SECOND, TimeUnit.SECONDS);
     }
 
     /**
@@ -692,34 +626,6 @@ public class SimDevMsgProcessor {
         }
 
         return PER_MIN_ELE.multiply(unitTotalPrice);
-    }
-
-    /**
-     * 停止实时监测数据定时器
-     * 安全关闭心跳任务并释放资源
-     *
-     * @author KevenPotter
-     * @date 2026-06-03 10:36:20
-     */
-    private void stopRealTimeMonitorTimer() {
-        if (realTimeMonitorTimer != null) {
-            realTimeMonitorTimer.cancel(false);
-            realTimeMonitorTimer = null;
-        }
-    }
-
-    /**
-     * 停止所有定时器(重连/关闭时使用)
-     *
-     * @author KevenPotter
-     * @date 2026-05-29 11:12:40
-     */
-    private void stopAllTimers() {
-        stopLoginTimer();
-        stopBillingValidTimer();
-        stopBillingModelTimer();
-        stopHeartbeatTimer();
-        stopRealTimeMonitorTimer();
     }
 
     /**
@@ -873,7 +779,17 @@ public class SimDevMsgProcessor {
      */
     public void destroy() {
         // 先停止所有单个定时任务
-        stopAllTimers();
+        timerScheduler.shutdownScheduler();
+    }
+
+    /**
+     * 链路断开时清理定时任务,不销毁线程池,用于自动重连、远程重启、升级
+     *
+     * @author KevenPotter
+     * @date 2026-06-25 13:56:02
+     */
+    public void clearAllTimers() {
+        timerScheduler.stopAllTimers();
     }
 
 }

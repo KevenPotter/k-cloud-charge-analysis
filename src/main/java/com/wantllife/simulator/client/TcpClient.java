@@ -176,6 +176,7 @@ public class TcpClient {
      * @date 2026-05-26 16:03:40
      */
     private void reconnect() {
+        simDevMsgProcessor.clearAllTimers();
         closeSocket();
         if (running) {
             ThreadUtil.execAsync(this::doConnect);
@@ -207,7 +208,7 @@ public class TcpClient {
      */
     public void stop() {
         running = false;
-        simDevMsgProcessor.destroy();
+        simDevMsgProcessor.clearAllTimers();
         closeSocket();
         TcpConnectionManager.remove(deviceId, this);
         log.info("{} {} {} stopped", SIM_TIP_ICON, SIM_PROJECT_NAME, deviceId);
