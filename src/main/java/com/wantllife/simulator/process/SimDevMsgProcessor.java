@@ -5,7 +5,7 @@ import com.wantllife.domain.vo.StandardBillingModel;
 import com.wantllife.domain.vo.StandardDevice;
 import com.wantllife.domain.vo.StandardRealTimeMonitor;
 import com.wantllife.domain.vo.StandardTradeRecord;
-import com.wantllife.enums.TimeSegment;
+import com.wantllife.simulator.business.ChargeSessionManager;
 import com.wantllife.simulator.client.TcpClient;
 import com.wantllife.simulator.manager.SimTimerScheduler;
 import com.wantllife.simulator.req.*;
@@ -14,10 +14,6 @@ import com.wantllife.simulator.state.DeviceState;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.OutputStream;
-import java.math.BigDecimal;
-import java.math.RoundingMode;
-import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -45,67 +41,31 @@ public class SimDevMsgProcessor {
     private String deviceId;
     /** 当前设备枪号 */
     private Integer gunNo;
-    /** 交易流水号 */
-    private String tradeNo;
-    /** 是否正在充电中 */
-    private boolean isCharging = false;
-    /** 充电开始时间 */
-    private LocalDateTime chargeStartTime;
-    /** 充电结束时间 */
-    private LocalDateTime chargeEndTime;
-    /** 总充电时间(固定120分钟,后续可改) */
-    public static final int TOTAL_CHARGE_MINUTES = 120;
-    /** 累计充电分钟数 */
-    private int accumulatedMinutes = 0;
-    /** 剩余充电分钟数 */
-    private int remainingMinutes = TOTAL_CHARGE_MINUTES;
-    /** 累计充电度数 */
-    private BigDecimal chargingDegree = BigDecimal.ZERO;
-    /** 已充金额 */
-    private BigDecimal chargedAmount = BigDecimal.ZERO;
-
     /** 设备状态机(独立枚举) */
     private DeviceState currentState = DeviceState.WAIT_LOGIN;
     /** 登录请求对象(用于心跳) */
     private SAALoginReq loginReq;
     /** 平台下发的计费模型编码 */
     private Integer platformBillingModeId;
-
     /** 实时监测数据[0x13指令]是否已经发送过初始化 */
     private boolean initRealTimeSent = false;
-
-    /* 计费模型 */
-    /** 尖 */
-    private BigDecimal sharpEleFee = BigDecimal.ZERO;
-    private BigDecimal sharpServiceFee = BigDecimal.ZERO;
-    private String sharpTimeRange;
-    /** 峰 */
-    private BigDecimal peakEleFee = BigDecimal.ZERO;
-    private BigDecimal peakServiceFee = BigDecimal.ZERO;
-    private String peakTimeRange;
-    /** 平 */
-    private BigDecimal flatEleFee = BigDecimal.ZERO;
-    private BigDecimal flatServiceFee = BigDecimal.ZERO;
-    private String flatTimeRange;
-    /** 谷 */
-    private BigDecimal valleyEleFee = BigDecimal.ZERO;
-    private BigDecimal valleyServiceFee = BigDecimal.ZERO;
-    private String valleyTimeRange;
-    /** 损耗比例 */
-    private Integer lossRatio = 0;
-    private BigDecimal sharpElectric = BigDecimal.ZERO;
-    private BigDecimal peakElectric = BigDecimal.ZERO;
-    private BigDecimal flatElectric = BigDecimal.ZERO;
-    private BigDecimal valleyElectric = BigDecimal.ZERO;
-
-    /** 金额、电量计算保留小数位数：4位 */
-    private static final int SCALE_4 = 4;
-    /** 四舍五入模式 */
-    private static final RoundingMode ROUND_HALF_UP = RoundingMode.HALF_UP;
-    /** 每分钟充电度数：0.5度/分钟 */
-    private static final BigDecimal PER_MIN_ELE = new BigDecimal("0.5");
     /** 定时任务调度管理器，接管所有定时任务生命周期 */
-    private final SimTimerScheduler timerScheduler = new SimTimerScheduler();
+    private final SimTimerScheduler timerScheduler;
+    /** 充电会话管理器，接管全部充电启停、计费、结算业务 */
+    private final ChargeSessionManager chargeSessionManager;
+
+    /**
+     * 无参构造，初始化定时调度与充电会话管理器
+     *
+     * @author KevenPotter
+     * @date 2026-07-02 15:56:08
+     */
+    public SimDevMsgProcessor() {
+        this.timerScheduler = new SimTimerScheduler();
+        this.chargeSessionManager = new ChargeSessionManager(timerScheduler);
+        // 注入报文发送回调，实时监测报文由本类统一发送
+        this.chargeSessionManager.setMonitorDataSendCallback(this::sendMessage);
+    }
 
     /**
      * 绑定TCP输出流与客户端实例
@@ -122,6 +82,7 @@ public class SimDevMsgProcessor {
         this.gunNo = device.getGunNum();
         this.outputStream = outputStream;
         this.tcpClient = tcpClient;
+        chargeSessionManager.initDeviceInfo(deviceId, gunNo);
     }
 
     /**
@@ -168,8 +129,16 @@ public class SimDevMsgProcessor {
                 // 模拟器读取实时监测数据
                 case SIM_UP_REAL_TIME_MONITOR:
                     new SAERealTimeMonitorReq(data, rawHexMsg);
-                    StandardRealTimeMonitor currentMonitor = isCharging
-                            ? fakeChargingRealTimeMonitor(tradeNo, deviceId, gunNo, accumulatedMinutes, remainingMinutes, chargingDegree, chargedAmount)
+                    StandardRealTimeMonitor currentMonitor = chargeSessionManager.isCharging() ?
+                            fakeChargingRealTimeMonitor(
+                                    chargeSessionManager.getTradeNo(),
+                                    deviceId,
+                                    gunNo,
+                                    chargeSessionManager.getAccumulatedMinutes(),
+                                    chargeSessionManager.getRemainingMinutes(),
+                                    chargeSessionManager.getChargingDegree(),
+                                    chargeSessionManager.getChargedAmount()
+                            )
                             : fakeInitRealTimeMonitor(deviceId, gunNo);
                     sendMessage(SAERealTimeMonitorRes.buildCommand(currentMonitor));
                     break;
@@ -180,10 +149,10 @@ public class SimDevMsgProcessor {
                 // 模拟器运营平台远程控制启机
                 case SIM_UP_START_CHARGE:
                     SAOStartChargeReq startChargeReq = new SAOStartChargeReq(data, rawHexMsg);
-                    if (!isCharging) {
+                    if (!chargeSessionManager.isCharging()) {
                         sendMessage(SAOStartChargeRes.buildCommand(startChargeReq, 1, 0));
-                        // 开始充电 → 启动实时数据上传
-                        startCharging(startChargeReq.getTradeNo());
+                        // 充电业务移交会话管理器
+                        chargeSessionManager.startCharge(startChargeReq.getTradeNo());
                     } else {
                         sendMessage(SAOStartChargeRes.buildCommand(startChargeReq, 0, 2));
                     }
@@ -192,29 +161,12 @@ public class SimDevMsgProcessor {
                 case SIM_UP_STOP_CHARGE:
                     SAPStopChargeReq stopChargeReq = new SAPStopChargeReq(data, rawHexMsg);
                     sendMessage(SAPStopChargeRes.buildCommand(stopChargeReq));
-                    String tmpChargeTradeNo = this.tradeNo;
-                    if (isCharging) {
-                        LocalDateTime now = LocalDateTime.now();
-                        long minutes = ChronoUnit.MINUTES.between(chargeStartTime, now);
-                        int stopCode = 0x40;
-                        // 判断是否超时停机
-                        if (minutes >= TOTAL_CHARGE_MINUTES) {
-                            minutes = TOTAL_CHARGE_MINUTES;
-                            stopCode = 0x41;
-                            log.info("充电达到最大时长{}分钟,触发停机结算", TOTAL_CHARGE_MINUTES);
+                    String tmpChargeTradeNo = chargeSessionManager.getTradeNo();
+                    if (chargeSessionManager.isCharging()) {
+                        StandardTradeRecord tradeRecord = chargeSessionManager.stopCharge(tmpChargeTradeNo);
+                        if (tradeRecord != null) {
+                            sendMessage(SAQTradeRecordRes.buildCommand(tradeRecord));
                         }
-                        // 统一一次计算电量金额
-                        chargingDegree = BigDecimal.valueOf(minutes).multiply(PER_MIN_ELE).setScale(SCALE_4, ROUND_HALF_UP);
-                        BigDecimal totalMoney = BigDecimal.ZERO;
-                        LocalDateTime loopMin = chargeStartTime;
-                        for (long i = 0; i < minutes; i++) {
-                            totalMoney = totalMoney.add(getSingleMinuteCost(loopMin));
-                            loopMin = loopMin.plusMinutes(1);
-                        }
-                        chargedAmount = totalMoney;
-                        stopCharging();
-                        StandardTradeRecord tradeRecord = buildTradeRecord(tmpChargeTradeNo, stopCode);
-                        sendMessage(SAQTradeRecordRes.buildCommand(tradeRecord));
                     }
                     break;
                 // 模拟器交易记录确认
@@ -283,51 +235,14 @@ public class SimDevMsgProcessor {
                 case SIM_UP_PARALLEL_START_CHARGE:
                     SBDParallelStartChargeReq parallelStartChargeReq = new SBDParallelStartChargeReq(data, rawHexMsg);
                     sendMessage(SBDParallelStartChargeRes.buildCommand(parallelStartChargeReq));
-                    // 开始充电 → 启动实时数据上传
-                    startCharging(parallelStartChargeReq.getTradeNo());
+                    // 充电业务移交会话管理器
+                    chargeSessionManager.startCharge(parallelStartChargeReq.getTradeNo());
                     break;
 
             }
         } catch (Exception e) {
-            log.error("{} {} {} Message Process Exception", SIM_TIP_ICON, SIM_PROJECT_NAME, deviceId);
+            log.error("{} {} {} Message Process Exception", SIM_TIP_ICON, SIM_PROJECT_NAME, deviceId, e);
         }
-    }
-
-    /**
-     * 开始充电
-     *
-     * @author KevenPotter
-     * @date 2026-06-02 16:04:30
-     */
-    private void startCharging(String tradeNo) {
-        this.tradeNo = tradeNo;
-        this.isCharging = true;
-        this.chargeStartTime = LocalDateTime.now();
-        this.chargeEndTime = null;
-        this.accumulatedMinutes = 0;
-        this.remainingMinutes = TOTAL_CHARGE_MINUTES;
-        this.chargingDegree = BigDecimal.ZERO;
-        this.chargedAmount = BigDecimal.ZERO;
-
-        this.sharpElectric = BigDecimal.ZERO;
-        this.peakElectric = BigDecimal.ZERO;
-        this.flatElectric = BigDecimal.ZERO;
-        this.valleyElectric = BigDecimal.ZERO;
-
-        startRealTimeMonitorTimer();
-    }
-
-    /**
-     * 停止充电
-     *
-     * @author KevenPotter
-     * @date 2026-06-02 16:04:40
-     */
-    private void stopCharging() {
-        this.isCharging = false;
-        this.tradeNo = null;
-        this.chargeEndTime = LocalDateTime.now();
-        timerScheduler.stopRealTimeMonitorTimer();
     }
 
     /**
@@ -385,34 +300,32 @@ public class SimDevMsgProcessor {
         // 1.先拿到当前应答对象
         List<StandardBillingModel> modelList = billingModelReq.getBillingModelList();
 
-        // 2.直接取四段电价、服务费、损耗比例
-        this.sharpEleFee = billingModelReq.getSharpEleFee();
-        this.sharpServiceFee = billingModelReq.getSharpServiceFee();
-        this.peakEleFee = billingModelReq.getPeakEleFee();
-        this.peakServiceFee = billingModelReq.getPeakServiceFee();
-        this.flatEleFee = billingModelReq.getFlatEleFee();
-        this.flatServiceFee = billingModelReq.getFlatServiceFee();
-        this.valleyEleFee = billingModelReq.getValleyEleFee();
-        this.valleyServiceFee = billingModelReq.getValleyServiceFee();
-        this.lossRatio = billingModelReq.getLossRatio();
-        // 3.遍历列表匹配类型,赋值时段字符串 "HH:mm-HH:mm"
+        // 2.遍历填充时段字符串
+        String sharpTime = null, peakTime = null, flatTime = null, valleyTime = null;
         for (StandardBillingModel item : modelList) {
             String timeStr = item.getStartTime() + "-" + item.getEndTime();
             switch (item.getTimeSlotType()) {
                 case 1:
-                    this.sharpTimeRange = timeStr;
+                    sharpTime = timeStr;
                     break;
                 case 2:
-                    this.peakTimeRange = timeStr;
+                    peakTime = timeStr;
                     break;
                 case 3:
-                    this.flatTimeRange = timeStr;
+                    flatTime = timeStr;
                     break;
                 case 4:
-                    this.valleyTimeRange = timeStr;
+                    valleyTime = timeStr;
                     break;
             }
         }
+        // 3.一次性完成电价、服务费、时段、损耗全部赋值
+        chargeSessionManager.setBillingModelData(
+                billingModelReq.getSharpEleFee(), billingModelReq.getSharpServiceFee(), sharpTime,
+                billingModelReq.getPeakEleFee(), billingModelReq.getPeakServiceFee(), peakTime,
+                billingModelReq.getFlatEleFee(), billingModelReq.getFlatServiceFee(), flatTime,
+                billingModelReq.getValleyEleFee(), billingModelReq.getValleyServiceFee(), valleyTime,
+                billingModelReq.getLossRatio());
     }
 
     /**
@@ -428,32 +341,11 @@ public class SimDevMsgProcessor {
         loginReq = null;
         platformBillingModeId = null;
         initRealTimeSent = false;
-        this.isCharging = false;
-        this.tradeNo = null;
-        this.accumulatedMinutes = 0;
-        this.remainingMinutes = TOTAL_CHARGE_MINUTES;
-
-        this.sharpEleFee = BigDecimal.ZERO;
-        this.sharpServiceFee = BigDecimal.ZERO;
-        this.peakEleFee = BigDecimal.ZERO;
-        this.peakServiceFee = BigDecimal.ZERO;
-        this.flatEleFee = BigDecimal.ZERO;
-        this.flatServiceFee = BigDecimal.ZERO;
-        this.valleyEleFee = BigDecimal.ZERO;
-        this.valleyServiceFee = BigDecimal.ZERO;
-        this.lossRatio = 0;
-        this.sharpTimeRange = null;
-        this.peakTimeRange = null;
-        this.flatTimeRange = null;
-        this.valleyTimeRange = null;
-        this.sharpElectric = BigDecimal.ZERO;
-        this.peakElectric = BigDecimal.ZERO;
-        this.flatElectric = BigDecimal.ZERO;
-        this.valleyElectric = BigDecimal.ZERO;
-        this.chargeEndTime = null;
 
         // 关闭所有旧定时器
         timerScheduler.stopAllTimers();
+        // 重连清空充电会话
+        chargeSessionManager.resetAllChargeData();
         // 启动登录
         startLoginTimer();
     }
@@ -540,95 +432,6 @@ public class SimDevMsgProcessor {
     }
 
     /**
-     * 启动实时监测数据定时发送器
-     *
-     * @author KevenPotter
-     * @date 2026-06-03 10:37:11
-     */
-    private void startRealTimeMonitorTimer() {
-        Runnable monitorTask = () -> {
-            try {
-                if (!isCharging) return;
-
-                LocalDateTime now = LocalDateTime.now();
-                // 真实已充电总分钟
-                long minutes = ChronoUnit.MINUTES.between(chargeStartTime, now);
-
-                // 越界保护,最多充120分钟
-                if (minutes >= TOTAL_CHARGE_MINUTES) {
-                    minutes = TOTAL_CHARGE_MINUTES;
-                }
-
-                accumulatedMinutes = (int) minutes;
-                remainingMinutes = TOTAL_CHARGE_MINUTES - accumulatedMinutes;
-                // 固定每分钟用电量0.5度(30kW直流桩典型值)
-                chargingDegree = BigDecimal.valueOf(minutes).multiply(PER_MIN_ELE).setScale(SCALE_4, ROUND_HALF_UP);
-
-                // 动态分时计算实时总金额
-                BigDecimal totalMoney = BigDecimal.ZERO;
-                // 逐分钟回溯计算每一分钟费用
-                LocalDateTime loopMin = chargeStartTime;
-                for (long i = 0; i < minutes; i++) {
-                    BigDecimal minuteCost = getSingleMinuteCost(loopMin);
-                    totalMoney = totalMoney.add(minuteCost);
-                    loopMin = loopMin.plusMinutes(1);
-                }
-                chargedAmount = totalMoney;
-
-                // 组装并上报实时报文
-                StandardRealTimeMonitor monitor = fakeChargingRealTimeMonitor(
-                        tradeNo,
-                        deviceId,
-                        gunNo,
-                        accumulatedMinutes,
-                        remainingMinutes,
-                        chargingDegree,
-                        chargedAmount
-                );
-                sendMessage(SAERealTimeMonitorRes.buildCommand(monitor));
-
-            } catch (Exception e) {
-                log.error("{} {} {} StartRealTimeMonitorTimer Exception", SIM_TIP_ICON, SIM_PROJECT_NAME, deviceId, e);
-            }
-        };
-        timerScheduler.startRealTimeMonitorTimer(monitorTask, 0, TIMER_REAL_TIME_MONITOR_SECOND, TimeUnit.SECONDS);
-    }
-
-    /**
-     * 计算指定时刻单分钟电费
-     *
-     * @param loopMin 当前分钟时刻
-     * @return 该分钟电费金额
-     * @author KevenPotter
-     * @date 2026-06-23 10:20:30
-     */
-    private BigDecimal getSingleMinuteCost(LocalDateTime loopMin) {
-        TimeSegment seg;
-        if (sharpTimeRange != null && peakTimeRange != null && flatTimeRange != null && valleyTimeRange != null) {
-            seg = TimeSegment.getTimeSegment(loopMin, sharpTimeRange, peakTimeRange, flatTimeRange, valleyTimeRange);
-        } else {
-            seg = TimeSegment.FLAT;
-        }
-
-        BigDecimal unitTotalPrice;
-        switch (seg) {
-            case SHARP:
-                unitTotalPrice = sharpEleFee.add(sharpServiceFee);
-                break;
-            case PEAK:
-                unitTotalPrice = peakEleFee.add(peakServiceFee);
-                break;
-            case VALLEY:
-                unitTotalPrice = valleyEleFee.add(valleyServiceFee);
-                break;
-            default:
-                unitTotalPrice = flatEleFee.add(flatServiceFee);
-        }
-
-        return PER_MIN_ELE.multiply(unitTotalPrice);
-    }
-
-    /**
      * 发送字节数组报文
      *
      * @param data 报文字节数组
@@ -645,130 +448,6 @@ public class SimDevMsgProcessor {
             outputStream = null;
             tcpClient.closeSocket();
         }
-    }
-
-    /**
-     * 回溯整段充电起止时间.按每分钟0.5度电,动态匹配尖峰平谷区间累加分时用电量
-     * <p>
-     * 兜底逻辑:未收到0x0A计费模型、时段字符串为空时,全部电量归入平时段
-     * 遍历充电每一分钟,逐分钟判定所属时段,累加对应时段用电量
-     *
-     * @author KevenPotter
-     * @date 2026-06-22 15:49:37
-     */
-    private void splitElectricByTimeSegment() {
-        if (chargeStartTime == null || chargeEndTime == null) {
-            return;
-        }
-        if (sharpTimeRange == null || peakTimeRange == null || flatTimeRange == null || valleyTimeRange == null) {
-            long totalMin = ChronoUnit.MINUTES.between(chargeStartTime, chargeEndTime);
-            this.flatElectric = BigDecimal.valueOf(totalMin).multiply(PER_MIN_ELE);
-            return;
-        }
-
-        long totalMin = ChronoUnit.MINUTES.between(chargeStartTime, chargeEndTime);
-        LocalDateTime currentMin = chargeStartTime;
-        for (long i = 0; i < totalMin; i++) {
-            TimeSegment seg = TimeSegment.getTimeSegment(currentMin, sharpTimeRange, peakTimeRange, flatTimeRange, valleyTimeRange);
-            switch (seg) {
-                case SHARP:
-                    sharpElectric = sharpElectric.add(PER_MIN_ELE).setScale(SCALE_4, ROUND_HALF_UP);
-                    break;
-                case PEAK:
-                    peakElectric = peakElectric.add(PER_MIN_ELE).setScale(SCALE_4, ROUND_HALF_UP);
-                    break;
-                case FLAT:
-                    flatElectric = flatElectric.add(PER_MIN_ELE).setScale(SCALE_4, ROUND_HALF_UP);
-                    break;
-                case VALLEY:
-                    valleyElectric = valleyElectric.add(PER_MIN_ELE).setScale(SCALE_4, ROUND_HALF_UP);
-                    break;
-            }
-            currentMin = currentMin.plusMinutes(1);
-        }
-    }
-
-    /**
-     * 生成结算交易记录实体,核心结算逻辑
-     * <p>
-     * 1.调用分时电量分摊,统计尖/峰/平/谷四段用电量
-     * 2.按公式计算各时段电费、线损损耗电量
-     * 单段电费 = 时段用电量 × (时段电价 + 时段服务费)
-     * 单段损耗 = 时段用电量 × (损耗百分比 / 100)
-     * 3.汇总总电量、总损耗、总费用,组装StandardTradeRecord交易对象
-     *
-     * @param stopReasonCode 停机原因编码,对应GBT-27930停机原因定义
-     * @return 完整结算交易记录, 用于0x3B交易记录上行报文
-     * @author KevenPotter
-     * @date 2026-06-22 15:51:32
-     */
-    private StandardTradeRecord buildTradeRecord(String tradeNo, Integer stopReasonCode) {
-        // 1. 先分摊分时电量
-        splitElectricByTimeSegment();
-
-        BigDecimal ratioDivisor = new BigDecimal("100");
-        BigDecimal lossRate = new BigDecimal(lossRatio).divide(ratioDivisor, 8, RoundingMode.HALF_UP);
-
-        // 2. 计算各段金额、损耗电量（统一百分比换算）
-        // 尖
-        BigDecimal sharpLossEle = sharpElectric.multiply(lossRate).setScale(SCALE_4, ROUND_HALF_UP);
-        BigDecimal sharpAmt = sharpElectric.multiply(sharpEleFee.add(sharpServiceFee)).setScale(SCALE_4, ROUND_HALF_UP);
-        // 峰
-        BigDecimal peakLossEle = peakElectric.multiply(lossRate).setScale(SCALE_4, ROUND_HALF_UP);
-        BigDecimal peakAmt = peakElectric.multiply(peakEleFee.add(peakServiceFee)).setScale(SCALE_4, ROUND_HALF_UP);
-        // 平
-        BigDecimal flatLossEle = flatElectric.multiply(lossRate).setScale(SCALE_4, ROUND_HALF_UP);
-        BigDecimal flatAmt = flatElectric.multiply(flatEleFee.add(flatServiceFee)).setScale(SCALE_4, ROUND_HALF_UP);
-        // 谷
-        BigDecimal valleyLossEle = valleyElectric.multiply(lossRate).setScale(SCALE_4, ROUND_HALF_UP);
-        BigDecimal valleyAmt = valleyElectric.multiply(valleyEleFee.add(valleyServiceFee)).setScale(SCALE_4, ROUND_HALF_UP);
-
-        // 汇总总电量、总损耗、总金额
-        BigDecimal totalElectricity = sharpElectric.add(peakElectric).add(flatElectric).add(valleyElectric);
-        BigDecimal totalLossEle = sharpLossEle.add(peakLossEle).add(flatLossEle).add(valleyLossEle);
-        BigDecimal totalAmt = sharpAmt.add(peakAmt).add(flatAmt).add(valleyAmt);
-
-        // 构造交易对象,填充固定模拟默认值
-        StandardTradeRecord record = new StandardTradeRecord();
-        record.setTradeNo(tradeNo);
-        record.setDeviceId(this.deviceId);
-        record.setGunNo(this.gunNo);
-        record.setStartTime(java.sql.Timestamp.valueOf(chargeStartTime));
-        record.setEndTime(java.sql.Timestamp.valueOf(chargeEndTime));
-
-        record.setSharpUnitPrice(sharpEleFee);
-        record.setSharpElectricity(sharpElectric);
-        record.setSharpLossElectricity(sharpLossEle);
-        record.setSharpAmount(sharpAmt);
-
-        record.setPeakUnitPrice(peakEleFee);
-        record.setPeakElectricity(peakElectric);
-        record.setPeakLossElectricity(peakLossEle);
-        record.setPeakAmount(peakAmt);
-
-        record.setFlatUnitPrice(flatEleFee);
-        record.setFlatElectricity(flatElectric);
-        record.setFlatLossElectricity(flatLossEle);
-        record.setFlatAmount(flatAmt);
-
-        record.setValleyUnitPrice(valleyEleFee);
-        record.setValleyElectricity(valleyElectric);
-        record.setValleyLossElectricity(valleyLossEle);
-        record.setValleyAmount(valleyAmt);
-
-        record.setElectricityStart(BigDecimal.ZERO);
-        record.setElectricityEnd(totalElectricity);
-        record.setTotalElectricity(totalElectricity);
-        record.setTotalLossElectricity(totalLossEle);
-        record.setTotalAmount(totalAmt);
-
-        record.setVinCode("");
-        record.setTradeIdentifier(1);
-        record.setTradeTime(java.sql.Timestamp.valueOf(chargeEndTime));
-        record.setStopReason(stopReasonCode);
-        record.setPhysicalCardNo("0000000000000000");
-
-        return record;
     }
 
     /**
