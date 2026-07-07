@@ -31,7 +31,7 @@ import static com.wantllife.constant.SimulatorConstants.*;
 public class DeviceTimerFacade {
 
     /** 定时任务调度管理器,接管所有定时任务生命周期 */
-    private final SimTimerScheduler timerScheduler;
+    public final SimTimerScheduler timerScheduler;
     /** 设备状态管理器,统一托管所有运行状态与标记 */
     private final DeviceStateHolder deviceStateHolder;
     /** 当前设备编号 */
