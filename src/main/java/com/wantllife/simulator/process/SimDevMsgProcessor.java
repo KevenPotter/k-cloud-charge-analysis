@@ -41,18 +41,12 @@ public class SimDevMsgProcessor {
     private String deviceId;
     /** 当前设备枪号 */
     private Integer gunNo;
-    /** 设备状态机(独立枚举) */
-    private DeviceState currentState = DeviceState.WAIT_LOGIN;
-    /** 登录请求对象(用于心跳) */
-    private SAALoginReq loginReq;
-    /** 平台下发的计费模型编码 */
-    private Integer platformBillingModeId;
-    /** 实时监测数据[0x13指令]是否已经发送过初始化 */
-    private boolean initRealTimeSent = false;
-    /** 定时任务调度管理器，接管所有定时任务生命周期 */
+    /** 定时任务调度管理器,接管所有定时任务生命周期 */
     private final SimTimerScheduler timerScheduler;
-    /** 充电会话管理器，接管全部充电启停、计费、结算业务 */
+    /** 充电会话管理器,接管全部充电启停、计费、结算业务 */
     private final ChargeSessionManager chargeSessionManager;
+    /** 设备状态管理器,统一托管所有运行状态与标记 */
+    private final DeviceStateHolder deviceStateHolder;
 
     /**
      * 无参构造，初始化定时调度与充电会话管理器
@@ -62,8 +56,8 @@ public class SimDevMsgProcessor {
      */
     public SimDevMsgProcessor() {
         this.timerScheduler = new SimTimerScheduler();
+        this.deviceStateHolder = new DeviceStateHolder();
         this.chargeSessionManager = new ChargeSessionManager(timerScheduler);
-        // 注入报文发送回调，实时监测报文由本类统一发送
         this.chargeSessionManager.setMonitorDataSendCallback(this::sendMessage);
     }
 
@@ -82,6 +76,7 @@ public class SimDevMsgProcessor {
         this.gunNo = device.getGunNum();
         this.outputStream = outputStream;
         this.tcpClient = tcpClient;
+        deviceStateHolder.bindDeviceId(this.deviceId);
         chargeSessionManager.initDeviceInfo(deviceId, gunNo);
     }
 
@@ -111,8 +106,8 @@ public class SimDevMsgProcessor {
                 // 模拟器心跳包应答
                 case SIM_UP_HEARTBEAT:
                     // 心跳第一次发送后 → 上传一次初始化0x13
-                    if (!initRealTimeSent && currentState == DeviceState.READY) {
-                        initRealTimeSent = true;
+                    if (!deviceStateHolder.isInitRealTimeSent() && deviceStateHolder.isCurrentState(DeviceState.READY)) {
+                        deviceStateHolder.markInitRealTimeSent(true);
                         sendMessage(SAERealTimeMonitorRes.buildCommand(fakeInitRealTimeMonitor(deviceId, gunNo)));
                     }
                     new SABHeartbeatReq(data, rawHexMsg);
@@ -252,14 +247,14 @@ public class SimDevMsgProcessor {
      * @date 2026-05-29 11:02:18
      */
     private void handleLoginReply(SAALoginReq req) {
-        if (currentState != DeviceState.WAIT_LOGIN) return;
+        if (!deviceStateHolder.isCurrentState(DeviceState.WAIT_LOGIN)) return;
         if (req.getLoginResult() != 0) return;
 
-        this.loginReq = req;
+        deviceStateHolder.setLoginReq(req);
         timerScheduler.stopLoginTimer();
 
         // 进入计费验证状态
-        currentState = DeviceState.WAIT_BILLING_VALID;
+        deviceStateHolder.switchState(DeviceState.WAIT_BILLING_VALID);
         startBillingValidTimer();
     }
 
@@ -270,15 +265,15 @@ public class SimDevMsgProcessor {
      * @date 2026-05-29 11:02:40
      */
     private void handleBillingValidReply(SACBillingModeValidReq req) {
-        if (currentState != DeviceState.WAIT_BILLING_VALID) return;
+        if (!deviceStateHolder.isCurrentState(DeviceState.WAIT_BILLING_VALID)) return;
 
         // 保存平台下发的计费编码
-        this.platformBillingModeId = req.getBillingModeId();
+        deviceStateHolder.setPlatformBillingModeId(req.getBillingModeId());
 
         // 验证一致 → 进入下一阶段
         if (req.getBillingModeValidResult() == 0) {
             timerScheduler.stopBillingValidTimer();
-            currentState = DeviceState.WAIT_BILLING_MODEL;
+            deviceStateHolder.switchState(DeviceState.WAIT_BILLING_MODEL);
             startBillingModelTimer();
         }
     }
@@ -291,10 +286,10 @@ public class SimDevMsgProcessor {
      * @date 2026-05-29 11:03:43
      */
     private void handleBillingModelReply(SADBillingModelReq billingModelReq) {
-        if (currentState != DeviceState.WAIT_BILLING_MODEL) return;
+        if (!deviceStateHolder.isCurrentState(DeviceState.WAIT_BILLING_MODEL)) return;
 
         timerScheduler.stopBillingModelTimer();
-        currentState = DeviceState.READY;
+        deviceStateHolder.switchState(DeviceState.READY);
         startHeartbeatTimer();
 
         // 1.先拿到当前应答对象
@@ -337,10 +332,7 @@ public class SimDevMsgProcessor {
      */
     public void onConnected() {
         // 重置所有状态
-        currentState = DeviceState.WAIT_LOGIN;
-        loginReq = null;
-        platformBillingModeId = null;
-        initRealTimeSent = false;
+        deviceStateHolder.resetAllState();
 
         // 关闭所有旧定时器
         timerScheduler.stopAllTimers();
@@ -360,7 +352,7 @@ public class SimDevMsgProcessor {
     private void startLoginTimer() {
         Runnable loginTask = () -> {
             try {
-                if (currentState == DeviceState.WAIT_LOGIN) {
+                if (deviceStateHolder.isCurrentState(DeviceState.WAIT_LOGIN)) {
                     sendMessage(SAALoginRes.buildCommand(tcpClient.getDevice()));
                 }
             } catch (Exception e) {
@@ -380,8 +372,8 @@ public class SimDevMsgProcessor {
     private void startBillingValidTimer() {
         Runnable billingValidTask = () -> {
             try {
-                if (currentState == DeviceState.WAIT_BILLING_VALID) {
-                    Long billingModeId = platformBillingModeId != null ? platformBillingModeId : 1L;
+                if (deviceStateHolder.isCurrentState(DeviceState.WAIT_BILLING_VALID)) {
+                    Long billingModeId = deviceStateHolder.getPlatformBillingModeId() != null ? Long.valueOf(deviceStateHolder.getPlatformBillingModeId()) : 1L;
                     sendMessage(SACBillingModeValidRes.buildCommand(deviceId, billingModeId));
                 }
             } catch (Exception e) {
@@ -401,7 +393,7 @@ public class SimDevMsgProcessor {
     private void startBillingModelTimer() {
         Runnable billingModelTask = () -> {
             try {
-                if (currentState == DeviceState.WAIT_BILLING_MODEL) {
+                if (deviceStateHolder.isCurrentState(DeviceState.WAIT_BILLING_MODEL)) {
                     sendMessage(SADBillingModelRes.buildCommand(deviceId));
                 }
             } catch (Exception e) {
@@ -421,8 +413,11 @@ public class SimDevMsgProcessor {
     private void startHeartbeatTimer() {
         Runnable heartbeatTask = () -> {
             try {
-                if (currentState == DeviceState.READY) {
-                    sendMessage(SABHeartbeatRes.buildCommand(loginReq, gunNo, 0));
+                if (deviceStateHolder.isCurrentState(DeviceState.READY)) {
+                    SAALoginReq loginReq = deviceStateHolder.getLoginReq();
+                    if (loginReq != null) {
+                        sendMessage(SABHeartbeatRes.buildCommand(loginReq, gunNo, 0));
+                    }
                 }
             } catch (Exception e) {
                 log.error("{} {} {} StartHeartbeatTimer Exception", SIM_TIP_ICON, SIM_PROJECT_NAME, deviceId, e);
