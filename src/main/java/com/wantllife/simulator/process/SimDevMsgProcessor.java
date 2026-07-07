@@ -15,10 +15,10 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.io.OutputStream;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import static com.wantllife.constant.CloudFastChargingConstants.*;
-import static com.wantllife.constant.SimulatorConstants.*;
+import static com.wantllife.constant.SimulatorConstants.DELAY_REBOOT_SECOND;
+import static com.wantllife.constant.SimulatorConstants.DELAY_UPGRADE_SECOND;
 import static com.wantllife.simulator.fake.FakeData.fakeChargingRealTimeMonitor;
 import static com.wantllife.simulator.fake.FakeData.fakeInitRealTimeMonitor;
 
@@ -47,6 +47,8 @@ public class SimDevMsgProcessor {
     private final ChargeSessionManager chargeSessionManager;
     /** 设备状态管理器,统一托管所有运行状态与标记 */
     private final DeviceStateHolder deviceStateHolder;
+    /** 设备定时任务门面,收拢全部业务定时创建逻辑 */
+    private DeviceTimerFacade timerFacade;
 
     /**
      * 无参构造，初始化定时调度与充电会话管理器
@@ -78,6 +80,14 @@ public class SimDevMsgProcessor {
         this.tcpClient = tcpClient;
         deviceStateHolder.bindDeviceId(this.deviceId);
         chargeSessionManager.initDeviceInfo(deviceId, gunNo);
+        this.timerFacade = new DeviceTimerFacade(
+                this.timerScheduler,
+                this.deviceStateHolder,
+                this.deviceId,
+                this.gunNo,
+                this.tcpClient,
+                this::sendMessage
+        );
     }
 
     /**
@@ -255,7 +265,7 @@ public class SimDevMsgProcessor {
 
         // 进入计费验证状态
         deviceStateHolder.switchState(DeviceState.WAIT_BILLING_VALID);
-        startBillingValidTimer();
+        timerFacade.startBillingValidTimer();
     }
 
     /**
@@ -274,7 +284,7 @@ public class SimDevMsgProcessor {
         if (req.getBillingModeValidResult() == 0) {
             timerScheduler.stopBillingValidTimer();
             deviceStateHolder.switchState(DeviceState.WAIT_BILLING_MODEL);
-            startBillingModelTimer();
+            timerFacade.startBillingModelTimer();
         }
     }
 
@@ -290,7 +300,7 @@ public class SimDevMsgProcessor {
 
         timerScheduler.stopBillingModelTimer();
         deviceStateHolder.switchState(DeviceState.READY);
-        startHeartbeatTimer();
+        timerFacade.startHeartbeatTimer();
 
         // 1.先拿到当前应答对象
         List<StandardBillingModel> modelList = billingModelReq.getBillingModelList();
@@ -339,91 +349,7 @@ public class SimDevMsgProcessor {
         // 重连清空充电会话
         chargeSessionManager.resetAllChargeData();
         // 启动登录
-        startLoginTimer();
-    }
-
-    /**
-     * 启动登录重试定时器
-     * 先停止旧定时器避免重复,再创建新定时器每5秒发送一次登录帧,直到登录成功为止
-     *
-     * @author KevenPotter
-     * @date 2026-05-28 13:44:21
-     */
-    private void startLoginTimer() {
-        Runnable loginTask = () -> {
-            try {
-                if (deviceStateHolder.isCurrentState(DeviceState.WAIT_LOGIN)) {
-                    sendMessage(SAALoginRes.buildCommand(tcpClient.getDevice()));
-                }
-            } catch (Exception e) {
-                log.error("{} {} {} StartLoginTimer Exception", SIM_TIP_ICON, SIM_PROJECT_NAME, deviceId, e);
-            }
-        };
-        timerScheduler.startLoginTimer(loginTask, 0, TIMER_LOGIN_SECOND, TimeUnit.SECONDS);
-    }
-
-    /**
-     * 启动计费验证定时器
-     * 先停止旧定时器避免重复,再创建新定时器每3秒发送一次计费模型验证请求,直到计费模型验证请求成功为止
-     *
-     * @author KevenPotter
-     * @date 2026-05-29 11:07:22
-     */
-    private void startBillingValidTimer() {
-        Runnable billingValidTask = () -> {
-            try {
-                if (deviceStateHolder.isCurrentState(DeviceState.WAIT_BILLING_VALID)) {
-                    Long billingModeId = deviceStateHolder.getPlatformBillingModeId() != null ? Long.valueOf(deviceStateHolder.getPlatformBillingModeId()) : 1L;
-                    sendMessage(SACBillingModeValidRes.buildCommand(deviceId, billingModeId));
-                }
-            } catch (Exception e) {
-                log.error("{} {} {} StartBillingValidTimer Exception", SIM_TIP_ICON, SIM_PROJECT_NAME, deviceId, e);
-            }
-        };
-        timerScheduler.startBillingValidTimer(billingValidTask, 0, TIMER_BILLING_MODE_VALID_SECOND, TimeUnit.SECONDS);
-    }
-
-    /**
-     * 启动充电桩计费模型请求定时器
-     * 先停止旧定时器避免重复,再创建新定时器每3秒发送一次充电桩计费模型请求,直到充电桩计费模型请求成功为止
-     *
-     * @author KevenPotter
-     * @date 2026-05-29 11:10:07
-     */
-    private void startBillingModelTimer() {
-        Runnable billingModelTask = () -> {
-            try {
-                if (deviceStateHolder.isCurrentState(DeviceState.WAIT_BILLING_MODEL)) {
-                    sendMessage(SADBillingModelRes.buildCommand(deviceId));
-                }
-            } catch (Exception e) {
-                log.error("{} {} {} StartBillingModelTimer Exception", SIM_TIP_ICON, SIM_PROJECT_NAME, deviceId, e);
-            }
-        };
-        timerScheduler.startBillingModelTimer(billingModelTask, 0, TIMER_BILLING_MODE_SECOND, TimeUnit.SECONDS);
-    }
-
-    /**
-     * 启动心跳定时发送器
-     * 登录成功后调用,每10秒自动发送一次心跳包
-     *
-     * @author KevenPotter
-     * @date 2026-05-28 13:45:39
-     */
-    private void startHeartbeatTimer() {
-        Runnable heartbeatTask = () -> {
-            try {
-                if (deviceStateHolder.isCurrentState(DeviceState.READY)) {
-                    SAALoginReq loginReq = deviceStateHolder.getLoginReq();
-                    if (loginReq != null) {
-                        sendMessage(SABHeartbeatRes.buildCommand(loginReq, gunNo, 0));
-                    }
-                }
-            } catch (Exception e) {
-                log.error("{} {} {} StartHeartbeatTimer Exception", SIM_TIP_ICON, SIM_PROJECT_NAME, deviceId, e);
-            }
-        };
-        timerScheduler.startHeartbeatTimer(heartbeatTask, TIMER_HEARTBEAT_SECOND, TIMER_HEARTBEAT_SECOND, TimeUnit.SECONDS);
+        timerFacade.startLoginTimer();
     }
 
     /**
