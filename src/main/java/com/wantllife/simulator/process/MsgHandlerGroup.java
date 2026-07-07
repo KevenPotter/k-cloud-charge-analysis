@@ -6,7 +6,7 @@ import com.wantllife.domain.vo.StandardTradeRecord;
 import com.wantllife.simulator.business.ChargeSessionManager;
 import com.wantllife.simulator.req.*;
 import com.wantllife.simulator.res.*;
-import com.wantllife.simulator.state.DeviceState;
+import com.wantllife.simulator.enums.DeviceState;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;

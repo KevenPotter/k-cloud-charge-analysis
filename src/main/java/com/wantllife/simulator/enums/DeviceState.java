@@ -1,4 +1,4 @@
-package com.wantllife.simulator.state;
+package com.wantllife.simulator.enums;
 
 /**
  * 设备状态机

@@ -1,7 +1,7 @@
 package com.wantllife.simulator.process;
 
 import com.wantllife.simulator.req.SAALoginReq;
-import com.wantllife.simulator.state.DeviceState;
+import com.wantllife.simulator.enums.DeviceState;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;

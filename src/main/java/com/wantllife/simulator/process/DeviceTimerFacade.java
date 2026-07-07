@@ -7,7 +7,7 @@ import com.wantllife.simulator.res.SAALoginRes;
 import com.wantllife.simulator.res.SABHeartbeatRes;
 import com.wantllife.simulator.res.SACBillingModeValidRes;
 import com.wantllife.simulator.res.SADBillingModelRes;
-import com.wantllife.simulator.state.DeviceState;
+import com.wantllife.simulator.enums.DeviceState;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.concurrent.TimeUnit;
