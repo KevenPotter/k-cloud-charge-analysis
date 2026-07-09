@@ -169,7 +169,7 @@ public class KCloudChargeConfig {
 
 ## 🚀 快速上手
 
-### 解析上报报文
+### 👨‍🚀 一、解析上报报文
 
 实现 `MessageProcessor<ByteBuffer>` 接口，通过帧类型 `frameType` 分发处理：
 
@@ -346,6 +346,89 @@ private List<StandardBillingModel> fakeBillingMode() {
 
     return billingModeList;
 }
+```
+
+### 👨‍🚀 二、操作设备模拟器数据
+
+通过包内构建好的 **模拟类** 进行数据操作，以下为部分示例：
+
+```java
+package com.ruoyi.device.controller;
+
+import cn.hutool.core.date.DateUtil;
+import com.ruoyi.common.annotation.Anonymous;
+import com.ruoyi.common.core.domain.AjaxResult;
+import com.wantllife.domain.vo.StandardTradeRecord;
+import com.wantllife.simulator.res.SAQTradeRecordRes;
+import com.wantllife.util.SimulatorUtil;
+import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.*;
+
+import java.math.BigDecimal;
+import java.util.HashMap;
+
+import static com.ruoyi.common.utils.StringUtils.getDefaultInt;
+import static com.ruoyi.common.utils.StringUtils.getDefaultStr;
+
+
+/**
+ * 模拟器-下发指令Controller
+ *
+ * @author KevenPotter
+ */
+@Anonymous
+@Slf4j
+@CrossOrigin()
+@RestController
+@AllArgsConstructor
+@RequestMapping("/fastCharging/simulatorCommand")
+public class SimulatorCommandController {
+
+    /**
+     * 模拟器-交易记录指令
+     *
+     * @param params 前端请求
+     * @return 返回是否请求成功
+     * @author KevenPotter
+     */
+    @ResponseBody
+    @PostMapping(value = "/tradeRecordCommand")
+    public AjaxResult tradeRecordRes(@RequestBody HashMap<String, String> params) {
+        String deviceId = getDefaultStr(params.get("deviceId"));
+        Integer gunNo = getDefaultInt(params.get("gunNo"));
+        String tradeNo = "52010600109042012604221118022583";
+        StandardTradeRecord standardTradeRecord = fakeTradeRecord(tradeNo, deviceId, gunNo);
+
+        SimulatorUtil.simulatorSendMsg(deviceId, SAQTradeRecordRes.buildCommand(standardTradeRecord));
+        return AjaxResult.success();
+    }
+
+    /**
+     * 交易记录模拟假数据
+     *
+     * @return 返回交易记录
+     * @author KevenPotter
+     */
+    private StandardTradeRecord fakeTradeRecord(String tradeNo, String deviceId, Integer gunNo) {
+        return new StandardTradeRecord()
+                .setTradeNo(tradeNo).setDeviceId(deviceId).setGunNo(gunNo)
+                .setStartTime(DateUtil.parse("2026-04-16 09:42:04.883")).setEndTime(DateUtil.parse("2026-04-16 09:49:08.224"))
+
+                .setSharpUnitPrice(BigDecimal.valueOf(3D)).setSharpElectricity(BigDecimal.ZERO).setSharpLossElectricity(BigDecimal.ZERO).setSharpAmount(BigDecimal.ZERO)
+                .setPeakUnitPrice(BigDecimal.valueOf(7D)).setPeakElectricity(BigDecimal.ZERO).setPeakLossElectricity(BigDecimal.ZERO).setPeakAmount(BigDecimal.ZERO)
+                .setFlatUnitPrice(BigDecimal.valueOf(11D)).setFlatElectricity(BigDecimal.valueOf(0.0760D)).setFlatLossElectricity(BigDecimal.ZERO).setFlatAmount(BigDecimal.valueOf(0.8360D))
+                .setValleyUnitPrice(BigDecimal.valueOf(15D)).setValleyElectricity(BigDecimal.ZERO).setValleyLossElectricity(BigDecimal.ZERO).setValleyAmount(BigDecimal.ZERO)
+
+                .setElectricityStart(BigDecimal.ZERO).setElectricityEnd(BigDecimal.valueOf(0.0760D)).setTotalElectricity(BigDecimal.valueOf(0.0760D)).setTotalLossElectricity(BigDecimal.ZERO)
+
+                .setTotalAmount(BigDecimal.valueOf(0.8360D)).setVinCode("12345678901234567").setTradeIdentifier(1)
+                .setTradeTime(DateUtil.parse("2026-04-16 09:49:08.224")).setStopReason(107).setPhysicalCardNo("0000000000000000");
+
+    }
+
+}
+
 ```
 
 ---
