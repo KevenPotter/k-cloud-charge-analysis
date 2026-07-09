@@ -309,39 +309,100 @@ private List<StandardBillingModel> fakeBillingMode() {
 ## 📁 项目结构
 
 ```
-com.wantllife
-├── analysis                        报文解析与指令构建核心模块
-│   ├── req                         设备上报请求类
-│   │   ├── AALoginReq.java
-│   │   ├── ABHeartbeatReq.java
-│   │   ├── ACBillingModelValidReq.java
-│   │   ├── ADBillingModelReq.java
-│   │   ├── AERealTimeMonitorReq.java
-│   │   ├── AFChargingHandshakeReq.java
-│   │   ├── AGParamConfigReq.java
-│   │   ├── AHChargeFinishedReq.java
-│   │   ├── ......
-│   └── res                         平台下发指令类
-│       ├── AALoginRes.java
-│       ├── ABHeartbeatRes.java
-│       ├── ACBillingModeValidRes.java
-│       ├── ADBillingModelRes.java
-│       ├── AERealTimeMonitorRes.java
-│       ├── ......
-├── config                          SDK 配置模块
-│   ├── CloudChargeConfig.java      配置类
-│   └── holder/
-│       └── CloudChargeHolder.java  全局配置持有器
-├── constant                        协议常量与消息定义
-│   └── CloudFastChargingConstants.java
-├── domain.vo                       标准业务对象
-│   ├── StandardBillingModel.java
-│   ├── StandardCard.java
-│   └── StandardChargeOrder.java
-└── util                            工具类
-    ├── CRCUtil.java
-    ├── StringUtil.java
-    └── TimeUtil.java
+k-cloud-charge-analysis/
+│
+├── src/main/
+│   ├── java/com/wantllife/
+│   │   ├── analysis/                           # 协议解析层（平台接收充电桩上报数据）
+│   │   │   ├── req/                            # 充电桩上报请求 (30个文件)
+│   │   │   │   ├── AALoginReq.java
+│   │   │   │   ├── ABHeartbeatReq.java
+│   │   │   │   ├── ACBillingModelValidReq.java
+│   │   │   │   ├── ADBillingModelReq.java
+│   │   │   │   ├── AERealTimeMonitorReq.java
+│   │   │   │   ├── AFChargingHandshakeReq.java
+│   │   │   │   ├── AGParamConfigReq.java
+│   │   │   │   ├── ······
+│   │   │   │
+│   │   │   └── res/                            # 平台下发响应 (21个文件)
+│   │   │       ├── AALoginRes.java
+│   │   │       ├── ABHeartbeatRes.java
+│   │   │       ├── ACBillingModeValidRes.java
+│   │   │       ├── ADBillingModelRes.java
+│   │   │       ├── AERealTimeMonitorRes.java
+│   │   │       ├── ······
+│   │   │
+│   │   ├── config/                             # 配置类
+│   │   │   ├── CloudChargeConfig.java
+│   │   │   ├── SimulatorConfig.java
+│   │   │   └── holder/
+│   │   │       └── CloudChargeHolder.java
+│   │   │
+│   │   ├── constant/                           # 常量定义
+│   │   │   ├── CloudFastChargingConstants.java
+│   │   │   ├── ColorConstants.java
+│   │   │   └── SimulatorConstants.java
+│   │   │
+│   │   ├── core/                               # 核心类
+│   │   │   └── FrameHeader.java                # 帧头定义
+│   │   │
+│   │   ├── domain/                             # 领域模型
+│   │   │   └── vo/                             # 值对象 (16个文件)
+│   │   │       ├── StandardApplyParallelCharging.java
+│   │   │       ├── StandardBillingModel.java
+│   │   │       ├── StandardCard.java
+│   │   │       ├── StandardChargeFinished.java
+│   │   │       ├── ······
+│   │   │
+│   │   ├── enums/                              # 枚举类
+│   │   │   └── TimeSegment.java                # 时间段枚举
+│   │   │
+│   │   ├── simulator/                          # 模拟器模块
+│   │   │   ├── DeviceSimulator.java
+│   │   │   ├── business/                       # 业务逻辑
+│   │   │   │   └── ChargeSessionManager.java
+│   │   │   ├── client/                         # TCP客户端
+│   │   │   │   └── TcpClient.java
+│   │   │   ├── enums/                          # 枚举
+│   │   │   │   └── DeviceState.java            # 设备状态枚举
+│   │   │   ├── fake/                           # 模拟数据
+│   │   │   │   └── FakeData.java
+│   │   │   ├── manager/                        # 管理器
+│   │   │   │   ├── SimTimerScheduler.java
+│   │   │   │   └── TcpConnectionManager.java
+│   │   │   ├── process/                        # 消息处理
+│   │   │   │   ├── DeviceStateHolder.java
+│   │   │   │   ├── DeviceTimerFacade.java
+│   │   │   │   ├── MsgHandlerGroup.java
+│   │   │   │   └── SimDevMsgProcessor.java
+│   │   │   ├── req/                            # 模拟器请求（平台下发指令）(21个文件)
+│   │   │   │   ├── SAALoginReq.java
+│   │   │   │   ├── SABHeartbeatReq.java
+│   │   │   │   ├── SACBillingModeValidReq.java
+│   │   │   │   ├── SADBillingModelReq.java
+│   │   │   │   ├── SAERealTimeMonitorReq.java
+│   │   │   │   ├── SANRequestChargingReq.java
+│   │   │   │   ├── ······
+│   │   │   │
+│   │   │   └── res/                            # 模拟器响应（模拟充电桩上报）(29个文件)
+│   │   │       ├── SAALoginRes.java
+│   │   │       ├── SABHeartbeatRes.java
+│   │   │       ├── SACBillingModeValidRes.java
+│   │   │       ├── SADBillingModelRes.java
+│   │   │       ├── SAERealTimeMonitorRes.java
+│   │   │       ├── ······
+│   │   │
+│   │   └── util/                               # 工具类
+│   │       ├── CRCUtil.java                    # CRC校验工具
+│   │       ├── SimulatorUtil.java              # 模拟器工具
+│   │       ├── StringUtil.java                 # 字符串工具
+│   │       └── TimeUtil.java                   # 时间工具
+│   │
+│   └── resources/
+│
+├── LICENSE
+├── pom.xml                                     # Maven配置文件
+└── README.md                                   # 项目说明文档
 ```
 
 ---
