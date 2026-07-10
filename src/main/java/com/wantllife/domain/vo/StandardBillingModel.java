@@ -23,9 +23,9 @@ public class StandardBillingModel {
     private Long modeId;
     /** 策略编号 */
     private Long strategyId;
-    /** 时段类型 */
+    /** 时段类型(1.尖 2.峰 3.平 4.谷) */
     private Integer timeSlotType;
-    /** 时段名称 */
+    /** 时段名称(尖 峰 平 谷) */
     private String timeSlotName;
     /** 开始时间 */
     private String startTime;
