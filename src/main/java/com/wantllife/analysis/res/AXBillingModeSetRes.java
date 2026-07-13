@@ -84,23 +84,65 @@ public class AXBillingModeSetRes extends FrameHeader {
         res.setDeviceId(deviceId);
         res.setBillingModeId(String.valueOf(billingModel.getStrategyId()));
 
+        // 标记每种费率是否已初始化赋值
+        boolean sharpSet = false;
+        boolean peakSet = false;
+        boolean flatSet = false;
+        boolean valleySet = false;
+
         for (StandardBillingModel mode : billingModelList) {
-            switch (mode.getTimeSlotType()) {
-                case 1:
-                    res.setSharpEleFee(mode.getElectricityFee());
-                    res.setSharpServiceFee(mode.getServiceFee());
+            int type = mode.getTimeSlotType();
+            BigDecimal eleFee = mode.getElectricityFee();
+            BigDecimal serFee = mode.getServiceFee();
+            switch (type) {
+                case 1: // 尖
+                    if (!sharpSet) {
+                        res.setSharpEleFee(eleFee);
+                        res.setSharpServiceFee(serFee);
+                        sharpSet = true;
+                    } else {
+                        // 校验同类型所有分段电价必须完全一致
+                        if (res.getSharpEleFee().compareTo(eleFee) != 0
+                                || res.getSharpServiceFee().compareTo(serFee) != 0) {
+                            throw new IllegalArgumentException("计费模型尖时段多分段电价/服务费不一致，下发报文非法");
+                        }
+                    }
                     break;
-                case 2:
-                    res.setPeakEleFee(mode.getElectricityFee());
-                    res.setPeakServiceFee(mode.getServiceFee());
+                case 2: // 峰
+                    if (!peakSet) {
+                        res.setPeakEleFee(eleFee);
+                        res.setPeakServiceFee(serFee);
+                        peakSet = true;
+                    } else {
+                        if (res.getPeakEleFee().compareTo(eleFee) != 0
+                                || res.getPeakServiceFee().compareTo(serFee) != 0) {
+                            throw new IllegalArgumentException("计费模型峰时段多分段电价/服务费不一致，下发报文非法");
+                        }
+                    }
                     break;
-                case 3:
-                    res.setFlatEleFee(mode.getElectricityFee());
-                    res.setFlatServiceFee(mode.getServiceFee());
+                case 3: // 平
+                    if (!flatSet) {
+                        res.setFlatEleFee(eleFee);
+                        res.setFlatServiceFee(serFee);
+                        flatSet = true;
+                    } else {
+                        if (res.getFlatEleFee().compareTo(eleFee) != 0
+                                || res.getFlatServiceFee().compareTo(serFee) != 0) {
+                            throw new IllegalArgumentException("计费模型平时段多分段电价/服务费不一致，下发报文非法");
+                        }
+                    }
                     break;
-                case 4:
-                    res.setValleyEleFee(mode.getElectricityFee());
-                    res.setValleyServiceFee(mode.getServiceFee());
+                case 4: // 谷
+                    if (!valleySet) {
+                        res.setValleyEleFee(eleFee);
+                        res.setValleyServiceFee(serFee);
+                        valleySet = true;
+                    } else {
+                        if (res.getValleyEleFee().compareTo(eleFee) != 0
+                                || res.getValleyServiceFee().compareTo(serFee) != 0) {
+                            throw new IllegalArgumentException("计费模型谷时段多分段电价/服务费不一致，下发报文非法");
+                        }
+                    }
                     break;
             }
         }

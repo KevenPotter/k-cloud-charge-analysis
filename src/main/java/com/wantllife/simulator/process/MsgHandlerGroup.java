@@ -4,9 +4,9 @@ import com.wantllife.domain.vo.StandardBillingModel;
 import com.wantllife.domain.vo.StandardRealTimeMonitor;
 import com.wantllife.domain.vo.StandardTradeRecord;
 import com.wantllife.simulator.business.ChargeSessionManager;
+import com.wantllife.simulator.enums.DeviceState;
 import com.wantllife.simulator.req.*;
 import com.wantllife.simulator.res.*;
-import com.wantllife.simulator.enums.DeviceState;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
@@ -117,35 +117,9 @@ public class MsgHandlerGroup {
         deviceStateHolder.switchState(DeviceState.READY);
         timerFacade.startHeartbeatTimer();
 
-        // 1.先拿到当前应答对象
         List<StandardBillingModel> modelList = req.getBillingModelList();
-
-        // 2.遍历填充时段字符串
-        String sharpTime = null, peakTime = null, flatTime = null, valleyTime = null;
-        for (StandardBillingModel item : modelList) {
-            String timeStr = item.getStartTime() + "-" + item.getEndTime();
-            switch (item.getTimeSlotType()) {
-                case 1:
-                    sharpTime = timeStr;
-                    break;
-                case 2:
-                    peakTime = timeStr;
-                    break;
-                case 3:
-                    flatTime = timeStr;
-                    break;
-                case 4:
-                    valleyTime = timeStr;
-                    break;
-            }
-        }
-        // 3.一次性完成电价、服务费、时段、损耗全部赋值
-        chargeSessionManager.setBillingModelData(
-                req.getSharpEleFee(), req.getSharpServiceFee(), sharpTime,
-                req.getPeakEleFee(), req.getPeakServiceFee(), peakTime,
-                req.getFlatEleFee(), req.getFlatServiceFee(), flatTime,
-                req.getValleyEleFee(), req.getValleyServiceFee(), valleyTime,
-                req.getLossRatio());
+        Integer lossRatio = req.getLossRatio();
+        chargeSessionManager.setBillingModelData(modelList, lossRatio);
     }
 
     /**
@@ -368,6 +342,9 @@ public class MsgHandlerGroup {
      * @date 2026-07-07 14:12:40
      */
     public void handleBillingModeSet(SAXBillingModeSetReq req) {
+        List<StandardBillingModel> modelList = req.getBillingModelList();
+        Integer lossRatio = req.getLossRatio();
+        chargeSessionManager.setBillingModelData(modelList, lossRatio);
         sendMsgCallback.accept(SAXBillingModeSetRes.buildCommand(req));
     }
 

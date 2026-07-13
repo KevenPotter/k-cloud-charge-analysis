@@ -11,8 +11,9 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 
 import static com.wantllife.constant.CloudFastChargingConstants.LOG_CAPACITY;
 import static com.wantllife.constant.ColorConstants.PURPLE;
@@ -171,62 +172,32 @@ public class SAXBillingModeSetReq extends FrameHeader {
         }
 
         // 2.按类型分组
-        Map<Integer, List<Segment>> group = new HashMap<>();
-        for (Segment s : segments) {
-            group.computeIfAbsent(s.type, k -> new ArrayList<>()).add(s);
-        }
-
-        // 3.合并跨天：首尾同类型 → 合并
         List<StandardBillingModel> result = new ArrayList<>();
-        for (Map.Entry<Integer, List<Segment>> entry : group.entrySet()) {
-            int type = entry.getKey();
-            List<Segment> list = entry.getValue();
-            // 判断是否跨天：首段从0开始，尾段到47结束
-            boolean cross = list.size() >= 2
-                    && list.get(0).start == 0
-                    && list.get(list.size() - 1).end == 47;
-            if (cross) {
-                // 合并成：尾段start → 首段end+1
-                Segment first = list.get(0);
-                Segment last = list.get(list.size() - 1);
-                String startTime = slotToTime(last.start);
-                String endTime = slotToTime(first.end + 1);
-                result.add(buildModel(type, startTime, endTime));
-            } else {
-                // 普通：只取第一段（同一类型只会一段）
-                Segment s = list.get(0);
-                String startTime = slotToTime(s.start);
-                String endTime = slotToTime(s.end + 1);
-                result.add(buildModel(type, startTime, endTime));
-            }
+        for (Segment s : segments) {
+            int type = s.type;
+            String startTime = slotToTime(s.start);
+            String endTime = slotToTime(s.end + 1);
+            result.add(buildModel(type, startTime, endTime));
         }
 
-        // 4.保证4类都存在（缺的补空）
-        ensureType(result, SHARP);
-        ensureType(result, PEAK);
-        ensureType(result, FLAT);
-        ensureType(result, VALLEY);
+        // 3. 按起始时间从小到大排序，保证时段顺序连贯
+        result.sort(Comparator.comparing(m -> timeToMin(m.getStartTime())));
 
-        // 5.赋值给最终列表
-        billingModelList = result.stream()
-                .sorted(Comparator.comparingInt(StandardBillingModel::getTimeSlotType))
-                .collect(Collectors.toList());
+        // 4. 赋值给最终列表，不再强制补单条类型时段
+        billingModelList = result;
     }
 
     /**
-     * 补全缺失类型
-     * 确保尖峰平谷四种类型始终存在，避免解析缺失报错
+     * 将HH:mm时间字符串转为当日总分钟数，用于时段排序
      *
-     * @param list 解析后的时段列表
-     * @param type 时段类型 0尖1峰2平3谷
      * @author KevenPotter
-     * @date 2026-06-05 10:00:58
+     * @date 2026-07-13 09:29:30
      */
-    private void ensureType(List<StandardBillingModel> list, int type) {
-        boolean exist = list.stream().anyMatch(m -> m.getTimeSlotType() == type + 1);
-        if (!exist) {
-            list.add(buildModel(type, "00:00", "00:00"));
-        }
+    private static int timeToMin(String time) {
+        String[] arr = time.split(":");
+        int h = Integer.parseInt(arr[0]);
+        int m = Integer.parseInt(arr[1]);
+        return h * 60 + m;
     }
 
     /**

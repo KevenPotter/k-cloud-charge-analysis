@@ -1,5 +1,6 @@
 package com.wantllife.simulator.business;
 
+import com.wantllife.domain.vo.StandardBillingModel;
 import com.wantllife.domain.vo.StandardRealTimeMonitor;
 import com.wantllife.domain.vo.StandardTradeRecord;
 import com.wantllife.enums.TimeSegment;
@@ -15,6 +16,10 @@ import java.math.RoundingMode;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import static com.wantllife.constant.CloudFastChargingConstants.SIM_PROJECT_NAME;
@@ -47,6 +52,12 @@ public class ChargeSessionManager {
     private static final int SCALE_4 = 4;
     /** 四舍五入模式 */
     private static final RoundingMode ROUND_HALF_UP = RoundingMode.HALF_UP;
+    /** 缓存每一分钟对应的分时类型 key=充电分钟起始时刻 */
+    @SuppressWarnings("FieldMayBeFinal")
+    private Map<LocalDateTime, TimeSegment> minuteSegCache;
+    /** 缓存每一分钟对应的电费 key=充电分钟起始时刻 */
+    @SuppressWarnings("FieldMayBeFinal")
+    private Map<LocalDateTime, BigDecimal> minuteCostCache;
 
     /** 是否正在充电中 */
     @Getter
@@ -68,40 +79,33 @@ public class ChargeSessionManager {
     @Getter
     private BigDecimal chargedAmount = BigDecimal.ZERO;
 
-    /** 尖 */
-    private BigDecimal sharpEleFee = BigDecimal.ZERO;
-    private BigDecimal sharpServiceFee = BigDecimal.ZERO;
-    private String sharpTimeRange;
-    /** 峰 */
-    private BigDecimal peakEleFee = BigDecimal.ZERO;
-    private BigDecimal peakServiceFee = BigDecimal.ZERO;
-    private String peakTimeRange;
-    /** 平 */
-    private BigDecimal flatEleFee = BigDecimal.ZERO;
-    private BigDecimal flatServiceFee = BigDecimal.ZERO;
-    private String flatTimeRange;
-    /** 谷 */
-    private BigDecimal valleyEleFee = BigDecimal.ZERO;
-    private BigDecimal valleyServiceFee = BigDecimal.ZERO;
-    private String valleyTimeRange;
     /** 损耗比例 */
     private Integer lossRatio = 0;
-    /** 尖时段累计电量 */
-    private BigDecimal sharpElectric = BigDecimal.ZERO;
-    /** 峰时段累计电量 */
-    private BigDecimal peakElectric = BigDecimal.ZERO;
-    /** 平时段累计电量 */
-    private BigDecimal flatElectric = BigDecimal.ZERO;
-    /** 谷时段累计电量 */
-    private BigDecimal valleyElectric = BigDecimal.ZERO;
-
     /** 定时调度器,用于启停实时上报定时任务 */
     private final SimTimerScheduler timerScheduler;
+    /** 统一管理4类分时配置 */
+    @SuppressWarnings("FieldMayBeFinal")
+    private TimeSegmentRate[] rateArr = new TimeSegmentRate[4];
 
-    /** 实时报文发送回调，交由上层处理器统一发送字节流 */
+    /**
+     * 分时费率封装实体，支持多段不连续时段
+     * 数组下标映射：0=尖 SHARP、1=峰 PEAK、2=平 FLAT、3=谷 VALLEY
+     */
+    private static class TimeSegmentRate {
+        // 电价
+        BigDecimal eleFee = BigDecimal.ZERO;
+        // 服务费
+        BigDecimal serviceFee = BigDecimal.ZERO;
+        // 多段时段集合 格式["16:00-17:00","22:00-23:00"]
+        List<String> timeRanges = new ArrayList<>();
+        // 本次充电该类型累计电量
+        BigDecimal electric = BigDecimal.ZERO;
+    }
+
+    /** 实时报文发送回调,交由上层处理器统一发送字节流 */
     public interface MonitorDataSendCallback {
         /**
-         * 实时监测报文就绪，执行发送
+         * 实时监测报文就绪,执行发送
          *
          * @param data 上行报文字节数组
          * @author KevenPotter
@@ -120,6 +124,11 @@ public class ChargeSessionManager {
      */
     public ChargeSessionManager(SimTimerScheduler timerScheduler) {
         this.timerScheduler = timerScheduler;
+        this.minuteSegCache = new HashMap<>();
+        this.minuteCostCache = new HashMap<>();
+        for (int i = 0; i < 4; i++) {
+            rateArr[i] = new TimeSegmentRate();
+        }
     }
 
     /**
@@ -151,28 +160,16 @@ public class ChargeSessionManager {
         this.remainingMinutes = TOTAL_CHARGE_MINUTES;
         this.chargingDegree = BigDecimal.ZERO;
         this.chargedAmount = BigDecimal.ZERO;
-
-        // 清空分时累计电量
-        this.sharpElectric = BigDecimal.ZERO;
-        this.peakElectric = BigDecimal.ZERO;
-        this.flatElectric = BigDecimal.ZERO;
-        this.valleyElectric = BigDecimal.ZERO;
-
-        // 清空电价配置
-        this.sharpEleFee = BigDecimal.ZERO;
-        this.sharpServiceFee = BigDecimal.ZERO;
-        this.sharpTimeRange = null;
-        this.peakEleFee = BigDecimal.ZERO;
-        this.peakServiceFee = BigDecimal.ZERO;
-        this.peakTimeRange = null;
-        this.flatEleFee = BigDecimal.ZERO;
-        this.flatServiceFee = BigDecimal.ZERO;
-        this.flatTimeRange = null;
-        this.valleyEleFee = BigDecimal.ZERO;
-        this.valleyServiceFee = BigDecimal.ZERO;
-        this.valleyTimeRange = null;
         this.lossRatio = 0;
-
+        // 批量重置所有分时电价、时段、累计电量
+        for (TimeSegmentRate rate : rateArr) {
+            rate.eleFee = BigDecimal.ZERO;
+            rate.serviceFee = BigDecimal.ZERO;
+            rate.timeRanges.clear();
+            rate.electric = BigDecimal.ZERO;
+        }
+        minuteSegCache.clear();
+        minuteCostCache.clear();
         // 停止实时上报定时
         timerScheduler.stopRealTimeMonitorTimer();
     }
@@ -194,10 +191,13 @@ public class ChargeSessionManager {
         this.chargingDegree = BigDecimal.ZERO;
         this.chargedAmount = BigDecimal.ZERO;
 
-        this.sharpElectric = BigDecimal.ZERO;
-        this.peakElectric = BigDecimal.ZERO;
-        this.flatElectric = BigDecimal.ZERO;
-        this.valleyElectric = BigDecimal.ZERO;
+        // 重置本次充电分时累计电量
+        for (TimeSegmentRate rate : rateArr) {
+            rate.electric = BigDecimal.ZERO;
+        }
+
+        this.minuteSegCache.clear();
+        this.minuteCostCache.clear();
 
         startRealTimeMonitorTimer();
     }
@@ -243,47 +243,56 @@ public class ChargeSessionManager {
     }
 
     /**
-     * 设置计费模型全套电价、时段、损耗配置
+     * 唯一标准设置计费模型方法,支持多段不连续分时
      *
-     * @param sharpEleFee      尖电价
-     * @param sharpServiceFee  尖服务费
-     * @param sharpTimeRange   尖时段
-     * @param peakEleFee       峰电价
-     * @param peakServiceFee   峰服务费
-     * @param peakTimeRange    峰时段
-     * @param flatEleFee       平电价
-     * @param flatServiceFee   平服务费
-     * @param flatTimeRange    平时段
-     * @param valleyEleFee     谷电价
-     * @param valleyServiceFee 谷服务费
-     * @param valleyTimeRange  谷时段
-     * @param lossRatio        损耗比例
+     * @param billingModelList SADBillingModelReq/SAXBillingModeSetReq解析后的全部分时列表
+     * @param lossRatio        损耗百分比
      * @author KevenPotter
-     * @date 2026-07-02 15:45:38
+     * @date 2026-07-13 15:14:05
      */
-    public void setBillingModelData(
-            BigDecimal sharpEleFee, BigDecimal sharpServiceFee, String sharpTimeRange,
-            BigDecimal peakEleFee, BigDecimal peakServiceFee, String peakTimeRange,
-            BigDecimal flatEleFee, BigDecimal flatServiceFee, String flatTimeRange,
-            BigDecimal valleyEleFee, BigDecimal valleyServiceFee, String valleyTimeRange,
-            Integer lossRatio) {
-        this.sharpEleFee = sharpEleFee;
-        this.sharpServiceFee = sharpServiceFee;
-        this.sharpTimeRange = sharpTimeRange;
-
-        this.peakEleFee = peakEleFee;
-        this.peakServiceFee = peakServiceFee;
-        this.peakTimeRange = peakTimeRange;
-
-        this.flatEleFee = flatEleFee;
-        this.flatServiceFee = flatServiceFee;
-        this.flatTimeRange = flatTimeRange;
-
-        this.valleyEleFee = valleyEleFee;
-        this.valleyServiceFee = valleyServiceFee;
-        this.valleyTimeRange = valleyTimeRange;
-
+    public void setBillingModelData(List<StandardBillingModel> billingModelList, Integer lossRatio) {
+        if (billingModelList == null) {
+            throw new IllegalArgumentException("计费模型列表不能为空");
+        }
+        // 清空旧时段数据，防止脏数据残留
+        for (TimeSegmentRate rate : rateArr) {
+            rate.timeRanges.clear();
+        }
         this.lossRatio = lossRatio;
+
+        // 按类型归类，填充电价与多段时段
+        for (StandardBillingModel model : billingModelList) {
+            int typeCode = model.getTimeSlotType();
+            int idx;
+            switch (typeCode) {
+                // 尖
+                case 1:
+                    idx = 0;
+                    break;
+                // 峰
+                case 2:
+                    idx = 1;
+                    break;
+                // 平
+                case 3:
+                    idx = 2;
+                    break;
+                // 谷
+                case 4:
+                    idx = 3;
+                    break;
+                default:
+                    throw new IllegalArgumentException("非法分时类型:" + typeCode);
+            }
+            TimeSegmentRate target = rateArr[idx];
+            // 同类型多段电价统一,仅第一次赋值
+            if (target.eleFee.compareTo(BigDecimal.ZERO) == 0) {
+                target.eleFee = model.getElectricityFee();
+                target.serviceFee = model.getServiceFee();
+            }
+            // 追加当前分段
+            target.timeRanges.add(model.getStartTime() + "-" + model.getEndTime());
+        }
     }
 
     /**
@@ -332,7 +341,7 @@ public class ChargeSessionManager {
                     monitorDataSendCallback.sendMessage(resBytes);
                 }
             } catch (Exception e) {
-                log.error("{} {} {} StartRealTimeMonitorTimer Exception", SIM_TIP_ICON, SIM_PROJECT_NAME, deviceId, e);
+                log.error("{} {} {} StartRealTimeMonitorTimer Exception. DeviceId: {}, TradeNo: {}, LossRatio: {}", SIM_TIP_ICON, SIM_PROJECT_NAME, deviceId, deviceId, tradeNo, lossRatio, e);
             }
         };
         timerScheduler.startRealTimeMonitorTimer(monitorTask, 0, TIMER_REAL_TIME_MONITOR_SECOND, TimeUnit.SECONDS);
@@ -347,28 +356,50 @@ public class ChargeSessionManager {
      * @date 2026-07-02 15:51:11
      */
     private BigDecimal getSingleMinuteCost(LocalDateTime loopMin) {
-        TimeSegment seg;
-        if (sharpTimeRange != null && peakTimeRange != null && flatTimeRange != null && valleyTimeRange != null) {
-            seg = TimeSegment.getTimeSegment(loopMin, sharpTimeRange, peakTimeRange, flatTimeRange, valleyTimeRange);
-        } else {
-            seg = TimeSegment.FLAT;
+        // 1.费用缓存命中直接返回,跳过全部计算逻辑
+        if (minuteCostCache.containsKey(loopMin)) {
+            return minuteCostCache.get(loopMin);
         }
 
+        TimeSegment seg;
+        // 2.分时缓存命中,直接复用已判定时段
+        if (minuteSegCache.containsKey(loopMin)) {
+            seg = minuteSegCache.get(loopMin);
+        } else {
+            // 3.无缓存：执行一次分时判定并存入缓存
+            List<String> sharpRanges = rateArr[0].timeRanges;
+            List<String> peakRanges = rateArr[1].timeRanges;
+            List<String> flatRanges = rateArr[2].timeRanges;
+            List<String> valleyRanges = rateArr[3].timeRanges;
+            boolean hasConfig = !sharpRanges.isEmpty() || !peakRanges.isEmpty()
+                    || !flatRanges.isEmpty() || !valleyRanges.isEmpty();
+            if (hasConfig) {
+                seg = TimeSegment.getTimeSegment(loopMin, sharpRanges, peakRanges, flatRanges, valleyRanges);
+            } else {
+                seg = TimeSegment.FLAT;
+            }
+            minuteSegCache.put(loopMin, seg);
+        }
+
+        // 4.根据分时获取单价,计算单分钟电费
         BigDecimal unitTotalPrice;
         switch (seg) {
             case SHARP:
-                unitTotalPrice = sharpEleFee.add(sharpServiceFee);
+                unitTotalPrice = rateArr[0].eleFee.add(rateArr[0].serviceFee);
                 break;
             case PEAK:
-                unitTotalPrice = peakEleFee.add(peakServiceFee);
+                unitTotalPrice = rateArr[1].eleFee.add(rateArr[1].serviceFee);
                 break;
             case VALLEY:
-                unitTotalPrice = valleyEleFee.add(valleyServiceFee);
+                unitTotalPrice = rateArr[3].eleFee.add(rateArr[3].serviceFee);
                 break;
             default:
-                unitTotalPrice = flatEleFee.add(flatServiceFee);
+                unitTotalPrice = rateArr[2].eleFee.add(rateArr[2].serviceFee);
         }
-        return PER_MIN_ELE.multiply(unitTotalPrice);
+        BigDecimal singleMinCost = PER_MIN_ELE.multiply(unitTotalPrice).setScale(SCALE_4, ROUND_HALF_UP);
+        // 存入费用缓存,下次直接读取
+        minuteCostCache.put(loopMin, singleMinCost);
+        return singleMinCost;
     }
 
     /**
@@ -384,28 +415,41 @@ public class ChargeSessionManager {
         if (chargeStartTime == null || chargeEndTime == null) {
             return;
         }
-        if (sharpTimeRange == null || peakTimeRange == null || flatTimeRange == null || valleyTimeRange == null) {
+        List<String> sharpRanges = rateArr[0].timeRanges;
+        List<String> peakRanges = rateArr[1].timeRanges;
+        List<String> flatRanges = rateArr[2].timeRanges;
+        List<String> valleyRanges = rateArr[3].timeRanges;
+        boolean hasConfig = !sharpRanges.isEmpty() || !peakRanges.isEmpty()
+                || !flatRanges.isEmpty() || !valleyRanges.isEmpty();
+        if (!hasConfig) {
             long totalMin = ChronoUnit.MINUTES.between(chargeStartTime, chargeEndTime);
-            this.flatElectric = BigDecimal.valueOf(totalMin).multiply(PER_MIN_ELE);
+            rateArr[2].electric = BigDecimal.valueOf(totalMin).multiply(PER_MIN_ELE);
             return;
         }
 
         long totalMin = ChronoUnit.MINUTES.between(chargeStartTime, chargeEndTime);
         LocalDateTime currentMin = chargeStartTime;
         for (long i = 0; i < totalMin; i++) {
-            TimeSegment seg = TimeSegment.getTimeSegment(currentMin, sharpTimeRange, peakTimeRange, flatTimeRange, valleyTimeRange);
+            // 复用已缓存分时数据,消除重复区间解析
+            TimeSegment seg;
+            if (minuteSegCache.containsKey(currentMin)) {
+                seg = minuteSegCache.get(currentMin);
+            } else {
+                seg = TimeSegment.getTimeSegment(currentMin, sharpRanges, peakRanges, flatRanges, valleyRanges);
+                minuteSegCache.put(currentMin, seg);
+            }
             switch (seg) {
                 case SHARP:
-                    sharpElectric = sharpElectric.add(PER_MIN_ELE).setScale(SCALE_4, ROUND_HALF_UP);
+                    rateArr[0].electric = rateArr[0].electric.add(PER_MIN_ELE).setScale(SCALE_4, ROUND_HALF_UP);
                     break;
                 case PEAK:
-                    peakElectric = peakElectric.add(PER_MIN_ELE).setScale(SCALE_4, ROUND_HALF_UP);
+                    rateArr[1].electric = rateArr[1].electric.add(PER_MIN_ELE).setScale(SCALE_4, ROUND_HALF_UP);
                     break;
                 case FLAT:
-                    flatElectric = flatElectric.add(PER_MIN_ELE).setScale(SCALE_4, ROUND_HALF_UP);
+                    rateArr[2].electric = rateArr[2].electric.add(PER_MIN_ELE).setScale(SCALE_4, ROUND_HALF_UP);
                     break;
                 case VALLEY:
-                    valleyElectric = valleyElectric.add(PER_MIN_ELE).setScale(SCALE_4, ROUND_HALF_UP);
+                    rateArr[3].electric = rateArr[3].electric.add(PER_MIN_ELE).setScale(SCALE_4, ROUND_HALF_UP);
                     break;
             }
             currentMin = currentMin.plusMinutes(1);
@@ -431,24 +475,28 @@ public class ChargeSessionManager {
         splitElectricByTimeSegment();
 
         BigDecimal ratioDivisor = new BigDecimal("100");
+        TimeSegmentRate sharpRate = rateArr[0];
+        TimeSegmentRate peakRate = rateArr[1];
+        TimeSegmentRate flatRate = rateArr[2];
+        TimeSegmentRate valleyRate = rateArr[3];
         BigDecimal lossRate = new BigDecimal(lossRatio).divide(ratioDivisor, 8, ROUND_HALF_UP);
 
         // 2. 计算各段金额、损耗电量（统一百分比换算）
         // 尖
-        BigDecimal sharpLossEle = sharpElectric.multiply(lossRate).setScale(SCALE_4, ROUND_HALF_UP);
-        BigDecimal sharpAmt = sharpElectric.multiply(sharpEleFee.add(sharpServiceFee)).setScale(SCALE_4, ROUND_HALF_UP);
+        BigDecimal sharpLossEle = sharpRate.electric.multiply(lossRate).setScale(SCALE_4, ROUND_HALF_UP);
+        BigDecimal sharpAmt = sharpRate.electric.multiply(sharpRate.eleFee.add(sharpRate.serviceFee)).setScale(SCALE_4, ROUND_HALF_UP);
         // 峰
-        BigDecimal peakLossEle = peakElectric.multiply(lossRate).setScale(SCALE_4, ROUND_HALF_UP);
-        BigDecimal peakAmt = peakElectric.multiply(peakEleFee.add(peakServiceFee)).setScale(SCALE_4, ROUND_HALF_UP);
+        BigDecimal peakLossEle = peakRate.electric.multiply(lossRate).setScale(SCALE_4, ROUND_HALF_UP);
+        BigDecimal peakAmt = peakRate.electric.multiply(peakRate.eleFee.add(peakRate.serviceFee)).setScale(SCALE_4, ROUND_HALF_UP);
         // 平
-        BigDecimal flatLossEle = flatElectric.multiply(lossRate).setScale(SCALE_4, ROUND_HALF_UP);
-        BigDecimal flatAmt = flatElectric.multiply(flatEleFee.add(flatServiceFee)).setScale(SCALE_4, ROUND_HALF_UP);
+        BigDecimal flatLossEle = flatRate.electric.multiply(lossRate).setScale(SCALE_4, ROUND_HALF_UP);
+        BigDecimal flatAmt = flatRate.electric.multiply(flatRate.eleFee.add(flatRate.serviceFee)).setScale(SCALE_4, ROUND_HALF_UP);
         // 谷
-        BigDecimal valleyLossEle = valleyElectric.multiply(lossRate).setScale(SCALE_4, ROUND_HALF_UP);
-        BigDecimal valleyAmt = valleyElectric.multiply(valleyEleFee.add(valleyServiceFee)).setScale(SCALE_4, ROUND_HALF_UP);
+        BigDecimal valleyLossEle = valleyRate.electric.multiply(lossRate).setScale(SCALE_4, ROUND_HALF_UP);
+        BigDecimal valleyAmt = valleyRate.electric.multiply(valleyRate.eleFee.add(valleyRate.serviceFee)).setScale(SCALE_4, ROUND_HALF_UP);
 
         // 汇总总电量、总损耗、总金额
-        BigDecimal totalElectricity = sharpElectric.add(peakElectric).add(flatElectric).add(valleyElectric);
+        BigDecimal totalElectricity = sharpRate.electric.add(peakRate.electric).add(flatRate.electric).add(valleyRate.electric);
         BigDecimal totalLossEle = sharpLossEle.add(peakLossEle).add(flatLossEle).add(valleyLossEle);
         BigDecimal totalAmt = sharpAmt.add(peakAmt).add(flatAmt).add(valleyAmt);
 
@@ -460,23 +508,23 @@ public class ChargeSessionManager {
         record.setStartTime(Timestamp.valueOf(chargeStartTime));
         record.setEndTime(Timestamp.valueOf(chargeEndTime));
 
-        record.setSharpUnitPrice(sharpEleFee);
-        record.setSharpElectricity(sharpElectric);
+        record.setSharpUnitPrice(sharpRate.eleFee);
+        record.setSharpElectricity(sharpRate.electric);
         record.setSharpLossElectricity(sharpLossEle);
         record.setSharpAmount(sharpAmt);
 
-        record.setPeakUnitPrice(peakEleFee);
-        record.setPeakElectricity(peakElectric);
+        record.setPeakUnitPrice(peakRate.eleFee);
+        record.setPeakElectricity(peakRate.electric);
         record.setPeakLossElectricity(peakLossEle);
         record.setPeakAmount(peakAmt);
 
-        record.setFlatUnitPrice(flatEleFee);
-        record.setFlatElectricity(flatElectric);
+        record.setFlatUnitPrice(flatRate.eleFee);
+        record.setFlatElectricity(flatRate.electric);
         record.setFlatLossElectricity(flatLossEle);
         record.setFlatAmount(flatAmt);
 
-        record.setValleyUnitPrice(valleyEleFee);
-        record.setValleyElectricity(valleyElectric);
+        record.setValleyUnitPrice(valleyRate.eleFee);
+        record.setValleyElectricity(valleyRate.electric);
         record.setValleyLossElectricity(valleyLossEle);
         record.setValleyAmount(valleyAmt);
 

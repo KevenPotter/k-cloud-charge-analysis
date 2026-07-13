@@ -84,23 +84,65 @@ public class ADBillingModelRes extends FrameHeader {
         res.setDeviceId(req.getDeviceId());
         res.setBillingModeId(String.valueOf(billingModel.getStrategyId()));
 
+        // 标记每种费率是否已初始化赋值
+        boolean sharpSet = false;
+        boolean peakSet = false;
+        boolean flatSet = false;
+        boolean valleySet = false;
+
         for (StandardBillingModel mode : billingModelList) {
-            switch (mode.getTimeSlotType()) {
-                case 1:
-                    res.setSharpEleFee(mode.getElectricityFee());
-                    res.setSharpServiceFee(mode.getServiceFee());
+            int type = mode.getTimeSlotType();
+            BigDecimal eleFee = mode.getElectricityFee();
+            BigDecimal serFee = mode.getServiceFee();
+            switch (type) {
+                case 1: // 尖
+                    if (!sharpSet) {
+                        res.setSharpEleFee(eleFee);
+                        res.setSharpServiceFee(serFee);
+                        sharpSet = true;
+                    } else {
+                        // 校验同类型所有分段电价必须完全一致
+                        if (res.getSharpEleFee().compareTo(eleFee) != 0
+                                || res.getSharpServiceFee().compareTo(serFee) != 0) {
+                            throw new IllegalArgumentException("计费模型尖时段多分段电价/服务费不一致，下发报文非法");
+                        }
+                    }
                     break;
-                case 2:
-                    res.setPeakEleFee(mode.getElectricityFee());
-                    res.setPeakServiceFee(mode.getServiceFee());
+                case 2: // 峰
+                    if (!peakSet) {
+                        res.setPeakEleFee(eleFee);
+                        res.setPeakServiceFee(serFee);
+                        peakSet = true;
+                    } else {
+                        if (res.getPeakEleFee().compareTo(eleFee) != 0
+                                || res.getPeakServiceFee().compareTo(serFee) != 0) {
+                            throw new IllegalArgumentException("计费模型峰时段多分段电价/服务费不一致，下发报文非法");
+                        }
+                    }
                     break;
-                case 3:
-                    res.setFlatEleFee(mode.getElectricityFee());
-                    res.setFlatServiceFee(mode.getServiceFee());
+                case 3: // 平
+                    if (!flatSet) {
+                        res.setFlatEleFee(eleFee);
+                        res.setFlatServiceFee(serFee);
+                        flatSet = true;
+                    } else {
+                        if (res.getFlatEleFee().compareTo(eleFee) != 0
+                                || res.getFlatServiceFee().compareTo(serFee) != 0) {
+                            throw new IllegalArgumentException("计费模型平时段多分段电价/服务费不一致，下发报文非法");
+                        }
+                    }
                     break;
-                case 4:
-                    res.setValleyEleFee(mode.getElectricityFee());
-                    res.setValleyServiceFee(mode.getServiceFee());
+                case 4: // 谷
+                    if (!valleySet) {
+                        res.setValleyEleFee(eleFee);
+                        res.setValleyServiceFee(serFee);
+                        valleySet = true;
+                    } else {
+                        if (res.getValleyEleFee().compareTo(eleFee) != 0
+                                || res.getValleyServiceFee().compareTo(serFee) != 0) {
+                            throw new IllegalArgumentException("计费模型谷时段多分段电价/服务费不一致，下发报文非法");
+                        }
+                    }
                     break;
             }
         }
@@ -293,16 +335,16 @@ public class ADBillingModelRes extends FrameHeader {
         for (StandardBillingModel mode : billingModelList) {
             switch (mode.getTimeSlotType()) {
                 case 1:
-                    sb.append(String.format("🟠%s 计费模型应答  尖时间段    sharpTime                    : %s-%s\n", devLabel, mode.getStartTime(), mode.getEndTime()));
+                    sb.append(String.format("🟠%s 计费模型设置  尖时间段    sharpTime                    : %s-%s\n", devLabel, mode.getStartTime(), mode.getEndTime()));
                     break;
                 case 2:
-                    sb.append(String.format("🟠%s 计费模型应答  峰时间段    peakTime                     : %s-%s\n", devLabel, mode.getStartTime(), mode.getEndTime()));
+                    sb.append(String.format("🟠%s 计费模型设置  峰时间段    peakTime                     : %s-%s\n", devLabel, mode.getStartTime(), mode.getEndTime()));
                     break;
                 case 3:
-                    sb.append(String.format("🟠%s 计费模型应答  平时间段    flatTime                     : %s-%s\n", devLabel, mode.getStartTime(), mode.getEndTime()));
+                    sb.append(String.format("🟠%s 计费模型设置  平时间段    flatTime                     : %s-%s\n", devLabel, mode.getStartTime(), mode.getEndTime()));
                     break;
                 case 4:
-                    sb.append(String.format("🟠%s 计费模型应答  谷时间段    valleyTime                   : %s-%s\n", devLabel, mode.getStartTime(), mode.getEndTime()));
+                    sb.append(String.format("🟠%s 计费模型设置  谷时间段    valleyTime                   : %s-%s\n", devLabel, mode.getStartTime(), mode.getEndTime()));
                     break;
             }
         }
