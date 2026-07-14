@@ -101,6 +101,8 @@ public class KCloudChargeConfig {
         config.setSimulatorLogOutput(true);
         // 模拟器-心跳日志开关
         config.setSimulatorHeartbeatLogOutput(false);
+        // 自定义单次最大充电时长(分钟)
+        config.setMaxChargeMinutes(600);
         CloudChargeHolder.setGlobalConfig(config);
         return config;
     }
