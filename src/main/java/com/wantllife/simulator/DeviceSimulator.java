@@ -146,4 +146,69 @@ public class DeviceSimulator {
         log.info("{} {} Completely stopped", SIM_TIP_ICON, SIM_PROJECT_NAME);
     }
 
+    /**
+     * 动态新增单台模拟器设备,自动创建TCP连接后台运行
+     *
+     * @param device 设备实体
+     * @author KevenPotter
+     * @date 2026-07-14 11:49:10
+     */
+    public void addDevice(StandardDevice device) {
+        if (!running) {
+            log.error("{} {} Simulator is not running, cannot add device {}", SIM_TIP_ICON, SIM_PROJECT_NAME, device.getDeviceId());
+            return;
+        }
+        String targetDeviceId = device.getDeviceId();
+        // 判断设备是否已存在
+        boolean exists = tcpClientList.stream()
+                .anyMatch(client -> client.getDeviceId().equals(targetDeviceId));
+        if (exists) {
+            log.warn("{} {} Device {} already exists, skip creation", SIM_TIP_ICON, SIM_PROJECT_NAME, targetDeviceId);
+            return;
+        }
+        // 1. 同步更新底层配置列表
+        config.addSimulatorDevice(device);
+        try {
+            // 2. 创建TCP客户端并启动，复用原有创建逻辑
+            TcpClient tcpClient = new TcpClient(config.getServerIP(), config.getServerPort(), device);
+            tcpClient.start();
+            tcpClientList.add(tcpClient);
+            TimeUnit.MILLISECONDS.sleep(SimulatorConstants.MULTI_DEVICE_START_INTERVAL);
+            log.info("{} {} Dynamically add device {} success", SIM_TIP_ICON, SIM_PROJECT_NAME, targetDeviceId);
+        } catch (Exception e) {
+            log.error("{} {} Failed to dynamically add device {}", SIM_TIP_ICON, SIM_PROJECT_NAME, targetDeviceId, e);
+        }
+    }
+
+    /**
+     * 根据设备ID移除并断开模拟器设备
+     *
+     * @param deviceId 设备编号
+     * @author KevenPotter
+     * @date 2026-07-14 11:50:19
+     */
+    public void removeDevice(String deviceId) {
+        // 1. 底层配置移除
+        config.removeSimulatorDevice(deviceId);
+        // 2. 找到对应客户端关闭销毁
+        TcpClient targetClient = null;
+        for (TcpClient client : tcpClientList) {
+            if (client.getDeviceId().equals(deviceId)) {
+                targetClient = client;
+                break;
+            }
+        }
+        if (targetClient == null) {
+            log.warn("{} {} Device {} not found, skip remove", SIM_TIP_ICON, SIM_PROJECT_NAME, deviceId);
+            return;
+        }
+        try {
+            targetClient.stop();
+            tcpClientList.remove(targetClient);
+            log.info("{} {} Dynamically remove device {} success", SIM_TIP_ICON, SIM_PROJECT_NAME, deviceId);
+        } catch (Exception e) {
+            log.error("{} {} Exception when removing device {}", SIM_TIP_ICON, SIM_PROJECT_NAME, deviceId, e);
+        }
+    }
+
 }
