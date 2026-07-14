@@ -17,6 +17,17 @@ public class CloudChargeHolder {
     private static CloudChargeConfig GLOBAL_CONFIG = new CloudChargeConfig();
 
     /**
+     * 获取全局完整配置实例
+     *
+     * @return 全局CloudChargeConfig
+     * @author KevenPotter
+     * @date 2026-07-14 11:03:34
+     */
+    public static CloudChargeConfig getGlobalConfig() {
+        return GLOBAL_CONFIG;
+    }
+
+    /**
      * 设置全局配置
      * 由使用者在@Bean中调用覆盖默认配置
      *

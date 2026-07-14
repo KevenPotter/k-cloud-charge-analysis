@@ -44,8 +44,8 @@ public class ChargeSessionManager {
     @Getter
     private String tradeNo;
 
-    /** 总充电时间(固定120分钟,后续可改) */
-    public static final int TOTAL_CHARGE_MINUTES = 120;
+    /** 单次最大充电分钟,由外部配置传入 */
+    private final int maxChargeMinutes;
     /** 每分钟充电度数：0.5度/分钟 */
     private static final BigDecimal PER_MIN_ELE = new BigDecimal("0.5");
     /** 金额、电量计算保留小数位数：4位 */
@@ -71,7 +71,7 @@ public class ChargeSessionManager {
     private int accumulatedMinutes = 0;
     /** 剩余充电分钟数 */
     @Getter
-    private int remainingMinutes = TOTAL_CHARGE_MINUTES;
+    private int remainingMinutes;
     /** 累计充电度数 */
     @Getter
     private BigDecimal chargingDegree = BigDecimal.ZERO;
@@ -120,10 +120,12 @@ public class ChargeSessionManager {
     /**
      * 构造注入定时调度器
      *
-     * @param timerScheduler 定时任务管理器
+     * @param timerScheduler   定时任务管理器
+     * @param maxChargeMinutes 单次最大充电分钟数
      */
-    public ChargeSessionManager(SimTimerScheduler timerScheduler) {
+    public ChargeSessionManager(SimTimerScheduler timerScheduler, int maxChargeMinutes) {
         this.timerScheduler = timerScheduler;
+        this.maxChargeMinutes = maxChargeMinutes;
         this.minuteSegCache = new HashMap<>();
         this.minuteCostCache = new HashMap<>();
         for (int i = 0; i < 4; i++) {
@@ -157,7 +159,7 @@ public class ChargeSessionManager {
         this.chargeStartTime = null;
         this.chargeEndTime = null;
         this.accumulatedMinutes = 0;
-        this.remainingMinutes = TOTAL_CHARGE_MINUTES;
+        this.remainingMinutes = maxChargeMinutes;
         this.chargingDegree = BigDecimal.ZERO;
         this.chargedAmount = BigDecimal.ZERO;
         this.lossRatio = 0;
@@ -187,7 +189,7 @@ public class ChargeSessionManager {
         this.chargeStartTime = LocalDateTime.now();
         this.chargeEndTime = null;
         this.accumulatedMinutes = 0;
-        this.remainingMinutes = TOTAL_CHARGE_MINUTES;
+        this.remainingMinutes = maxChargeMinutes;
         this.chargingDegree = BigDecimal.ZERO;
         this.chargedAmount = BigDecimal.ZERO;
 
@@ -218,10 +220,10 @@ public class ChargeSessionManager {
         long minutes = ChronoUnit.MINUTES.between(chargeStartTime, now);
         int stopCode = 0x40;
         // 超时达到最大时长强制停机
-        if (minutes >= TOTAL_CHARGE_MINUTES) {
-            minutes = TOTAL_CHARGE_MINUTES;
+        if (minutes >= maxChargeMinutes) {
+            minutes = maxChargeMinutes;
             stopCode = 0x41;
-            log.info("充电达到最大时长{}分钟,触发停机结算", TOTAL_CHARGE_MINUTES);
+            log.info("充电达到最大时长{}分钟,触发停机结算", maxChargeMinutes);
         }
 
         chargingDegree = BigDecimal.valueOf(minutes).multiply(PER_MIN_ELE).setScale(SCALE_4, ROUND_HALF_UP);
@@ -311,12 +313,12 @@ public class ChargeSessionManager {
                 long minutes = ChronoUnit.MINUTES.between(chargeStartTime, now);
 
                 // 越界保护,最多充120分钟
-                if (minutes >= TOTAL_CHARGE_MINUTES) {
-                    minutes = TOTAL_CHARGE_MINUTES;
+                if (minutes >= maxChargeMinutes) {
+                    minutes = maxChargeMinutes;
                 }
 
                 accumulatedMinutes = (int) minutes;
-                remainingMinutes = TOTAL_CHARGE_MINUTES - accumulatedMinutes;
+                remainingMinutes = maxChargeMinutes - accumulatedMinutes;
                 // 固定每分钟用电量0.5度(30kW直流桩典型值)
                 chargingDegree = BigDecimal.valueOf(minutes).multiply(PER_MIN_ELE).setScale(SCALE_4, ROUND_HALF_UP);
 

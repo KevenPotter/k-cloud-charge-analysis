@@ -1,6 +1,7 @@
 package com.wantllife.simulator.process;
 
 import cn.hutool.core.util.HexUtil;
+import com.wantllife.config.holder.CloudChargeHolder;
 import com.wantllife.domain.vo.StandardDevice;
 import com.wantllife.simulator.business.ChargeSessionManager;
 import com.wantllife.simulator.client.TcpClient;
@@ -51,7 +52,8 @@ public class SimDevMsgProcessor {
     public SimDevMsgProcessor() {
         this.timerScheduler = new SimTimerScheduler();
         this.deviceStateHolder = new DeviceStateHolder();
-        this.chargeSessionManager = new ChargeSessionManager(timerScheduler);
+        int maxMin = CloudChargeHolder.getGlobalConfig().getMaxChargeMinutes();
+        this.chargeSessionManager = new ChargeSessionManager(timerScheduler, maxMin);
         this.chargeSessionManager.setMonitorDataSendCallback(this::sendMessage);
     }
 

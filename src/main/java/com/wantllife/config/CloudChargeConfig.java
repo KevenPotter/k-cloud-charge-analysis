@@ -21,6 +21,8 @@ public class CloudChargeConfig {
     private boolean simulatorLogOutput = true;
     /** 模拟器-心跳日志开关,默认true(打印日志) */
     private boolean simulatorHeartbeatLogOutput = true;
+    /** 单次模拟最大充电时长(分钟)，默认120 */
+    private int maxChargeMinutes = 120;
 
     /**
      * 获取解析器-日志输出开关状态
@@ -177,4 +179,27 @@ public class CloudChargeConfig {
             log.info("{} {} User configured simulator heartbeat logging as DISABLED ❌", SIM_TIP_ICON, SIM_PROJECT_NAME);
         }
     }
+
+    /**
+     * 获取单次模拟最大充电时长
+     *
+     * @return 单次模拟最大充电时长(分钟)
+     * @author KevenPotter
+     * @date 2026-07-14 10:52:12
+     */
+    public int getMaxChargeMinutes() {
+        return maxChargeMinutes;
+    }
+
+    /**
+     * 设置单次模拟最大充电时长
+     *
+     * @param maxChargeMinutes 单次模拟最大充电时长(分钟)
+     * @author KevenPotter
+     * @date 2026-07-14 10:52:37
+     */
+    public void setMaxChargeMinutes(int maxChargeMinutes) {
+        this.maxChargeMinutes = maxChargeMinutes;
+    }
+
 }

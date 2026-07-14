@@ -1,5 +1,7 @@
 package com.wantllife.analysis.req;
 
+import cn.hutool.core.date.DateUnit;
+import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.HexUtil;
 import com.wantllife.core.FrameHeader;
 import com.wantllife.config.holder.CloudChargeHolder;
@@ -465,6 +467,7 @@ public class AQTradeRecordReq extends FrameHeader {
         sb.append(String.format("🟢%s 交易记录上报  枪口编号    gunNo                        : %s\n", devLabel, gunNo));
         sb.append(String.format("🟢%s 交易记录上报  交易编号    tradeNo                      : %s\n", devLabel, tradeNo));
         sb.append(String.format("🟢%s 交易记录上报  时间范围    timeRange                    : %s-%s\n", devLabel, startTime, endTime));
+        sb.append(String.format("🟢%s 交易记录上报  充电时常    chargeDuration               : %s\n", devLabel, DateUtil.between(DateUtil.parse(startTime), DateUtil.parse(endTime), DateUnit.MINUTE)));
         sb.append(String.format("🟢%s 交易记录上报  尖时单价    sharpUnitPrice               : %s\n", devLabel, sharpUnitPrice));
         sb.append(String.format("🟢%s 交易记录上报  尖时电量    sharpElectricity             : %s\n", devLabel, sharpElectricity));
         sb.append(String.format("🟢%s 交易记录上报  尖时计损    sharpLossElectricity         : %s\n", devLabel, sharpLossElectricity));
